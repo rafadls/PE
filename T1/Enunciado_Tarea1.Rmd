@@ -1,6 +1,7 @@
 ---
 title: "Tarea 1"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -81,7 +82,25 @@ Un amigue cercano a usted le comenta que le preocupa salir a la calle cuando hay
 #### **Pregunta 3:**
 Señale las diferentes aplicaciones que poseen las visualizaciones: Boxplot, histograma, gráfico de pie y scatterplot.
 
-> Respuesta Aquí
+El Boxplot está hecho en base a los percentiles. Nos permite identificar la distribución en base a sus cuartiles, su simetría y sus outliers. A continuación se muestras sus aplicaciónes:
+* Boxplot de solo una variable
+* Separa una variable en categorias y hacer boxplot de cada una de estas.
+* Comparar distintos boxplot en un mismo gráfico.
+
+El histograma muestra la distribución de valores de una variable. Se aplica para descomponer variables con un cierto orden, pues los datos son agrupados en "bins", permitiendo elegír la continuidad del gráfico. A continuación se muestras sus aplicaciónes:
+* Histograma por cantidad
+* Histograma por densidad (áreas deben sumar 1)
+
+El gráfico de pie es utilizado para mostrar frecuencia de clases en una variable. Normalmente se utiliza para variables categóricas. A continuación se muestras sus aplicaciónes:
+* Dos dimensiones
+* Tres dimensiones
+
+Scatterplot compara dos variables numéricas en un plano carteciano, donde los valores de cada dato determinan su posición. A continuación se muestras sus aplicaciónes:
+* Scatterplot entre dos variables numericas.
+* Combinación de scatterplot entre un grupo de variables.
+* Scatterplot de tres dimensiones.
+
+
 
 #### **Pregunta 4:**
 Suponga que esta estudiando la diferencia en los sueldos de las personas que viven en Santiago y Rancagua. Suponiendo que los datos poseen outliers, ¿Que métrica de resumen utilizaría para comparar los datos?. Justifique su respuesta.
