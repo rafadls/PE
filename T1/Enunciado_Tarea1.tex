@@ -1,0 +1,756 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Tarea 1},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Tarea 1}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\includegraphics{banner.png}
+
+Tarea 1: Foundations
+
+CC6104: Statistical Thinking
+
+\hypertarget{integrantes}{%
+\paragraph{\texorpdfstring{\textbf{Integrantes
+:}}{Integrantes :}}\label{integrantes}}
+
+\begin{itemize}
+\tightlist
+\item
+  Rafael De La Sotta
+\item
+  Felipe Ortuzar
+\end{itemize}
+
+\hypertarget{cuerpo-docente}{%
+\paragraph{\texorpdfstring{\textbf{Cuerpo
+Docente:}}{Cuerpo Docente:}}\label{cuerpo-docente}}
+
+\begin{itemize}
+\tightlist
+\item
+  Profesor: Felipe Bravo M.
+\item
+  Auxiliar: Sebastian Bustos e Ignacio Meza D.
+\end{itemize}
+
+\hypertarget{fecha-limite-de-entrega}{%
+\paragraph{\texorpdfstring{\textbf{Fecha límite de
+entrega:}}{Fecha límite de entrega:}}\label{fecha-limite-de-entrega}}
+
+\hypertarget{indice}{%
+\subsubsection{\texorpdfstring{\textbf{Índice:}}{Índice:}}\label{indice}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \protect\hyperlink{id1}{Objetivo}
+\item
+  \protect\hyperlink{id2}{Instrucciones}
+\item
+  \protect\hyperlink{id3}{Referencias}
+\item
+  \protect\hyperlink{id4}{Primera Parte: Preguntas Teóricas}
+\item
+  \protect\hyperlink{id5}{Segunda Parte: Elaboración de Código}
+\end{enumerate}
+
+\hypertarget{objetivo}{%
+\subsubsection{\texorpdfstring{\textbf{Objetivo}}{Objetivo}}\label{objetivo}}
+
+\href{mailto:Bienvenid@s}{\nolinkurl{Bienvenid@s}} a la primera tarea
+del curso Statistical Thinking. Esta tarea tiene como objetivo evaluar
+los contenidos teóricos de la primera parte del curso, los cuales se
+enfocan principalmente en análisis exploratorio de datos y conceptos
+introductorios de probabilidades. Si aún no han visto las clases, se
+recomienda visitar los enlaces de las referencias.
+
+La tarea consta de una parte teórica que busca evaluar conceptos vistos
+en clases. Seguido por una parte práctica con el fín de introducirlos a
+la programación en R enfocada en el análisis estadístico de datos.
+
+\hypertarget{instrucciones}{%
+\subsubsection{\texorpdfstring{\textbf{Instrucciones:}}{Instrucciones:}}\label{instrucciones}}
+
+\begin{itemize}
+\tightlist
+\item
+  La tarea se realiza en grupos de \textbf{máximo 2 personas}. Pero no
+  existe problema si usted desea hacerla de forma individual.
+\item
+  La entrega es a través de u-cursos a más tardar el día estipulado en
+  la misma plataforma. A las tareas atrasadas se les descontará un punto
+  por día.
+\item
+  El formato de entrega es este mismo \textbf{Rmarkdown} y un
+  \textbf{html} con la tarea desarrollada. Por favor compruebe que todas
+  las celdas han sido ejecutadas en el archivo html.
+\item
+  Al momento de la revisión tu código será ejecutado. Por favor verifica
+  que tu entrega no tenga errores de compilación.
+\item
+  No serán revisadas tareas desarrolladas en Python.
+\item
+  Está \textbf{PROHIBIDO} la copia o compartir las respuestas entre
+  integrantes de diferentes grupos.
+\item
+  Pueden realizar consultas de la tarea a través de U-cursos y/o del
+  canal de Discord del curso.
+\end{itemize}
+
+\hypertarget{referencias}{%
+\subsubsection{\texorpdfstring{\textbf{Referencias:}}{Referencias:}}\label{referencias}}
+
+Slides de las clases:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/dccuchile/CC6104/blob/master/slides/1_1_ST-intro.pdf}{Introduction
+  to Statistical Thinking}
+\item
+  \href{https://github.com/dccuchile/CC6104/blob/master/slides/1_2_ST-R.pdf}{Introduction
+  to R}
+\item
+  \href{https://github.com/dccuchile/CC6104/blob/master/slides/1_3_ST-explore.pdf}{Descriptive
+  Statistics}
+\item
+  \href{https://github.com/dccuchile/CC6104/blob/master/slides/1_4_ST-prob.pdf}{Probability}
+\end{itemize}
+
+Videos de las clases:
+
+\begin{itemize}
+\tightlist
+\item
+  Introduction to Statistical Thinking:
+  \href{https://youtu.be/X4SqJu6lExM}{video1}
+  \href{https://youtu.be/YbiQU5TTBX4}{video2}
+\item
+  Introduction to R: \href{https://youtu.be/MbeLD3hWWVo}{video1}
+  \href{https://youtu.be/9W_eWCy86F4}{video2}
+  \href{https://youtu.be/QvFXSw2-1r4}{video3}
+  \href{https://youtu.be/y4JY7klrbfQ}{video4}
+\item
+  Descriptive Statistics: \href{https://youtu.be/kWNskZ8_98o}{video1}
+  \href{https://youtu.be/_FJ8x9M4b1w}{video2}
+  \href{https://youtu.be/m7VBNZ2mYWI}{video3}
+  \href{https://youtu.be/ylGMJ_aSQk0}{video4}
+\item
+  Probability: \href{https://youtu.be/R9AVYV73m1M}{video1}
+  \href{https://youtu.be/zubh1jbRiKE}{video2}
+  \href{https://youtu.be/uiwToagp0z4}{video3}
+  \href{https://youtu.be/RlhN3t_VIyw}{video4}
+  \href{https://youtu.be/4kV1dBaeWVc}{video5}
+  \href{https://youtu.be/MGyXc70JdSk}{video6}
+\end{itemize}
+
+\hypertarget{primera-parte-preguntas-teoricas}{%
+\section{Primera Parte: Preguntas
+Teóricas}\label{primera-parte-preguntas-teoricas}}
+
+A continuación, se presentaran diferentes preguntas que abordan las
+temáticas vistas en clases. Por favor responda cada una de estas
+preguntas de forma breve, no más de 4 o 5 lineas.
+
+\hypertarget{pregunta-1}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+1:}}{Pregunta 1:}}\label{pregunta-1}}
+
+¿Por qué la estadística es importante?, ¿Que nos permite realizar con
+los datos?. De algún ejemplo.
+
+La estadística tiene como tema central la organización y análisis de
+datos. Con ella se puede describir, decidir y predecir a partir de
+estos. La estadística logra transformar los datos en información
+confiable sobre fenomenos, y esta información, debido a su
+confiabilidad, permite predecir, detectar tendencias y tomar desiciones.
+
+\hypertarget{pregunta-2}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+2:}}{Pregunta 2:}}\label{pregunta-2}}
+
+Un amigue cercano a usted le comenta que le preocupa salir a la calle
+cuando hay ofertas en los helados, esto debido a que ha visto el
+siguiente titular en un famoso diario chileno: ``El aumento en la compra
+de helados tiene una alta correlación con la muerte de personas en
+Santiago''. ¿Que le recomendaría a su amigue sobre el titular leído?,
+¿Debería preocuparse tanto?.
+
+\begin{quote}
+Respuesta Aquí
+\end{quote}
+
+\hypertarget{pregunta-3}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+3:}}{Pregunta 3:}}\label{pregunta-3}}
+
+Señale las diferentes aplicaciones que poseen las visualizaciones:
+Boxplot, histograma, gráfico de pie y scatterplot.
+
+El Boxplot está hecho en base a los percentiles. Nos permite identificar
+la distribución en base a sus cuartiles, su simetría y sus outliers. A
+continuación se muestras sus aplicaciónes: * Boxplot de solo una
+variable * Separa una variable en categorias y hacer boxplot de cada una
+de estas. * Comparar distintos boxplot en un mismo gráfico.
+
+El histograma muestra la distribución de valores de una variable. Se
+aplica para descomponer variables con un cierto orden, pues los datos
+son agrupados en ``bins'', permitiendo elegír la continuidad del
+gráfico. A continuación se muestras sus aplicaciónes: * Histograma por
+cantidad * Histograma por densidad (áreas deben sumar 1)
+
+El gráfico de pie es utilizado para mostrar frecuencia de clases en una
+variable. Normalmente se utiliza para variables categóricas. A
+continuación se muestras sus aplicaciónes: * Dos dimensiones * Tres
+dimensiones
+
+Scatterplot compara dos variables numéricas en un plano carteciano,
+donde los valores de cada dato determinan su posición. A continuación se
+muestras sus aplicaciónes: * Scatterplot entre dos variables numericas.
+* Combinación de scatterplot entre un grupo de variables. * Scatterplot
+de tres dimensiones.
+
+\hypertarget{pregunta-4}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+4:}}{Pregunta 4:}}\label{pregunta-4}}
+
+Suponga que esta estudiando la diferencia en los sueldos de las personas
+que viven en Santiago y Rancagua. Suponiendo que los datos poseen
+outliers, ¿Que métrica de resumen utilizaría para comparar los datos?.
+Justifique su respuesta.
+
+\begin{quote}
+Respuesta Aquí
+\end{quote}
+
+\hypertarget{pregunta-5}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+5:}}{Pregunta 5:}}\label{pregunta-5}}
+
+En base al mismo dataset de sueldos para las regiones de Santiago y
+Rancagua, le comentan que existe un error en los datos y que estos deben
+ser modificados aumentando un 10\% el valor original y sumando
+\(15.000\) a cada uno de los datos. ¿Como se ve afectada la media,
+mediana y desviación estándar con esta modificación?. Explique a través
+de ecuaciones el cambio que experimentan las métricas de resumen
+respecto al valor original, considere para el caso de la media
+\(\bar{X}_{old} = \dfrac{1}{m} \sum^{m}_{i=1} x_i\) y
+\(sd_{old} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i-\bar{x})^{2}}\)
+para la desviación estándar.
+
+\begin{quote}
+Respuesta Aquí
+\end{quote}
+
+\hypertarget{pregunta-6}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+6:}}{Pregunta 6:}}\label{pregunta-6}}
+
+Suponga que debe responder un examen sorpresa de 10 preguntas, con 5
+alternativas por cada pregunta. ¿Cual es la probabilidad de obtener mas
+de 5 alternativas correctas si responde de forma aleatoria todo el
+examen?.
+
+\textbf{Nota:} Puede resolver el ejercicio desarrollándolo a mano o
+utilizando código en R.
+
+\begin{quote}
+Respuesta Aquí
+\end{quote}
+
+\hypertarget{pregunta-7}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+7:}}{Pregunta 7:}}\label{pregunta-7}}
+
+Supongamos que el 10\% de los alumnos del curso utilizan Macintosh, el
+60\% utiliza Windows y el 30\% utiliza Linux. Supongamos que el 50\% de
+los usuarios de Mac, el 78\% de los usuarios de Windows y el 20\% de los
+usuarios de Linux han sucumbido bajo un terrible virus. Al seleccionar
+una persona al azar nos enteramos de que su sistema está infectado por
+el virus. ¿Cuál es la probabilidad de que sea un alumno con Windows?.
+
+\begin{quote}
+Respuesta Aquí
+\end{quote}
+
+\hypertarget{pregunta-8}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+8:}}{Pregunta 8:}}\label{pregunta-8}}
+
+Señale si las siguientes declaraciones son verdaderas o falsas respecto
+a las variables aleatorias:
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  Como las variables aleatorias son funciones que nos permiten obtener
+  valores de probabilidad, siempre podemos obtener \(\mathbb{P}(X=x)>0\)
+  evaluando en una \(f(x)\) continua y discreta.
+\item[$\square$]
+  Una PDF bien definida solo puede tener valores menores a 1 y un área
+  debajo de la curva igual a 1.
+\item[$\square$]
+  La CDF puede ser representada como la integral de la PDF y PMF.
+\item[$\square$]
+  Una CDF es definida para todo x, continua hacia la derecha y no es
+  decreciente.
+\end{itemize}
+
+\begin{quote}
+Respuesta Aquí
+\end{quote}
+
+\hypertarget{pregunta-9}{%
+\paragraph{\texorpdfstring{\textbf{Pregunta
+9:}}{Pregunta 9:}}\label{pregunta-9}}
+
+Una famosa fabrica de dulces señala que solo el \(5\%\) de sus dulces
+contienen menos de \(350\) gramos. Si los dulces elaborados por la
+fabrica distribuyen de forma normal, con media \(\mu\) y desviación
+estándar \(11.2\). Responda las siguientes preguntas:
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\alph{enumi})}
+  \tightlist
+  \item
+    Encuentre la media del producto.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Señale el porcentaje de dulces que se encuentran sobre los \(390\)
+    gramos.
+  \end{enumerate}
+\end{itemize}
+
+\textbf{Nota:} Puede ser útil
+\url{https://www.statskingdom.com/z_table.html}
+
+\begin{quote}
+Respuesta Aquí
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{segunda-parte-elaboracion-de-codigo}{%
+\section{Segunda Parte: Elaboración de
+Código}\label{segunda-parte-elaboracion-de-codigo}}
+
+En la siguiente sección deberá resolver cada uno de los experimentos
+computacionales a través de la programación en R. Para esto se le
+aconseja que cree funciones en R, ya que le facilitará la ejecución de
+gran parte de lo solicitado.
+
+\hypertarget{pregunta-1-visualizacion-de-datos}{%
+\subsubsection{Pregunta 1: Visualización de
+Datos}\label{pregunta-1-visualizacion-de-datos}}
+
+Para esta pregunta usted deberá trabajar en base al conjunto de datos
+\texttt{hearth\_database.csv}, el cual esta compuesto por las siguientes
+variables:
+
+\begin{itemize}
+\tightlist
+\item
+  target: Señala si el paciente tuvo un infarto.
+\item
+  sex: Sexo de los sujetos de prueba.
+\item
+  fbs: Azúcar en la sangre con ayunas. Esta variable señala solo si se
+  encuentra \textless=120 o \textgreater120.
+\item
+  exang: Angina de pecho inducida por el ejercicio.
+\item
+  cp: Tipo de dolor de pecho.
+\item
+  restecg: Resultados electrocardiográficos en reposo.
+\item
+  slope: Pendiente del segmento ST máximo de ejercicio.
+\item
+  ca: Número de buques principales.
+\item
+  thal: Thalassemia.
+\item
+  age: Edad en años.
+\item
+  trestbps: Presión arterial en reposo.
+\item
+  chol: colesterol sérico en mg/dl.
+\item
+  thalach: Frecuencia cardíaca máxima alcanzada.
+\item
+  oldpeak: Depresión del ST inducida por el ejercicio en relación con el
+  reposo.
+\end{itemize}
+
+En base al dataset propuesto realice un análisis exploratorio de los
+datos (EDA). Para su análisis enfoquen el desarrollo en las siguientes
+tareas:
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  Obtenga la media, mediana, quintiles y valores máximos desde los datos
+  que componen el dataset.
+\item[$\square$]
+  Obtenga la Matriz de correlación de Pearson y visualice la relación
+  entre las variables numéricas.
+\item[$\square$]
+  Visualice los boxplot para las variables numéricas.
+\item[$\square$]
+  Visualice a través de un histograma como distribuyen las variables
+  respecto a los TARGET.
+\end{itemize}
+
+\textbf{Respuesta}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{pregunta-2-teorema-central-del-limite}{%
+\subsubsection{Pregunta 2: Teorema Central del
+Limite}\label{pregunta-2-teorema-central-del-limite}}
+
+Pruebe el teorema central del limite aplicando un muestreo de la media
+en las distribuciones Poisson, Exponencial y una a su elección. Grafique
+los resultados obtenidos y señale aproximadamente el numero de muestreos
+necesarios para obtener el resultado esperado, pruebe esto con las
+siguientes cantidades de muestreo \(\{10,100,1000,5000\}\). ¿El efecto
+ocurre con el mismo número de muestreo para todas las distribuciones?.
+
+\textbf{Respuesta}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Definición de variables o estructuras necesarias para el muestreo.}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{1000}
+
+\CommentTok{\# Realizar el muestreo de las distribuciones.}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n) \{}
+  
+\NormalTok{\}}
+
+\CommentTok{\# Código para gráficos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{pregunta-3-ley-de-los-grandes-numeros.}{%
+\subsubsection{Pregunta 3: Ley de los Grandes
+Numeros.}\label{pregunta-3-ley-de-los-grandes-numeros.}}
+
+\hypertarget{lanzamiento-de-monedas}{%
+\paragraph{Lanzamiento de monedas}\label{lanzamiento-de-monedas}}
+
+Realice el experimento de lanzar una moneda cargada 1000 veces y observe
+el comportamiento que tiene la probabilidad de salir cara. Para realizar
+el experimento considere que la moneda tiene una probabilidad de \(4/5\)
+de salir cara. Grafique el experimento para las secuencias de intentos
+que van desde 1 a 1000, señalando el valor en que converge la
+probabilidad de salir cara.
+
+\textbf{Respuesta}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Simular lanzamientos}
+\ControlFlowTok{for}\NormalTok{ (lanzamientos }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{) \{}
+  
+\NormalTok{\}}
+
+\CommentTok{\# Gráfico de la convergencia}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{el-problema-de-monty-hall}{%
+\paragraph{El problema de Monty Hall}\label{el-problema-de-monty-hall}}
+
+Remontándonos en la televisión del año 1963, en USA existía un programa
+de concursos donde los participantes debían escoger entre 3 puertas para
+ganar un premio soñado. El problema del concurso era que solo detrás de
+1 puerta estaba el premio mayor, mientras que detrás de las otras dos
+habían cabras como ``premio''.
+
+Una de las particularidades de este concurso, es que cuando el
+participante escogía una puerta, el animador del show abría una de las
+puertas que no fue escogida por el participante (Obviamente la puerta
+abierta por el animador no contenía el premio). Tras abrir la puerta, el
+animador consultaba al participante si su elección era definitiva, o si
+deseaba cambiar la puerta escogida por la otra puerta cerrada.
+
+Imagine que usted es participante del concurso y desea calcular la
+probabilidad de ganar el gran premio \textbf{si cambia de puerta} en el
+momento que el animador se lo ofrece. Utilizando listas/arrays/vectores
+simule las puertas del concurso, dejando aleatoriamente el premio en
+alguna posición del array. Hecho esto, genere un numero de forma
+aleatoria para escoger una de las puerta (posiciones de la estructura),
+para luego ver si cambiando de posición tendrá mayores posibilidades de
+ganar el premio. Genere N veces el experimento y grafique cada una de
+las iteraciones, tal como se hizo en el ejercicio de las monedas.
+
+\textbf{Respuesta:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creamos una función que simule el juego}
+\NormalTok{montyhall }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{cambiar =} \ConstantTok{TRUE}\NormalTok{)\{}
+\NormalTok{  Puertas }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)             }\CommentTok{\#Puertas donde la posición que tiene el 3 es el premio}
+\NormalTok{  posicion }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{)            }\CommentTok{\#Elección del participante.}
+  
+  \FunctionTok{return}\NormalTok{(Eleccion) }\CommentTok{\# Retornamos la elección, esta puede que tenga el premio o no}
+\NormalTok{\}}
+
+\CommentTok{\# Función que simula N juegos}
+\NormalTok{n\_juegos }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{ ,}\AttributeTok{cambiar\_puerta =} \ConstantTok{TRUE}\NormalTok{)\{}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{pregunta-4-independencia}{%
+\subsubsection{Pregunta 4:
+¿Independencia?}\label{pregunta-4-independencia}}
+
+Ustedes disponen de los dados D1 y D2, los cuales no están cargados y
+son utilizados para comprobar que
+\(\mathbb{P}(AB)=\mathbb{P}(A)\mathbb{P}(B)\) cuando el evento A es
+independiente del B. Para estudiar la independencia considere que los
+eventos A y B se definen de la siguiente manera; sea A el evento dado
+por los valores obtenidos en el lanzamiento del dado D1, este está
+compuesto por \(A=\{D1=1,D1=2,D1=6\}\). Por otro lado, el evento B viene
+dado por los valores obtenidos con el dado D2, el que está conformado
+por \(B=\{D2=1,D2=2,D2=3,D2=4\}\). Con esto, tendremos un
+\(\mathbb{P}(A)=1/2\), \(\mathbb{P}(𝐵)=2/3\) y \(\mathbb{P}(AB)=1/3\).
+Compruebe de forma gráfica que al realizar 1000 lanzamientos (u otro
+valor grande que usted desea probar) se visualiza que
+\(\mathbb{P}(AB)=\mathbb{P}(A)\mathbb{P}(B)\).
+
+Hecho lo anterior, compruebe el comportamiento de un segundo grupo de
+eventos, dados por el lanzamiento de solo el dado D1. Donde, los eventos
+para D1 quedan definidos como: \(A =\{D1=1,D1=2,D1=6\}\) y
+\(B=\{D1=1,D1=2,D1=3\}\). ¿Se observa independencia en este
+experimento?.
+
+Se le aconseja que para simular los lanzamientos de dados utilice la
+función \texttt{sample()} para generar valores aleatorios entre 1 y 6.
+Compruebe los números generados por la función con los casos favorables
+de cada uno de los eventos a ser estudiados.
+
+\textbf{Respuesta:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Primer grupo de eventos}
+\NormalTok{N\_lan }\OtherTok{=} \DecValTok{1000} \CommentTok{\# Numero de lanzamientos}
+  
+\NormalTok{L\_A }\OtherTok{=}  \CommentTok{\# Lanzamientos favorables A = c(1, 2, 6)}
+\NormalTok{L\_B }\OtherTok{=}  \CommentTok{\# Lanzamientos favorables B = c(1, 2, 3, 4)}
+\NormalTok{L\_AB }\OtherTok{=} \CommentTok{\# Lanzamientos favorables AB = c(1, 2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Segundo grupo de eventos}
+\NormalTok{N\_lan }\OtherTok{=} \DecValTok{1000} \CommentTok{\# Numero de lanzamientos}
+  
+\NormalTok{L\_A }\OtherTok{=}  \CommentTok{\# Lanzamientos favorables A = c(1, 2, 6)}
+\NormalTok{L\_B }\OtherTok{=}  \CommentTok{\# Lanzamientos favorables B = c(1, 2, 3)}
+\NormalTok{L\_AB }\OtherTok{=} \CommentTok{\# Lanzamientos favorables AB = c(1, 2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{pregunta-5-la-ruina-del-jugador}{%
+\subsubsection{Pregunta 5: La Ruina del
+Jugador}\label{pregunta-5-la-ruina-del-jugador}}
+
+Un amigo ludópata suyo le comenta que el truco de jugar en el casino
+esta en no parar de apostar y apostando lo mínimo posible. Ya que así,
+tienes mas probabilidades de ganar el gran pozo que acumula el juego.
+Usted sabiendo la condición de su amigo, decide no creer en su conjetura
+y decide probar esto a través de un experimento.
+
+Para realizar el experimento usted decide asumir las siguientes
+declaraciones, bajo sus observaciones:
+
+\begin{itemize}
+\tightlist
+\item
+  La probabilidad de ganar en un juego del casino es \(9/19\)
+\item
+  Sabe que su amigo posee fondos en el rango de 0 a 200 dolares.
+\item
+  Las apuestas como mínimo deben ser igual a 5 dolares.
+\item
+  El monto de las apuestas no cambia y son siempre igual a la primera.
+  Por ejemplo, si su amigo apuesta 50 dolares, todos los próximos juegos
+  apuesta 50 hasta que se acaba su dinero.
+\item
+  Asuma que al momento de ganar el jugador anexa el valor apostado a sus
+  fondos.
+\end{itemize}
+
+En el experimento deberá obtener la evolución de los fondos hasta que el
+jugador se queda sin fondos para jugar. Puede ser útil seguir la lógica
+de una moneda cargada para realizar esto. Pruebe esto con una apuesta
+igual a 5, 25 y 50 graficando los resultados. Comente los resultados
+obtenidos.
+
+\textbf{Respuesta}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Función para obtener el desarrollo de las apuestas}
+\NormalTok{ruina }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{fondos =} \DecValTok{100}\NormalTok{, }\AttributeTok{apuesta =} \DecValTok{5}\NormalTok{)\{}
+  \ControlFlowTok{while}\NormalTok{ (}\DecValTok{0}\SpecialCharTok{\textless{}}\NormalTok{fondos }\SpecialCharTok{\&}\NormalTok{ fondos}\SpecialCharTok{\textless{}}\DecValTok{200}\NormalTok{) \{}
+    
+\NormalTok{  \}}
+  \FunctionTok{return}\NormalTok{(vec\_fondos) }\CommentTok{\# Devuelve un vector con el desarrollo de los fondos}
+\NormalTok{\}}
+
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{ruina}\NormalTok{(), }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"N° de juegos"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Fondos"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Evolución de los fondos (apuesta = 5)"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{ruina}\NormalTok{(}\AttributeTok{apuesta =} \DecValTok{25}\NormalTok{), }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"N° de juegos"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Fondos"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Evolución de los fondos (apuesta = 25)"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{ruina}\NormalTok{(}\AttributeTok{apuesta =} \DecValTok{50}\NormalTok{), }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"N° de juegos"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Fondos"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Evolución de los fondos (apuesta = 50)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+~
+
+A work by CC6104
+
+~
+
+
+\end{document}
