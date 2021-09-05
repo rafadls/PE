@@ -5,14 +5,14 @@ output:
     df_print: paged
 ---
 
-![](D:/pandicosas/Codes/CC6104/estudio_estadistico-1/Tarea1/banner.png)
+![](banner.png)
 
 <center> <h1>Tarea 1: Foundations</h1> </center>
 <center><strong>CC6104: Statistical Thinking</strong></center>
 #### **Integrantes :** 
 
-- Alumno 1
-- Alumno 2
+- Rafael De La Sotta
+- Felipe Ortuzar
 
 #### **Cuerpo Docente:**
 
@@ -70,7 +70,8 @@ A continuación, se presentaran diferentes preguntas que abordan las temáticas 
 #### **Pregunta 1:**
 ¿Por qué la estadística es importante?, ¿Que nos permite realizar con los datos?. De algún ejemplo.
 
-> Respuesta Aquí
+La estadística tiene como tema central la organización y análisis de datos. Con ella se puede describir, decidir y predecir a partir de estos. 
+La estadística logra transformar los datos en información confiable sobre fenomenos, y esta información, debido a su confiabilidad, permite predecir, detectar tendencias y tomar desiciones.
 
 #### **Pregunta 2:**
 Un amigue cercano a usted le comenta que le preocupa salir a la calle cuando hay ofertas en los helados, esto debido a que ha visto el siguiente titular en un famoso diario chileno: "El aumento en la compra de helados tiene una alta correlación con la muerte de personas en Santiago". ¿Que le recomendaría a su amigue sobre el titular leído?, ¿Debería preocuparse tanto?.
