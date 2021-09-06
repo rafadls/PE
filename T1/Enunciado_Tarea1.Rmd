@@ -114,7 +114,57 @@ Suponga que esta estudiando la diferencia en los sueldos de las personas que viv
 #### **Pregunta 5:**
 En base al mismo dataset de sueldos para las regiones de Santiago y Rancagua, le comentan que existe un error en los datos y que estos deben ser modificados aumentando un 10% el valor original y sumando $15.000$ a cada uno de los datos. ¿Como se ve afectada la media, mediana y desviación estándar con esta modificación?. Explique a través de ecuaciones el cambio que experimentan las métricas de resumen respecto al valor original, considere para el caso de la media $\bar{X}_{old} = \dfrac{1}{m} \sum^{m}_{i=1} x_i$ y $sd_{old} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i-\bar{x})^{2}}$ para la desviación estándar.
 
-> Respuesta Aquí
+- Media
+
+$\bar{X}_{new} = \dfrac{1}{m} \sum^{m}_{i=1} (x_i \cdot 0.1 + 15.000)$ 
+
+$= \bar{X}_{old} \cdot 0.1 + 15.000 \cdot \dfrac{m}{m}$
+
+$= \bar{X}_{old} \cdot 0.1 + 15.000$
+
+- Desviación estándar
+
+$sd_{new} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 + 15.000 - \bar{x}_{new})^{2}}$
+
+$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 + 15.000 - (\bar{x}_{old} \cdot 0.1 + 15.000)^{2}}$
+
+$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 -\bar{x}_{old} \cdot 0.1)^{2}}$
+
+$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2} \cdot  0.1^{2}}$
+
+$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2}} \cdot 0.1$
+
+$= sd_{old} \cdot 0.1$
+
+- Mediana (n par)
+
+$M_{old} = \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2}$
+
+$M_{new} = \frac{x_{\frac{n}{2}} \cdot 0.1 + 15.000 + x_{\frac{n}{2} + 1} \cdot 0.1 + 15.000}{2}$
+
+$= \frac{x_{\frac{n}{2}} \cdot 0.1 + x_{\frac{n}{2} + 1} \cdot 0.1}{2} + 15.000$
+
+$= \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2} \cdot 0.1 + 15.000$
+
+$= M_{old} \cdot 0.1 + 15.000$
+
+- Mediana (n impar)
+
+$M_{old} = x_{\frac{n+1}{2}}$
+
+$M_{new} = x_{\frac{n+1}{2}} \cdot 0.1 + 15.000 $
+
+$= M_{old} \cdot 0.1 + 15.000$
+
+- Mediana
+
+$M_{new} = M_{old} \cdot 0.1 + 15.000$
+
+
+
+
+
+
 
 #### **Pregunta 6:**
 Suponga que debe responder un examen sorpresa de 10 preguntas, con 5 alternativas por cada pregunta. ¿Cual es la probabilidad de obtener mas de 5 alternativas correctas si responde de forma aleatoria todo el examen?.
