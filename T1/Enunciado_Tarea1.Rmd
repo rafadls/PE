@@ -161,11 +161,6 @@ $= M_{old} \cdot 0.1 + 15.000$
 $M_{new} = M_{old} \cdot 0.1 + 15.000$
 
 
-
-
-
-
-
 #### **Pregunta 6:**
 Suponga que debe responder un examen sorpresa de 10 preguntas, con 5 alternativas por cada pregunta. ¿Cual es la probabilidad de obtener mas de 5 alternativas correctas si responde de forma aleatoria todo el examen?.
 
@@ -176,7 +171,15 @@ Suponga que debe responder un examen sorpresa de 10 preguntas, con 5 alternativa
 #### **Pregunta 7:**
 Supongamos que el 10% de los alumnos del curso utilizan Macintosh, el 60% utiliza Windows y el 30% utiliza Linux. Supongamos que el 50% de los usuarios de Mac, el 78% de los usuarios de Windows y el 20% de los usuarios de Linux han sucumbido bajo un terrible virus. Al seleccionar una persona al azar nos enteramos de que su sistema está infectado por el virus. ¿Cuál es la probabilidad de que sea un alumno con Windows?.
 
-> Respuesta Aquí
+Por el teroema de Bayes se tiene que 
+
+$P(windows | virus) = \frac{P(virus | windows) \cdot P(windows) }{ P(virus) }$
+
+$= \frac{0.78 \cdot 0.6 }{ 0.1 \cdot 0.5 + 0.6 \cdot 0.78 + 0.3 \cdot 0.2 }$
+
+$= \frac{0.78 \cdot 0.6 }{ 0.578 }$
+
+$= 0.8096886$
 
 #### **Pregunta 8:**
 Señale si las siguientes declaraciones son verdaderas o falsas respecto a las variables aleatorias:
