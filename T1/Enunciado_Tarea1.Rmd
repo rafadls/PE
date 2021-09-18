@@ -4,6 +4,8 @@ output:
   html_document:
     df_print: paged
   pdf_document: default
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ![](banner.png)
@@ -13,7 +15,7 @@ output:
 #### **Integrantes :** 
 
 - Rafael De La Sotta
-- Felipe Ortuzar
+- Felipe Ortúzar
 
 #### **Cuerpo Docente:**
 
@@ -77,7 +79,7 @@ La estadística logra transformar los datos en información confiable sobre feno
 #### **Pregunta 2:**
 Un amigue cercano a usted le comenta que le preocupa salir a la calle cuando hay ofertas en los helados, esto debido a que ha visto el siguiente titular en un famoso diario chileno: "El aumento en la compra de helados tiene una alta correlación con la muerte de personas en Santiago". ¿Que le recomendaría a su amigue sobre el titular leído?, ¿Debería preocuparse tanto?.
 
-> Respuesta Aquí
+Le diría que tuviera cuidado con mezclar los términos de correlación y causalidad. Es posible que la correlación se deba a que existen más muertes en el verano, que es la estación donde se vende más helado, por dar un ejemplo. Es decir, no porque exista correlación en dos variable signifique que haya una causalidad entre ellas, y por lo tanto lo que le recomendaría al amig" es que investigue mejor a la fuente que el diario cita y no lo que sale en el diario chileno, para que encuentre la razón de tal correlación y así deje probablemente de preocuparse.
 
 #### **Pregunta 3:**
 Señale las diferentes aplicaciones que poseen las visualizaciones: Boxplot, histograma, gráfico de pie y scatterplot.
@@ -109,7 +111,17 @@ Scatterplot compara dos variables numéricas en un plano carteciano, donde los v
 #### **Pregunta 4:**
 Suponga que esta estudiando la diferencia en los sueldos de las personas que viven en Santiago y Rancagua. Suponiendo que los datos poseen outliers, ¿Que métrica de resumen utilizaría para comparar los datos?. Justifique su respuesta.
 
+hint: boxplot pq muestra media, cuartiles y outlayers
+
+boxplot e histograma
+
 > Respuesta Aquí
+
+Probablemente utilizaría boxplot para aprender sobre estos datos en particular. La razón es que boxplot muestra la mediana, los rangos intercuartiles, el mínimo y el máximo que son buenas medidas para entender los datos. Pero más importante aún, boxplot permite visualizar de manera especial a los outliers de los datos, y por lo tanto es una herramienta que los señala directamente.
+
+Usando scatter plots o histogramas también se podría estudiar el dataset, pero con respecto a los outliers se tendrían que identificar de manera visual e indirecta, con mayor dificultad en algunos casos. Por ejemplo en el histograma se podría ver cuando una barra está separada del resto de las barras.
+
+Si el dataset contiene outliers que sólo son detectables mirando múltiples columnas, entonces es mejor tomar un rumbo más matemático/programación para obtener alguna lista o cantidad de outliers.(4 o más dimensiones). Con 3 dimensiones todavía se podría ocupar un scatter plot en 3D para visualizar la información y tratar de encontrar los outliers.
 
 #### **Pregunta 5:**
 En base al mismo dataset de sueldos para las regiones de Santiago y Rancagua, le comentan que existe un error en los datos y que estos deben ser modificados aumentando un 10% el valor original y sumando $15.000$ a cada uno de los datos. ¿Como se ve afectada la media, mediana y desviación estándar con esta modificación?. Explique a través de ecuaciones el cambio que experimentan las métricas de resumen respecto al valor original, considere para el caso de la media $\bar{X}_{old} = \dfrac{1}{m} \sum^{m}_{i=1} x_i$ y $sd_{old} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i-\bar{x})^{2}}$ para la desviación estándar.
@@ -167,6 +179,19 @@ Suponga que debe responder un examen sorpresa de 10 preguntas, con 5 alternativa
 **Nota:** Puede resolver el ejercicio desarrollándolo a mano o utilizando código en R. 
 
 > Respuesta Aquí
+
+Calculando el binomio de Newton , podemos obtener de cuántas maneras sacamos más de 5 correctas 
+```{r p1}
+cant_list <- c(1, 10, 45, 120, 210)
+win_prob <- 1/5
+total <- 0 
+for (i in 0:4){
+  total <- total + cant_list[i+1]*((win_prob**(10 - i))*((1- win_prob)**(i)))
+}
+print(total)
+
+```
+
 
 #### **Pregunta 7:**
 Supongamos que el 10% de los alumnos del curso utilizan Macintosh, el 60% utiliza Windows y el 30% utiliza Linux. Supongamos que el 50% de los usuarios de Mac, el 78% de los usuarios de Windows y el 20% de los usuarios de Linux han sucumbido bajo un terrible virus. Al seleccionar una persona al azar nos enteramos de que su sistema está infectado por el virus. ¿Cuál es la probabilidad de que sea un alumno con Windows?.
@@ -234,8 +259,76 @@ En base al dataset propuesto realice un análisis exploratorio de los datos (EDA
 - [ ] Visualice a través de un histograma como distribuyen las variables respecto a los TARGET.
 
 **Respuesta**
+```{r p2 instalation eval=TRUE include=TRUE}
+#install.packages("corrplot")
+library(corrplot)
+```
 
----
+
+
+```{r p2.1.1 eval=TRUE include=TRUE}
+
+data <- read.csv('hearth_database.csv', header = TRUE, sep= ",", quote = '\"')
+numeric_columns <- data[, 7:14]
+
+media <- mapply(mean, numeric_columns)
+mediana <- mapply(median, numeric_columns)
+quintiles <- mapply(quantile, numeric_columns, MoreArgs = list(seq(0, 1, 1/5)))
+maximos <- mapply(max, numeric_columns)
+print(media)
+print(mediana)
+print(quintiles)
+print(maximos)
+
+
+```
+```{r p2.1.2 eval=TRUE include=TRUE}
+
+numeric_columns.cor <- cor(numeric_columns)
+corrplot(numeric_columns.cor)
+
+# Se observa que hay una relación inversa notable entre slope y oldpeak, y unas menores entre thalach y age, y además thalach y oldpeak. Por otro lado, existe una relación directa entre slope y thalach.
+```
+
+```{r p2.1.3 eval=TRUE include=TRUE}
+
+#NORMAL
+boxplot(numeric_columns)
+#NORMALIZE BY Z-SCORE
+boxplot(scale(numeric_columns))
+
+```
+
+
+```{r p2.1.4 eval=TRUE include=TRUE}
+#install.packages("ggplot2")
+library(ggplot2)
+
+
+#yes_frame <- data[data[, c(1)] == "YES",]
+#no_frame  <- data[data[, c(1)] == "NO", ]
+
+#qplot(yes_frame$slope, geom="histogram")
+
+#dat <- data.frame(xx = c(runif(100,20,50),runif(100,40,80),runif(100,0,30)),yy = rep(letters[1:3],each = 100))
+data_f <-as.data.frame(data)
+
+ggplot(data_f, aes(x = slope, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+ggplot(data_f, aes(x = ca, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+ggplot(data_f, aes(x = thal, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+ggplot(data_f, aes(x = age, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+ggplot(data_f, aes(x = trestbps, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+ggplot(data_f, aes(x = chol, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+ggplot(data_f, aes(x = thalach, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+ggplot(data_f, aes(x = oldpeak, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
+
+```
+
+
+
+
+
+
 
 ### Pregunta 2: Teorema Central del Limite
 
@@ -266,10 +359,18 @@ Realice el experimento de lanzar una moneda cargada 1000 veces y observe el comp
 
 ```{r eval=TRUE}
 # Simular lanzamientos
-for (lanzamientos in 1:1000) {
-  
-}
 
+lanzamientos <- runif(1000, 1, 100)
+comportamiento <- lanzamientos >= 20
+list_ratio <- data.frame(1:1000)
+suma_true <- 0
+suma_falsa <- 0
+for (tirada  in comportamiento){
+  if (tirada){suma_true  <- suma_true  + 1}
+  else{       suma_falsa <- suma_falsa + 1}
+  list_ratio[1+suma_falsa+suma_true, 1] <- suma_true/(suma_falsa + suma_true)
+}
+plot(c(0:1000), c(list_ratio$X1.100), type = "l")
 # Gráfico de la convergencia
 ```
 
@@ -351,10 +452,17 @@ En el experimento deberá obtener la evolución de los fondos hasta que el jugad
 
 ```{r eval=FALSE}
 # Función para obtener el desarrollo de las apuestas
-ruina <- function(fondos = 100, apuesta = 5){
-  while (0<fondos & fondos<200) {
+ruina <- function(fondos = 1000, apuesta = 5){
+  win_prob <- 9/19
+  vec_fondos <- c()
+  while (0<fondos & fondos<2000) {
+    
+    dado <- runif(1, 0, 1)
+    fondos <- fondos + ((dado<win_prob) - (dado>=win_prob))*apuesta
+    vec_fondos <- rbind(vec_fondos, fondos)
     
   }
+  print(vec_fondos)
   return(vec_fondos) # Devuelve un vector con el desarrollo de los fondos
 }
 
@@ -363,7 +471,7 @@ plot(ruina(apuesta = 25), type="l", col="blue", xlab="N° de juegos", ylab="Fond
 plot(ruina(apuesta = 50), type="l", col="blue", xlab="N° de juegos", ylab="Fondos", main="Evolución de los fondos (apuesta = 50)")
 ```
 
-
+Viendo los resultados, y repitiendo el experimento varias veces y con diferentes variables, podemos observar que si la probabilidad de ganar la apuesta es menor a un 50%, es altamente probable que ha medida que vayan ocurriendo más juegos la persona irá perdiendo más dinero.
 
 &nbsp;
 <hr />

@@ -1,4 +1,4 @@
-"target","sex","fbs","exang","cp","restecg","slope","ca","thal","ï..age","trestbps","chol","thalach","oldpeak"
+"target","sex","fbs","exang","cp","restecg","slope","ca","thal","age","trestbps","chol","thalach","oldpeak"
 "YES","MALE",">120","NO","ASYMPTOMATIC","NORMAL","0","0","1",63,145,233,150,2.3
 "YES","MALE","<=120","NO","NON-ANGINAL PAIN","ABNORMALITY","0","0","2",37,130,250,187,3.5
 "YES","FEMALE","<=120","NO","ATYPICAL ANGINA","NORMAL","2","0","2",41,130,204,172,1.4
