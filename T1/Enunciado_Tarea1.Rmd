@@ -1,9 +1,9 @@
 ---
 title: "Tarea 1"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 editor_options: 
   chunk_output_type: inline
 ---
@@ -528,25 +528,120 @@ Hecho lo anterior, compruebe el comportamiento de un segundo grupo de eventos, d
 
 Se le aconseja que para simular los lanzamientos de dados utilice la función `sample()` para generar valores aleatorios entre 1 y 6. Compruebe los números generados por la función con los casos favorables de cada uno de los eventos a ser estudiados.
 
-**Respuesta:**
+** Lanzamiento de dados **
 
 ```{r eval=FALSE}
-# Primer grupo de eventos
-N_lan = 1000 # Numero de lanzamientos
-  
-L_A =  # Lanzamientos favorables A = c(1, 2, 6)
-L_B =  # Lanzamientos favorables B = c(1, 2, 3, 4)
-L_AB = # Lanzamientos favorables AB = c(1, 2)
+N_lan <- 1000 # Numero de lanzamientos
+
+vec_D1 <- sample(1:6, size = N_lan, replace = TRUE)
+vec_D2 <- sample(1:6, size = N_lan, replace = TRUE)
 ```
 
+** Eventos independientes **
+
 ```{r eval=FALSE}
-# Segundo grupo de eventos
-N_lan = 1000 # Numero de lanzamientos
-  
-L_A =  # Lanzamientos favorables A = c(1, 2, 6)
-L_B =  # Lanzamientos favorables B = c(1, 2, 3)
-L_AB = # Lanzamientos favorables AB = c(1, 2)
+cond_A <- vec_D1 %in% c(1,2,6)
+cond_B <- vec_D2 %in% c(1,2,3,4)
+
+L_A  <- sum(cond_A , na.rm=TRUE)          # Lanzamientos favorables A = c(1, 2, 6)
+L_B  <- sum(cond_B , na.rm=TRUE)          # Lanzamientos favorables B = c(1, 2, 3, 4)
+L_AB <- sum(cond_A & cond_B, na.rm=TRUE)  # Lanzamientos favorables AB = c(1, 2)
+
+P_A <- L_A/N_lan
+P_B <-  L_B/N_lan
+
+P_AB <- L_AB/N_lan
+PA_PB <- P_A*P_B
+
+message("P(AB): ", P_AB)
+message("P(A)P(B): ", PA_PB)
 ```
+
+
+```{r eval=FALSE}
+list_P_AB <- c(1:1000)  # probabilidad de ambas
+list_PA_PB <- c(1:1000) # producto
+
+suma_true_A <- 0
+suma_true_B <- 0
+suma_true_AB <- 0
+count <- 0
+
+for (i in 1:N_lan){
+  if (cond_A[i]){suma_true_A  <- suma_true_A  + 1}
+  if (cond_B[i]){suma_true_B  <- suma_true_B  + 1}
+  if (cond_A[i] & cond_B[i]){suma_true_AB  <- suma_true_AB  + 1}
+  count <- count + 1
+  
+  P_A <- suma_true_A/(count)
+  P_B <- suma_true_B/(count)
+  P_AB <- suma_true_AB/(count)
+  PA_PB <- P_A * P_B
+  
+  list_P_AB[count] <- P_AB
+  list_PA_PB[count] <- PA_PB
+}
+plot(c(1:1000), list_P_AB, type = "l", col = "blue", xlim=c(1,1000), ylim=c(0,1))
+lines(c(1:1000), list_PA_PB, type = "l", col = "orange")
+
+legend(800, 0.9, legend=c("P(AB)", "P(A)P(B)"),
+       col=c("blue", "orange"), lty=1:2, cex=0.8)
+```
+
+** Eventos dependientes **
+
+```{r eval=FALSE}
+cond_A <- vec_D1 %in% c(1,2,6)
+cond_B <- vec_D1 %in% c(1,2,3,4)
+
+L_A <- sum(cond_A , na.rm=TRUE) # Lanzamientos favorables A = c(1, 2, 6)
+L_B <- sum(cond_B , na.rm=TRUE) # Lanzamientos favorables B = c(1, 2, 3, 4)
+L_AB <- sum( cond_A & cond_B, na.rm=TRUE) # Lanzamientos favorables AB = c(1, 2)
+
+P_A <- L_A/N_lan
+P_B <- L_B/N_lan
+P_AB <- L_AB/N_lan
+PA_PB <- P_A*P_B
+
+message("P(AB): ", P_AB)
+message("P(A)P(B): ", PA_PB)
+```
+
+
+
+```{r eval=FALSE}
+list_P_AB <- c(1:1000)  # probabilidad de ambas
+list_PA_PB <- c(1:1000) # producto
+
+suma_true_A <- 0
+suma_true_B <- 0
+suma_true_AB <- 0
+count <- 0
+
+for (i in 1:N_lan){
+  if (cond_A[i]){suma_true_A  <- suma_true_A  + 1}
+  if (cond_B[i]){suma_true_B  <- suma_true_B  + 1}
+  if (cond_A[i] & cond_B[i]){suma_true_AB  <- suma_true_AB  + 1}
+  count <- count + 1
+  
+  P_A <- suma_true_A/(count)
+  P_B <- suma_true_B/(count)
+  P_AB <- suma_true_AB/(count)
+  PA_PB <- P_A * P_B
+  
+  list_P_AB[count] <- P_AB
+  list_PA_PB[count] <- PA_PB
+}
+plot(c(1:1000), list_P_AB, type = "l", col = "blue", xlim=c(1,1000), ylim=c(0,1))
+lines(c(1:1000), list_PA_PB, type = "l", col = "orange")
+
+legend(800, 0.9, legend=c("P(AB)", "P(A)P(B)"),
+       col=c("blue", "orange"), lty=1:2, cex=0.8)
+```
+
+
+
+
 
 ---
 
