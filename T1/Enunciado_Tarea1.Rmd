@@ -209,10 +209,10 @@ $= 0.8096886$
 #### **Pregunta 8:**
 Señale si las siguientes declaraciones son verdaderas o falsas respecto a las variables aleatorias:
 
-- [ ] Como las variables aleatorias son funciones que nos permiten obtener valores de probabilidad, siempre podemos obtener $\mathbb{P}(X=x)>0$ evaluando en una $f(x)$ continua y discreta.
-- [ ] Una PDF bien definida solo puede tener valores menores a 1 y un área debajo de la curva igual a 1.
-- [ ] La CDF puede ser representada como la integral de la PDF y PMF.
-- [ ] Una CDF es definida para todo x, continua hacia la derecha y no es decreciente.
+- [F?] Como las variables aleatorias son funciones que nos permiten obtener valores de probabilidad, siempre podemos obtener $\mathbb{P}(X=x)>0$ evaluando en una $f(x)$ continua y discreta.
+- [F] Una PDF bien definida solo puede tener valores menores a 1 y un área debajo de la curva igual a 1.
+- [V?] La CDF puede ser representada como la integral de la PDF y PMF.
+- [V] Una CDF es definida para todo x, continua hacia la derecha y no es decreciente.
 
 > Respuesta Aquí
 
