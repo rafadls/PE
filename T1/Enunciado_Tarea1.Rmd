@@ -106,8 +106,6 @@ Scatterplot compara dos variables numéricas en un plano carteciano, donde los v
 - Combinación de scatterplot entre un grupo de variables.
 - Scatterplot de tres dimensiones.
 
-
-
 #### **Pregunta 4:**
 Suponga que esta estudiando la diferencia en los sueldos de las personas que viven en Santiago y Rancagua. Suponiendo que los datos poseen outliers, ¿Que métrica de resumen utilizaría para comparar los datos?. Justifique su respuesta.
 
@@ -224,7 +222,35 @@ Una famosa fabrica de dulces señala que solo el $5\%$ de sus dulces contienen m
 
 **Nota:** Puede ser útil https://www.statskingdom.com/z_table.html
 
-> Respuesta Aquí
+a) Se normalizan los datos mendiante:
+
+$Z = \frac{x - \mu}{\sigma}$
+
+Luego, se busca en la tabla cual debe ser el valor de Z para que la probabilidad de que un dato sea mayor sea 5$\%$.
+
+$\mathbb{P}(z\leq -1.644854) = 0.05$
+
+Por lo tanto, se tiene que 
+
+$-1.644854 = \frac{350 - \mu}{11.2}$
+
+$\mu = 1.644854 \cdot 11.2 + 350$
+
+$\mu = 368.4224$
+
+a) Se normalizan los datos
+
+$Z = \frac{x - \mu}{\sigma} = \frac{390 - 368.4224}{11.2}  = 1.926571$
+
+Luego se busca el valor en la tabla
+
+$\mathbb{P}(z\leq 1.93) = 0.9725710503$
+
+$\mathbb{P}(z > 1.93) = 1 - \mathbb{P}(z\leq 1.93)$
+
+$\mathbb{P}(z > 1.93) = 0.02742895$
+
+Por lo tanto, existe un 2,7$\%$ de probabilidades de que esté sobre los 390.
 
 ---
 
@@ -334,19 +360,108 @@ ggplot(data_f, aes(x = oldpeak, fill = target)) + geom_bar(position = "identity"
 
 Pruebe el teorema central del limite aplicando un muestreo de la media en las distribuciones Poisson, Exponencial y una a su elección. Grafique los resultados obtenidos y señale aproximadamente el numero de muestreos necesarios para obtener el resultado esperado, pruebe esto con las siguientes cantidades de muestreo $\{10,100,1000,5000\}$. ¿El efecto ocurre con el mismo número de muestreo para todas las distribuciones?.
 
-**Respuesta**
+
+Por el terorema central del limite (TLC) aplicado a promdeios se tiene que los promedios de una muestra n formarán una distribución normal de $\mu = \mu$ y $\sigma^{2} = \frac{\sigma^{2}}{n}$. A continuación se demuestra esto para distintas distribuciones y número de muestras. 
+
+####  Dsitribución de Poisson
 
 ```{r eval=FALSE}
 # Definición de variables o estructuras necesarias para el muestreo.
-n <- 1000
+n<- 100
+lambda_dp = 5
 
-# Realizar el muestreo de las distribuciones.
-for(i in 1:n) {
+mean_dp <- lambda_dp
+var_dp <- lambda_dp
+
+for(n in c(10,100,1000,5000)){
+  means_dp <- vector("numeric",n)
+  vars_dp <- vector("numeric",n)
+  
+  for(i in 1:n){
+    dp = rpois(n, lambda_dp)
+    
+    means_dp[i] <- mean(dp)
+    vars_dp[i] <- var(dp)
+  }
+  
+  hist(means_dp, main = paste("Promedios de Distribución Poisson, n =", n, sep=" "), ylab = "Frecuencia", xlab = "Valores")
+  abline(v = mean(means_dp), col='blue') 
+  abline(v = mean(means_dp)+sqrt(var(means_dp)),col='blue', lty = 2)
+  abline(v = mean(means_dp)-sqrt(var(means_dp)),col='blue', lty = 2)
+  
+  abline(v = mean_dp, col='red') 
+  abline(v = mean_dp + sqrt(var_dp/n), col='red',  lty = 2)
+  abline(v = mean_dp - sqrt(var_dp/n), col='red',  lty = 2)
   
 }
 
-# Código para gráficos
 ```
+
+####  Dsitribución Exponencial
+
+```{r eval=FALSE}
+# Definición de variables o estructuras necesarias para el muestreo.
+n<- 100
+lambda_dp = 0.2
+
+mean_de <- lambda_de^(-1)
+var_de <- lambda_de^(-2)
+
+for(n in c(10,100,1000,5000)){
+  means_de <- vector("numeric",n)
+  vars_de <- vector("numeric",n)
+  
+  for(i in 1:n){
+    de = rexp(n, lambda_de)
+    
+    means_de[i] <- mean(de)
+    vars_de[i] <- var(de)
+  }
+  
+  hist(means_de, main = paste("Promedios de Distribución Exponencial, n =", n, sep=" "), ylab = "Frecuencia", xlab = "Valores")
+  abline(v = mean(means_de), col='blue') 
+  abline(v = mean(means_de)+sqrt(var(means_de)),col='blue', lty = 2)
+  abline(v = mean(means_de)-sqrt(var(means_de)),col='blue', lty = 2)
+  
+  abline(v = mean_de, col='red') 
+  abline(v = mean_de + sqrt(var_de/n), col='red',  lty = 2)
+  abline(v = mean_de - sqrt(var_de/n), col='red',  lty = 2)
+}
+
+```
+
+
+####  Dsitribución Normal
+
+```{r eval=FALSE}
+# Definición de variables o estructuras necesarias para el muestreo.
+
+mean_dn <- 0
+var_dn <- 1
+
+for(n in c(10,100,1000,5000)){
+  means_dn <- vector("numeric",n)
+  vars_dn <- vector("numeric",n)
+  
+  for(i in 1:n){
+    dn = rnorm(n)
+    
+    means_dn[i] <- mean(dn)
+    vars_dn[i] <- var(dn)
+  }
+  
+  hist(means_dn, main = paste("Promedios de Distribución Poisson, n =", n, sep=" "), ylab = "Frecuencia", xlab = "Valores")
+  abline(v = mean(means_dn), col='blue') 
+  abline(v = mean(means_dn)+sqrt(var(means_dn)),col='blue', lty = 2)
+  abline(v = mean(means_dn)-sqrt(var(means_dn)),col='blue', lty = 2)
+  
+  abline(v = mean_dn, col='red') 
+  abline(v = mean_dn + sqrt(var_dn/n), col='red',  lty = 2)
+  abline(v = mean_dn - sqrt(var_dn/n), col='red',  lty = 2)
+}
+
+```
+
 
 ---
 
