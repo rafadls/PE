@@ -109,9 +109,6 @@ Scatterplot compara dos variables numéricas en un plano carteciano, donde los v
 #### **Pregunta 4:**
 Suponga que esta estudiando la diferencia en los sueldos de las personas que viven en Santiago y Rancagua. Suponiendo que los datos poseen outliers, ¿Que métrica de resumen utilizaría para comparar los datos?. Justifique su respuesta.
 
-hint: boxplot pq muestra media, cuartiles y outlayers
-
-boxplot e histograma
 
 > Respuesta Aquí
 
@@ -162,7 +159,7 @@ $= M_{old} \cdot 0.1 + 15.000$
 
 $M_{old} = x_{\frac{n+1}{2}}$
 
-$M_{new} = x_{\frac{n+1}{2}} \cdot 0.1 + 15.000 $
+$M_{new} = x_{\frac{n+1}{2}} \cdot 0.1 + 15.000$
 
 $= M_{old} \cdot 0.1 + 15.000$
 
@@ -207,9 +204,11 @@ $= 0.8096886$
 #### **Pregunta 8:**
 Señale si las siguientes declaraciones son verdaderas o falsas respecto a las variables aleatorias:
 
-- [F?] Como las variables aleatorias son funciones que nos permiten obtener valores de probabilidad, siempre podemos obtener $\mathbb{P}(X=x)>0$ evaluando en una $f(x)$ continua y discreta.
-- [F] Una PDF bien definida solo puede tener valores menores a 1 y un área debajo de la curva igual a 1.
-- [V?] La CDF puede ser representada como la integral de la PDF y PMF.
+- [F] Como las variables aleatorias son funciones que nos permiten obtener valores de probabilidad, siempre podemos obtener $\mathbb{P}(X=x)>0$ evaluando en una $f(x)$ continua y discreta.
+Justificación: En particular, las funcinones continuas valen 0 evaluando en un punto particular. La manera correcta de obtener un valor es calcular la suma sobre un rango de valores.
+- [F] Una PDF bien definida solo puede tener valores menores a 1 y un área debajo de la curva igual a 1. 
+Justificación: Una PDF bien definida sí puede tener valores mayores a 1.
+- [V] La CDF(cummulative distribuitive f) puede ser representada como la integral de la PDF(probability dens. f) y PMF (probability mass func.).
 - [V] Una CDF es definida para todo x, continua hacia la derecha y no es decreciente.
 
 > Respuesta Aquí
@@ -285,14 +284,14 @@ En base al dataset propuesto realice un análisis exploratorio de los datos (EDA
 - [ ] Visualice a través de un histograma como distribuyen las variables respecto a los TARGET.
 
 **Respuesta**
-```{r p2 instalation eval=TRUE include=TRUE}
+```{r, p2_instalation, eval=TRUE}
 #install.packages("corrplot")
 library(corrplot)
 ```
 
 
 
-```{r p2.1.1 eval=TRUE include=TRUE}
+```{r, p2.1.1, eval=TRUE}
 
 data <- read.csv('hearth_database.csv', header = TRUE, sep= ",", quote = '\"')
 numeric_columns <- data[, 7:14]
@@ -308,7 +307,7 @@ print(maximos)
 
 
 ```
-```{r p2.1.2 eval=TRUE include=TRUE}
+```{r, p2.1.2, eval=TRUE}
 
 numeric_columns.cor <- cor(numeric_columns)
 corrplot(numeric_columns.cor)
@@ -316,7 +315,7 @@ corrplot(numeric_columns.cor)
 # Se observa que hay una relación inversa notable entre slope y oldpeak, y unas menores entre thalach y age, y además thalach y oldpeak. Por otro lado, existe una relación directa entre slope y thalach.
 ```
 
-```{r p2.1.3 eval=TRUE include=TRUE}
+```{r, p2.1.3, eval=TRUE}
 
 #NORMAL
 boxplot(numeric_columns)
@@ -326,7 +325,7 @@ boxplot(scale(numeric_columns))
 ```
 
 
-```{r p2.1.4 eval=TRUE include=TRUE}
+```{r, p2.1.4, eval=TRUE}
 #install.packages("ggplot2")
 library(ggplot2)
 
@@ -365,7 +364,7 @@ Por el terorema central del limite (TLC) aplicado a promdeios se tiene que los p
 
 ####  Dsitribución de Poisson
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 # Definición de variables o estructuras necesarias para el muestreo.
 n<- 100
 lambda_dp = 5
@@ -399,10 +398,10 @@ for(n in c(10,100,1000,5000)){
 
 ####  Dsitribución Exponencial
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 # Definición de variables o estructuras necesarias para el muestreo.
 n<- 100
-lambda_dp = 0.2
+lambda_de = 0.2
 
 mean_de <- lambda_de^(-1)
 var_de <- lambda_de^(-2)
@@ -433,7 +432,7 @@ for(n in c(10,100,1000,5000)){
 
 ####  Dsitribución Normal
 
-```{r eval=FALSE}
+```{r, eval=FALSE}
 # Definición de variables o estructuras necesarias para el muestreo.
 
 mean_dn <- 0
@@ -472,7 +471,7 @@ Realice el experimento de lanzar una moneda cargada 1000 veces y observe el comp
 
 **Respuesta**
 
-```{r eval=TRUE}
+```{r, eval=TRUE}
 # Simular lanzamientos
 
 lanzamientos <- runif(1000, 1, 100)
@@ -504,25 +503,50 @@ Imagine que usted es participante del concurso y desea calcular la probabilidad 
 
 **Respuesta:**
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 # Creamos una función que simule el juego
 montyhall <- function(cambiar = TRUE){
   Puertas <- sample(1:3,3)             #Puertas donde la posición que tiene el 3 es el premio
-  posicion <- sample(1:3,1)            #Elección del participante.
-  
-  return(Eleccion) # Retornamos la elección, esta puede que tenga el premio o no
+  first_choose <- sample(1:3,1)            #Elección del participante.
+  TRUE 
+  if (which(Puertas == 3) == first_choose){# le achunta a la primera
+    return (!cambiar)
+    
+  }
+  else{# no le achunta a la primera
+    return (cambiar)
+  }
+  # Retornamos la elección, esta puede que tenga el premio o no
 }
 
 # Función que simula N juegos
-n_juegos <- function(n = 10 ,cambiar_puerta = TRUE){
+n_juegos <- function(n = 1000 ,cambiar_puerta = TRUE){
+  res <- c()
+  for (i in (1:n)){
+    res <- rbind(res, montyhall(cambiar = cambiar_puerta))
+  }
+  comportamiento <- res
+  list_ratio <- c(1:n)
+  suma_true <- 0
+  suma_falsa <- 0
+  for (tirada  in comportamiento){
+    if (tirada){suma_true  <- suma_true  + 1}
+    else{       suma_falsa <- suma_falsa + 1}
+    list_ratio[1+suma_falsa+suma_true] <- suma_true/(suma_falsa + suma_true)
+  }
+  plot(c(0:n), list_ratio, type = "l", ylim=c(0,1))
   
 }
+n_juegos(1000, TRUE)
+n_juegos(1000, FALSE)
+
+
 ```
 
 ---
 
 ### Pregunta 4: ¿Independencia?
-Ustedes disponen de los dados D1 y D2, los cuales no están cargados y son utilizados para comprobar que $\mathbb{P}(AB)=\mathbb{P}(A)\mathbb{P}(B)$ cuando el evento A es independiente del B. Para estudiar la independencia considere que los eventos A y B se definen de la siguiente manera; sea A el evento dado por los valores obtenidos en el lanzamiento del dado D1, este está compuesto por $A=\{D1=1,D1=2,D1=6\}$. Por otro lado, el evento B viene dado por los valores obtenidos con el dado D2, el que está conformado por $B=\{D2=1,D2=2,D2=3,D2=4\}$. Con esto, tendremos un $\mathbb{P}(A)=1/2$, $\mathbb{P}(𝐵)=2/3$ y $\mathbb{P}(AB)=1/3$. Compruebe de forma gráfica que al realizar 1000 lanzamientos (u otro valor grande que usted desea probar) se visualiza que $\mathbb{P}(AB)=\mathbb{P}(A)\mathbb{P}(B)$. 
+Ustedes disponen de los dados D1 y D2, los cuales no están cargados y son utilizados para comprobar que $\mathbb{P}(AB)=\mathbb{P}(A)\mathbb{P}(B)$ cuando el evento A es independiente del B. Para estudiar la independencia considere que los eventos A y B se definen de la siguiente manera; sea A el evento dado por los valores obtenidos en el lanzamiento del dado D1, este está compuesto por $A=\{D1=1,D1=2,D1=6\}$. Por otro lado, el evento B viene dado por los valores obtenidos con el dado D2, el que está conformado por $B=\{D2=1,D2=2,D2=3,D2=4\}$. Con esto, tendremos un $\mathbb{P}(A)=1/2$, $\mathbb{P}(B)=2/3$ y $\mathbb{P}(AB)=1/3$. Compruebe de forma gráfica que al realizar 1000 lanzamientos (u otro valor grande que usted desea probar) se visualiza que $\mathbb{P}(AB)=\mathbb{P}(A)\mathbb{P}(B)$. 
 
 Hecho lo anterior, compruebe el comportamiento de un segundo grupo de eventos, dados por el lanzamiento de solo el dado D1. Donde, los eventos para D1 quedan definidos como: $A =\{D1=1,D1=2,D1=6\}$ y $B=\{D1=1,D1=2,D1=3\}$. ¿Se observa independencia en este experimento?.
 
@@ -530,7 +554,7 @@ Se le aconseja que para simular los lanzamientos de dados utilice la función `s
 
 ** Lanzamiento de dados **
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 N_lan <- 1000 # Numero de lanzamientos
 
 vec_D1 <- sample(1:6, size = N_lan, replace = TRUE)
@@ -539,7 +563,7 @@ vec_D2 <- sample(1:6, size = N_lan, replace = TRUE)
 
 ** Eventos independientes **
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 cond_A <- vec_D1 %in% c(1,2,6)
 cond_B <- vec_D2 %in% c(1,2,3,4)
 
@@ -558,7 +582,7 @@ message("P(A)P(B): ", PA_PB)
 ```
 
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 list_P_AB <- c(1:1000)  # probabilidad de ambas
 list_PA_PB <- c(1:1000) # producto
 
@@ -590,7 +614,7 @@ legend(800, 0.9, legend=c("P(AB)", "P(A)P(B)"),
 
 ** Eventos dependientes **
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 cond_A <- vec_D1 %in% c(1,2,6)
 cond_B <- vec_D1 %in% c(1,2,3,4)
 
@@ -609,7 +633,7 @@ message("P(A)P(B): ", PA_PB)
 
 
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 list_P_AB <- c(1:1000)  # probabilidad de ambas
 list_PA_PB <- c(1:1000) # producto
 
@@ -660,7 +684,7 @@ En el experimento deberá obtener la evolución de los fondos hasta que el jugad
 
 **Respuesta**
 
-```{r eval=FALSE}
+```{r, eval=TRUE}
 # Función para obtener el desarrollo de las apuestas
 ruina <- function(fondos = 1000, apuesta = 5){
   win_prob <- 9/19
@@ -672,7 +696,6 @@ ruina <- function(fondos = 1000, apuesta = 5){
     vec_fondos <- rbind(vec_fondos, fondos)
     
   }
-  print(vec_fondos)
   return(vec_fondos) # Devuelve un vector con el desarrollo de los fondos
 }
 
