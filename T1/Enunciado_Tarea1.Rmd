@@ -1,9 +1,9 @@
 ---
 title: "Tarea 1"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 editor_options: 
   chunk_output_type: inline
 ---
@@ -73,8 +73,11 @@ A continuación, se presentaran diferentes preguntas que abordan las temáticas 
 #### **Pregunta 1:**
 ¿Por qué la estadística es importante?, ¿Que nos permite realizar con los datos?. De algún ejemplo.
 
-La estadística tiene como tema central la organización y análisis de datos. Con ella se puede describir, decidir y predecir a partir de estos. 
-La estadística logra transformar los datos en información confiable sobre fenomenos, y esta información, debido a su confiabilidad, permite predecir, detectar tendencias y tomar desiciones.
+La estadística tiene como tema central la obtención, organización, análisis  e interpretación de datos. Con ella se pueden describir fenómenos, tomar decisiones y predecir el comportamiento de los datos en un futuro.La estadística logra transformar los datos en información confiable sobre fenomenos, y esta información, debido a su confiabilidad, permite predecir, detectar tendencias y tomar desiciones. 
+
+La confiabilidad de la información a partir de datos que brinda la estadística crea ambientes donde se respeta la información que esta entrega. Por ejemplo, la politica se basa mayormente en estadisticas, tanto para las elecciones como para las decisiones de los politicos electos. Tambien, los votantes confian en la representatividad de los politicos en base a estadisticas. 
+
+Un ejemplo real es que los estadounidence tienen un sentimiento de crecimiento de crimenes violentos en el tiempo. Los datos nos dicen que los crimenes violentos han decrecido constantemente durante las últimas decadas.
 
 #### **Pregunta 2:**
 Un amigue cercano a usted le comenta que le preocupa salir a la calle cuando hay ofertas en los helados, esto debido a que ha visto el siguiente titular en un famoso diario chileno: "El aumento en la compra de helados tiene una alta correlación con la muerte de personas en Santiago". ¿Que le recomendaría a su amigue sobre el titular leído?, ¿Debería preocuparse tanto?.
@@ -84,23 +87,48 @@ Le diría que tuviera cuidado con mezclar los términos de correlación y causal
 #### **Pregunta 3:**
 Señale las diferentes aplicaciones que poseen las visualizaciones: Boxplot, histograma, gráfico de pie y scatterplot.
 
-El Boxplot está hecho en base a los percentiles. Nos permite identificar la distribución en base a sus cuartiles, su simetría y sus outliers. A continuación se muestras sus aplicaciónes:
+**Boxplot:** Nos permite identificar la distribución en base a sus cuartiles, su simetría y sus outliers. A continuación se muestras sus aplicaciónes:
+
+- Identificar outliers
+- Determinar simetría
+- Estimar la distribución de los datos, en base a cuartiles
+- Trabajo con variables numéricas
+
+Formas de uso:
 
 - Boxplot de solo una variable.
 - Separa una variable en categorias y hacer boxplot de cada una de estas.
 - Comparar distintos boxplot en un mismo gráfico.
 
-El histograma muestra la distribución de valores de una variable. Se aplica para descomponer variables con un cierto orden, pues los datos son agrupados en "bins", permitiendo elegír la continuidad del gráfico. A continuación se muestras sus aplicaciónes:
+
+**histograma:** El histograma muestra la distribución de valores de una variable. Se aplica para descomponer variables con un cierto orden, pues los datos son agrupados en "bins", permitiendo elegír la continuidad del gráfico. A continuación se muestras sus aplicaciónes:
+
+- Trabajo con grandes cantidades de datos
+- Obtener distribución más exacta sobre una variable
+- Trabajo con variables numéricas
+
+Formas de uso:
 
 - Histograma por cantidad.
 - Histograma por densidad (áreas deben sumar 1).
 
-El gráfico de pie es utilizado para mostrar frecuencia de clases en una variable. Normalmente se utiliza para variables categóricas. A continuación se muestras sus aplicaciónes:
+**gráfico de pie:** El gráfico de pie es utilizado para mostrar frecuencia de clases en una variable. Normalmente se utiliza para variables categóricas. A continuación se muestras sus aplicaciónes:
+
+- Mostrar porcentajes 
+- Trabajo con variables categóricas
+
+Formas de uso:
 
 - Dos dimensiones
 - Tres dimensiones
 
-Scatterplot compara dos variables numéricas en un plano carteciano, donde los valores de cada dato determinan su posición. A continuación se muestras sus aplicaciónes:
+**Scatterplot:** Scatterplot compara dos variables numéricas en un plano carteciano, donde los valores de cada dato determinan su posición. A continuación se muestras sus aplicaciónes:
+
+- Trabajo con variables numéricas
+- Mostrar todos los datos
+- Obtener la distribución exacta de los datos
+
+Formas de uso:
 
 - Scatterplot entre dos variables numericas.
 - Combinación de scatterplot entre un grupo de variables.
@@ -108,9 +136,6 @@ Scatterplot compara dos variables numéricas en un plano carteciano, donde los v
 
 #### **Pregunta 4:**
 Suponga que esta estudiando la diferencia en los sueldos de las personas que viven en Santiago y Rancagua. Suponiendo que los datos poseen outliers, ¿Que métrica de resumen utilizaría para comparar los datos?. Justifique su respuesta.
-
-
-> Respuesta Aquí
 
 Probablemente utilizaría boxplot para aprender sobre estos datos en particular. La razón es que boxplot muestra la mediana, los rangos intercuartiles, el mínimo y el máximo que son buenas medidas para entender los datos. Pero más importante aún, boxplot permite visualizar de manera especial a los outliers de los datos, y por lo tanto es una herramienta que los señala directamente.
 
@@ -121,49 +146,46 @@ Si el dataset contiene outliers que sólo son detectables mirando múltiples col
 #### **Pregunta 5:**
 En base al mismo dataset de sueldos para las regiones de Santiago y Rancagua, le comentan que existe un error en los datos y que estos deben ser modificados aumentando un 10% el valor original y sumando $15.000$ a cada uno de los datos. ¿Como se ve afectada la media, mediana y desviación estándar con esta modificación?. Explique a través de ecuaciones el cambio que experimentan las métricas de resumen respecto al valor original, considere para el caso de la media $\bar{X}_{old} = \dfrac{1}{m} \sum^{m}_{i=1} x_i$ y $sd_{old} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i-\bar{x})^{2}}$ para la desviación estándar.
 
-- Media
+**Media**
 
 $\bar{X}_{new} = \dfrac{1}{m} \sum^{m}_{i=1} (x_i \cdot 0.1 + 15.000)$ 
 
-$= \bar{X}_{old} \cdot 0.1 + 15.000 \cdot \dfrac{m}{m}$
+$\bar{X}_{new} = \bar{X}_{old} \cdot 0.1 + 15.000 \cdot \dfrac{m}{m}$
 
-$= \bar{X}_{old} \cdot 0.1 + 15.000$
+$\bar{X}_{new} = \bar{X}_{old} \cdot 0.1 + 15.000$
 
-- Desviación estándar
+**Desviación estándar**
 
 $sd_{new} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 + 15.000 - \bar{x}_{new})^{2}}$
 
-$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 + 15.000 - (\bar{x}_{old} \cdot 0.1 + 15.000)^{2}}$
+$sd_{new} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 + 15.000 - (\bar{x}_{old} \cdot 0.1 + 15.000))^{2}}$
 
-$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 -\bar{x}_{old} \cdot 0.1)^{2}}$
+$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 -\bar{x}_{old} \cdot 0.1)^{2}}$
 
-$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2} \cdot  0.1^{2}}$
+$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2} \cdot  0.1^{2}}$
 
-$= \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2}} \cdot 0.1$
+$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2}} \cdot 0.1$
 
-$= sd_{old} \cdot 0.1$
+$sd_{new} =  sd_{old} \cdot 0.1$
 
-- Mediana (n par)
+**Mediana**
+- n par
 
 $M_{old} = \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2}$
 
 $M_{new} = \frac{x_{\frac{n}{2}} \cdot 0.1 + 15.000 + x_{\frac{n}{2} + 1} \cdot 0.1 + 15.000}{2}$
 
-$= \frac{x_{\frac{n}{2}} \cdot 0.1 + x_{\frac{n}{2} + 1} \cdot 0.1}{2} + 15.000$
+$M_{new} = \frac{x_{\frac{n}{2}} \cdot 0.1 + x_{\frac{n}{2} + 1} \cdot 0.1}{2} + 15.000$
 
-$= \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2} \cdot 0.1 + 15.000$
+$M_{new} = \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2} \cdot 0.1 + 15.000$
 
-$= M_{old} \cdot 0.1 + 15.000$
+$M_{new} = M_{old} \cdot 0.1 + 15.000$
 
-- Mediana (n impar)
+- n impar
 
 $M_{old} = x_{\frac{n+1}{2}}$
 
 $M_{new} = x_{\frac{n+1}{2}} \cdot 0.1 + 15.000$
-
-$= M_{old} \cdot 0.1 + 15.000$
-
-- Mediana
 
 $M_{new} = M_{old} \cdot 0.1 + 15.000$
 
@@ -205,9 +227,13 @@ $= 0.8096886$
 Señale si las siguientes declaraciones son verdaderas o falsas respecto a las variables aleatorias:
 
 - [F] Como las variables aleatorias son funciones que nos permiten obtener valores de probabilidad, siempre podemos obtener $\mathbb{P}(X=x)>0$ evaluando en una $f(x)$ continua y discreta.
+
 Justificación: En particular, las funcinones continuas valen 0 evaluando en un punto particular. La manera correcta de obtener un valor es calcular la suma sobre un rango de valores.
+
 - [F] Una PDF bien definida solo puede tener valores menores a 1 y un área debajo de la curva igual a 1. 
+
 Justificación: Una PDF bien definida sí puede tener valores mayores a 1.
+
 - [V] La CDF(cummulative distribuitive f) puede ser representada como la integral de la PDF(probability dens. f) y PMF (probability mass func.).
 - [V] Una CDF es definida para todo x, continua hacia la derecha y no es decreciente.
 
@@ -362,7 +388,14 @@ Pruebe el teorema central del limite aplicando un muestreo de la media en las di
 
 Por el terorema central del limite (TLC) aplicado a promdeios se tiene que los promedios de una muestra n formarán una distribución normal de $\mu = \mu$ y $\sigma^{2} = \frac{\sigma^{2}}{n}$. A continuación se demuestra esto para distintas distribuciones y número de muestras. 
 
-####  Dsitribución de Poisson
+Tal como se muestra a continuación, el número de muestras necesario para obtener una distribución normal varía según la distribución con la cual se trabaje.
+
+####  Distribución de Poisson
+
+Para la Distribución de Poisson se realizan las siguientes cantidades de muestreo $\{10,100,1000,5000\}$. Se dibuja con color rojo el promedio y desviación estandar esperados, para cada muestreo. Se dibuja con color azul el promedio y desviación estandar obtenidos, para cada muestreo. 
+
+A partir de los resultados se puede estimar que los datos comienzan a tener una distribución normal a partir de la muestra 1000.
+
 
 ```{r, eval=TRUE}
 # Definición de variables o estructuras necesarias para el muestreo.
@@ -396,7 +429,12 @@ for(n in c(10,100,1000,5000)){
 
 ```
 
-####  Dsitribución Exponencial
+####  Distribución Exponencial
+
+Para la Distribución Exponencial se realizan las siguientes cantidades de muestreo $\{10,100,1000,5000\}$. Se dibuja con color rojo el promedio y desviación estandar esperados, para cada muestreo. Se dibuja con color azul el promedio y desviación estandar obtenidos, para cada muestreo. 
+
+A partir de los resultados se puede estimar que los datos comienzan a tener una distribución normal a partir de la muestra 100.
+
 
 ```{r, eval=TRUE}
 # Definición de variables o estructuras necesarias para el muestreo.
@@ -430,7 +468,11 @@ for(n in c(10,100,1000,5000)){
 ```
 
 
-####  Dsitribución Normal
+####  Distribución Normal
+
+Para la Distribución Normal se realizan las siguientes cantidades de muestreo $\{10,100,1000,5000\}$. Se dibuja con color rojo el promedio y desviación estandar esperados, para cada muestreo. Se dibuja con color azul el promedio y desviación estandar obtenidos, para cada muestreo. 
+
+A partir de los resultados se puede estimar que los datos comienzan a tener una distribución normal a partir de la muestra 100.
 
 ```{r, eval=FALSE}
 # Definición de variables o estructuras necesarias para el muestreo.
@@ -552,7 +594,7 @@ Hecho lo anterior, compruebe el comportamiento de un segundo grupo de eventos, d
 
 Se le aconseja que para simular los lanzamientos de dados utilice la función `sample()` para generar valores aleatorios entre 1 y 6. Compruebe los números generados por la función con los casos favorables de cada uno de los eventos a ser estudiados.
 
-** Lanzamiento de dados **
+**Lanzamiento de dados**
 
 ```{r, eval=TRUE}
 N_lan <- 1000 # Numero de lanzamientos
@@ -561,7 +603,7 @@ vec_D1 <- sample(1:6, size = N_lan, replace = TRUE)
 vec_D2 <- sample(1:6, size = N_lan, replace = TRUE)
 ```
 
-** Eventos independientes **
+**Eventos independientes**
 
 ```{r, eval=TRUE}
 cond_A <- vec_D1 %in% c(1,2,6)
@@ -605,18 +647,18 @@ for (i in 1:N_lan){
   list_P_AB[count] <- P_AB
   list_PA_PB[count] <- PA_PB
 }
-plot(c(1:1000), list_P_AB, type = "l", col = "blue", xlim=c(1,1000), ylim=c(0,1))
+plot(c(1:1000), list_P_AB, type = "l", col = "blue", xlim=c(1,1000), ylim=c(0,1), ylab = "Probabilidad", xlab = "Muestra", main= "Probabilidad de P(AB) y P(A)P(B) para A y B independientes")
 lines(c(1:1000), list_PA_PB, type = "l", col = "orange")
 
 legend(800, 0.9, legend=c("P(AB)", "P(A)P(B)"),
        col=c("blue", "orange"), lty=1:2, cex=0.8)
 ```
 
-** Eventos dependientes **
+**Eventos dependientes**
 
 ```{r, eval=TRUE}
 cond_A <- vec_D1 %in% c(1,2,6)
-cond_B <- vec_D1 %in% c(1,2,3,4)
+cond_B <- vec_D1 %in% c(1,2,3)
 
 L_A <- sum(cond_A , na.rm=TRUE) # Lanzamientos favorables A = c(1, 2, 6)
 L_B <- sum(cond_B , na.rm=TRUE) # Lanzamientos favorables B = c(1, 2, 3, 4)
@@ -656,7 +698,7 @@ for (i in 1:N_lan){
   list_P_AB[count] <- P_AB
   list_PA_PB[count] <- PA_PB
 }
-plot(c(1:1000), list_P_AB, type = "l", col = "blue", xlim=c(1,1000), ylim=c(0,1))
+plot(c(1:1000), list_P_AB, type = "l", col = "blue", xlim=c(1,1000), ylim=c(0,1), ylab = "Probabilidad", xlab = "Muestra", main= "Probabilidad de P(AB) y P(A)P(B) para A y B dependientes")
 lines(c(1:1000), list_PA_PB, type = "l", col = "orange")
 
 legend(800, 0.9, legend=c("P(AB)", "P(A)P(B)"),
@@ -664,7 +706,7 @@ legend(800, 0.9, legend=c("P(AB)", "P(A)P(B)"),
 ```
 
 
-
+Tal como se puede apreciar, para eventos independientes se cumple que $\mathbb{P}(AB)=\mathbb{P}(A)\mathbb{P}(B)$. Por lo contrario, para eventes dependientes no se cumple.
 
 
 ---
