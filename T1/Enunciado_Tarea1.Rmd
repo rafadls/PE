@@ -218,7 +218,9 @@ Una famosa fabrica de dulces señala que solo el $5\%$ de sus dulces contienen m
 
 **Nota:** Puede ser útil https://www.statskingdom.com/z_table.html
 
-a) Se normalizan los datos mendiante:
+a) Encuentre la media del producto.
+
+Se normalizan los datos mendiante:
 
 $Z = \frac{x - \mu}{\sigma}$
 
@@ -234,7 +236,7 @@ $\mu = 1.644854 \cdot 11.2 + 350$
 
 $\mu = 368.4224$
 
-a) Se normalizan los datos
+b) Señale el porcentaje de dulces que se encuentran sobre los $390$ gramos.
 
 $Z = \frac{x - \mu}{\sigma} = \frac{390 - 368.4224}{11.2}  = 1.926571$
 
@@ -440,7 +442,7 @@ Para la Distribución Normal se realizan las siguientes cantidades de muestreo $
 
 A partir de los resultados se puede estimar que los datos comienzan a tener una distribución normal a partir de la muestra 100.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 # Definición de variables o estructuras necesarias para el muestreo.
 
 mean_dn <- 0
@@ -457,7 +459,7 @@ for(n in c(10,100,1000,5000)){
     vars_dn[i] <- var(dn)
   }
   
-  hist(means_dn, main = paste("Promedios de Distribución Poisson, n =", n, sep=" "), ylab = "Frecuencia", xlab = "Valores")
+  hist(means_dn, main = paste("Promedios de Distribución Normal, n =", n, sep=" "), ylab = "Frecuencia", xlab = "Valores")
   abline(v = mean(means_dn), col='blue') 
   abline(v = mean(means_dn)+sqrt(var(means_dn)),col='blue', lty = 2)
   abline(v = mean(means_dn)-sqrt(var(means_dn)),col='blue', lty = 2)
