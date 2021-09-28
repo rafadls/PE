@@ -92,45 +92,22 @@ Señale las diferentes aplicaciones que poseen las visualizaciones: Boxplot, his
 - Estimar la distribución de los datos, en base a cuartiles
 - Trabajo con variables numéricas
 
-Formas de uso:
-
-- Boxplot de solo una variable.
-- Separa una variable en categorias y hacer boxplot de cada una de estas.
-- Comparar distintos boxplot en un mismo gráfico.
-
-
 **histograma:** El histograma muestra la distribución de valores de una variable. Se aplica para descomponer variables con un cierto orden, pues los datos son agrupados en "bins", permitiendo elegír la continuidad del gráfico. A continuación se muestras sus aplicaciónes:
 
 - Trabajo con grandes cantidades de datos
 - Obtener distribución más exacta sobre una variable
 - Trabajo con variables numéricas
 
-Formas de uso:
-
-- Histograma por cantidad.
-- Histograma por densidad (áreas deben sumar 1).
-
 **gráfico de pie:** El gráfico de pie es utilizado para mostrar frecuencia de clases en una variable. Normalmente se utiliza para variables categóricas. A continuación se muestras sus aplicaciónes:
 
 - Mostrar porcentajes 
 - Trabajo con variables categóricas
-
-Formas de uso:
-
-- Dos dimensiones
-- Tres dimensiones
 
 **Scatterplot:** Scatterplot compara dos variables numéricas en un plano carteciano, donde los valores de cada dato determinan su posición. A continuación se muestras sus aplicaciónes:
 
 - Trabajo con variables numéricas
 - Mostrar todos los datos
 - Obtener la distribución exacta de los datos
-
-Formas de uso:
-
-- Scatterplot entre dos variables numericas.
-- Combinación de scatterplot entre un grupo de variables.
-- Scatterplot de tres dimensiones.
 
 #### **Pregunta 4:**
 Suponga que esta estudiando la diferencia en los sueldos de las personas que viven en Santiago y Rancagua. Suponiendo que los datos poseen outliers, ¿Que métrica de resumen utilizaría para comparar los datos?. Justifique su respuesta.
@@ -193,8 +170,6 @@ Suponga que debe responder un examen sorpresa de 10 preguntas, con 5 alternativa
 
 **Nota:** Puede resolver el ejercicio desarrollándolo a mano o utilizando código en R. 
 
-> Respuesta Aquí
-
 Calculando el binomio de Newton , podemos obtener de cuántas maneras sacamos más de 5 correctas 
 ```{r p1}
 cant_list <- c(1, 10, 45, 120, 210)
@@ -234,8 +209,6 @@ Justificación: Una PDF bien definida sí puede tener valores mayores a 1.
 
 - [V] La CDF(cummulative distribuitive f) puede ser representada como la integral de la PDF(probability dens. f) y PMF (probability mass func.).
 - [V] Una CDF es definida para todo x, continua hacia la derecha y no es decreciente.
-
-> Respuesta Aquí
 
 #### **Pregunta 9:**
 Una famosa fabrica de dulces señala que solo el $5\%$ de sus dulces contienen menos de $350$ gramos. Si los dulces elaborados por la fabrica distribuyen de forma normal, con media $\mu$ y desviación estándar $11.2$. Responda las siguientes preguntas:
@@ -329,7 +302,6 @@ print(mediana)
 print(quintiles)
 print(maximos)
 
-
 ```
 ```{r, p2.1.2, eval=TRUE}
 
@@ -372,10 +344,6 @@ ggplot(data_f, aes(x = thalach, fill = target)) + geom_bar(position = "identity"
 ggplot(data_f, aes(x = oldpeak, fill = target)) + geom_bar(position = "identity", alpha = 0.4)
 
 ```
-
-
-
-
 
 
 
@@ -528,7 +496,7 @@ plot(c(0:1000), c(list_ratio$X1.100), type = "l")
 # Gráfico de la convergencia
 ```
 
-#### El problema de Monty Hall 
+#### El problema de Monty Hall
 
 Remontándonos en la televisión del año 1963, en USA existía un programa de concursos donde los participantes debían escoger entre 3 puertas para ganar un premio soñado. El problema del concurso era que solo detrás de 1 puerta estaba el premio mayor, mientras que detrás de las otras dos habían cabras como "premio". 
 
