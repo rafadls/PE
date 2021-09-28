@@ -73,16 +73,14 @@ A continuación, se presentaran diferentes preguntas que abordan las temáticas 
 #### **Pregunta 1:**
 ¿Por qué la estadística es importante?, ¿Que nos permite realizar con los datos?. De algún ejemplo.
 
-La estadística tiene como tema central la obtención, organización, análisis  e interpretación de datos. Con ella se pueden describir fenómenos, tomar decisiones y predecir el comportamiento de los datos en un futuro.La estadística logra transformar los datos en información confiable sobre fenomenos, y esta información, debido a su confiabilidad, permite predecir, detectar tendencias y tomar desiciones. 
+La estadística tiene como objetivo central la obtención, organización, análisis  e interpretación de datos. Con ella se pueden describir fenómenos, tomar decisiones y predecir el comportamiento de los datos en un futuro.
 
-La confiabilidad de la información a partir de datos que brinda la estadística crea ambientes donde se respeta la información que esta entrega. Por ejemplo, la politica se basa mayormente en estadisticas, tanto para las elecciones como para las decisiones de los politicos electos. Tambien, los votantes confian en la representatividad de los politicos en base a estadisticas. 
-
-Un ejemplo real es que los estadounidence tienen un sentimiento de crecimiento de crimenes violentos en el tiempo. Los datos nos dicen que los crimenes violentos han decrecido constantemente durante las últimas decadas.
+La estadística logra transformar los datos en información confiable sobre fenomenos, y esta información, debido a su confiabilidad, permite predecir, detectar tendencias y tomar desiciones. Por ejemplo, la politica se basa mayormente en estadisticas, tanto para las elecciones como para las decisiones de los politicos electos. Tambien, los votantes confian en la representatividad de los politicos en base a estadisticas. 
 
 #### **Pregunta 2:**
 Un amigue cercano a usted le comenta que le preocupa salir a la calle cuando hay ofertas en los helados, esto debido a que ha visto el siguiente titular en un famoso diario chileno: "El aumento en la compra de helados tiene una alta correlación con la muerte de personas en Santiago". ¿Que le recomendaría a su amigue sobre el titular leído?, ¿Debería preocuparse tanto?.
 
-Le diría que tuviera cuidado con mezclar los términos de correlación y causalidad. Es posible que la correlación se deba a que existen más muertes en el verano, que es la estación donde se vende más helado, por dar un ejemplo. Es decir, no porque exista correlación en dos variable signifique que haya una causalidad entre ellas, y por lo tanto lo que le recomendaría al amig" es que investigue mejor a la fuente que el diario cita y no lo que sale en el diario chileno, para que encuentre la razón de tal correlación y así deje probablemente de preocuparse.
+Le diría que tuviera cuidado con mezclar los términos de correlación y causalidad. Es posible que la correlación se deba a que existen más muertes en el verano, que es la estación donde se vende más helado, por dar un ejemplo. Es decir, no porque exista correlación en dos variable signifique que haya una causalidad entre ellas, y por lo tanto lo que le recomendaría al amigue es que investigue mejor a la fuente que el diario cita y no lo que sale en el diario chileno, para que encuentre la razón de tal correlación y así deje probablemente de preocuparse.
 
 #### **Pregunta 3:**
 Señale las diferentes aplicaciones que poseen las visualizaciones: Boxplot, histograma, gráfico de pie y scatterplot.
@@ -148,46 +146,46 @@ En base al mismo dataset de sueldos para las regiones de Santiago y Rancagua, le
 
 **Media**
 
-$\bar{X}_{new} = \dfrac{1}{m} \sum^{m}_{i=1} (x_i \cdot 0.1 + 15.000)$ 
+$\bar{X}_{new} = \dfrac{1}{m} \sum^{m}_{i=1} (x_i \cdot 1.1 + 15.000)$ 
 
-$\bar{X}_{new} = \bar{X}_{old} \cdot 0.1 + 15.000 \cdot \dfrac{m}{m}$
+$\bar{X}_{new} = \bar{X}_{old} \cdot 1.1 + 15.000 \cdot \dfrac{m}{m}$
 
-$\bar{X}_{new} = \bar{X}_{old} \cdot 0.1 + 15.000$
+$\bar{X}_{new} = \bar{X}_{old} \cdot 1.1 + 15.000$
 
 **Desviación estándar**
 
-$sd_{new} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 + 15.000 - \bar{x}_{new})^{2}}$
+$sd_{new} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 1.1 + 15.000 - \bar{x}_{new})^{2}}$
 
-$sd_{new} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 + 15.000 - (\bar{x}_{old} \cdot 0.1 + 15.000))^{2}}$
+$sd_{new} = \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 1.1 + 15.000 - (\bar{x}_{old} \cdot 1.1 + 15.000))^{2}}$
 
-$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 0.1 -\bar{x}_{old} \cdot 0.1)^{2}}$
+$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i \cdot 1.1 -\bar{x}_{old} \cdot 1.1)^{2}}$
 
-$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2} \cdot  0.1^{2}}$
+$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2} \cdot  1.1^{2}}$
 
-$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2}} \cdot 0.1$
+$sd_{new} =  \sqrt{\dfrac{1}{(m-1)}\sum_{i=1}^{m}(x_i -\bar{x}_{old})^{2}} \cdot 1.1$
 
-$sd_{new} =  sd_{old} \cdot 0.1$
+$sd_{new} =  sd_{old} \cdot 1.1$
 
 **Mediana**
 - n par
 
 $M_{old} = \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2}$
 
-$M_{new} = \frac{x_{\frac{n}{2}} \cdot 0.1 + 15.000 + x_{\frac{n}{2} + 1} \cdot 0.1 + 15.000}{2}$
+$M_{new} = \frac{x_{\frac{n}{2}} \cdot 1.1 + 15.000 + x_{\frac{n}{2} + 1} \cdot 1.1 + 15.000}{2}$
 
-$M_{new} = \frac{x_{\frac{n}{2}} \cdot 0.1 + x_{\frac{n}{2} + 1} \cdot 0.1}{2} + 15.000$
+$M_{new} = \frac{x_{\frac{n}{2}} \cdot 1.1 + x_{\frac{n}{2} + 1} \cdot 1.1}{2} + 15.000$
 
-$M_{new} = \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2} \cdot 0.1 + 15.000$
+$M_{new} = \frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2} \cdot 1.1 + 15.000$
 
-$M_{new} = M_{old} \cdot 0.1 + 15.000$
+$M_{new} = M_{old} \cdot 1.1 + 15.000$
 
 - n impar
 
 $M_{old} = x_{\frac{n+1}{2}}$
 
-$M_{new} = x_{\frac{n+1}{2}} \cdot 0.1 + 15.000$
+$M_{new} = x_{\frac{n+1}{2}} \cdot 1.1 + 15.000$
 
-$M_{new} = M_{old} \cdot 0.1 + 15.000$
+$M_{new} = M_{old} \cdot 1.1 + 15.000$
 
 
 #### **Pregunta 6:**
