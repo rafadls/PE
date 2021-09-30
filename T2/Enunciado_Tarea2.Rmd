@@ -85,7 +85,9 @@ A continuación, se presenta una serie de declaraciones relacionadas con el sesg
 #### **Pregunta 2:**
 Explique una buena practica para desarrollar un muestreo, ¿Cree que en una encuesta real es factible obtener una muestra sin sesgo?
 
-> Respuesta Aquí
+Una buena práctica de muestreo es el random sample, el cual puede ser estratificado o no. Este método se utiliza para evitar sesgos en la elección de la población.
+
+En una encuesta real no es factible obtener una muestra sin sesgo. Existen distintos tipos de sesgo, algunos son más dependiente de quien realiza la encuesta (sesgo de tamaño, sesgo de conveniencia, etc) y otros de los entrevistados (no respuesta, respuesta inorrecta, etc). Quien realiza la encuesta puede minimizar ciertos sesgos pero anularlos no es factible. 
 
 #### **Pregunta 3:**
 Nombre una ventaja y una desventaja del método de máxima verosimilitud. Justifique cada una de las ventajas y desventajas señaladas.
@@ -99,7 +101,16 @@ $$ f(X_{i};\theta) = \prod_{i=1}^{n} \frac{\theta^{X_{i}}e^{-\theta}}{X_{i}!}$$
 
 **Nota:** Puede ser útil utilizar el logaritmo natural para inferir $\theta$.
 
-> Respuesta Aquí
+$$ ln(f(X_{i};\theta)) = \sum_{i=1}^{n}(X_{i} \cdot ln(\theta) - \theta  - ln(X_{i}!))$$
+$$ ln(f(X_{i};\theta)) = \sum_{i=1}^{n} X_{i} \cdot ln(\theta) - n \cdot \theta  - \sum_{i=1}^{n} ln(X_{i}!)$$
+Ahora optimizamos, derivando e igualando a cero. Primero, derivamos la expresión:
+
+$$ \frac{d ln(f(X_{i};\theta))}{d \theta} = \sum_{i=1}^{n} X_{i} \cdot \frac{1}{\theta} - n$$
+Luego, igualamos a cero, colo lo cual se obtiene lo siguiente:
+
+$$ \frac{d ln(f(X_{i};\theta))}{d \theta} = 0 \longrightarrow \theta = \frac{\sum_{i=1}^{n} X_{i}}{n}$$
+Es decir, el estímador de máxima verosimilitud corresponde al promedio de los valores.
+
 
 #### **Pregunta 5:**
 Suponga que usted ha realizado una `sampling distribution` de dos encuestas diferentes en los que obtiene los datos `Muestreo 1` y `Muestreo 2`, al momento de estimar el parámetro $\beta$ de cada uno de los muestreos, se da cuenta que el estimador para los diferentes datos varia según el tamaño de observaciones (n). Al darse cuenta de esto, gráfica el histograma del comportamiento de los estimadores, obteniendo los siguientes gráficos:
