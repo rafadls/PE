@@ -85,9 +85,9 @@ A continuación, se presenta una serie de declaraciones relacionadas con el sesg
 #### **Pregunta 2:**
 Explique una buena practica para desarrollar un muestreo, ¿Cree que en una encuesta real es factible obtener una muestra sin sesgo?
 
-Una buena práctica de muestreo es el random sample, el cual puede ser estratificado o no. Este método se utiliza para evitar sesgos en la elección de la población.
+Una buena práctica de muestreo es el muestreo aleatorio (random sample), el cual puede ser estratificado o no. Este método se utiliza para evitar sesgos en la elección de la población.
 
-En una encuesta real no es factible obtener una muestra sin sesgo. Existen distintos tipos de sesgo, algunos son más dependiente de quien realiza la encuesta (sesgo de tamaño, sesgo de conveniencia, etc) y otros de los entrevistados (no respuesta, respuesta inorrecta, etc). Quien realiza la encuesta puede minimizar ciertos sesgos pero anularlos no es factible. 
+Existen distintos tipos de sesgo, algunos son más dependiente de quien realiza la encuesta (sesgo de tamaño, sesgo de conveniencia, etc) y otros de los entrevistados (no respuesta, respuesta inorrecta, etc). Quien realiza la encuesta puede minimizar ciertos sesgos pero anularlos no es factible. Es por esto que en una encuesta real no es factible obtener una muestra sin sesgo.  
 
 #### **Pregunta 3:**
 Nombre una ventaja y una desventaja del método de máxima verosimilitud. Justifique cada una de las ventajas y desventajas señaladas.
@@ -109,7 +109,7 @@ $$ \frac{d ln(f(X_{i};\theta))}{d \theta} = \sum_{i=1}^{n} X_{i} \cdot \frac{1}{
 Luego, igualamos a cero, colo lo cual se obtiene lo siguiente:
 
 $$ \frac{d ln(f(X_{i};\theta))}{d \theta} = 0 \longrightarrow \theta = \frac{\sum_{i=1}^{n} X_{i}}{n}$$
-Es decir, el estímador de máxima verosimilitud corresponde al promedio de los valores.
+Es decir, el estímador de máxima verosimilitud de $\theta$ corresponde al promedio a la media de los valores $X_{i}$.
 
 
 #### **Pregunta 5:**
@@ -127,7 +127,8 @@ Suponiendo que la linea roja en los gráficos representa el valor real del pará
 #### **Pregunta 6:**
 Considere que esta trabajando con intervalos de confianza al $95\%$ e intenta estudiar un parámetro $\theta$, ¿porque es incorrecto decir, en la visión frecuentista, que la probabilidad que $\theta$ pertenezca al intervalo es del $95\%$?
 
-> Respuesta Aquí
+En l visión frecuentista los parámetros son constantes pero desconcocidos. Es por esto que el intervalo es el que puede o no incluir el valor real de $\theta$, no que este valor este en el intervalo.
+
 
 #### **Pregunta 7:**
 Se sabe que al realizar un test de hipótesis es posible equivocarse al tomar una decisión. Sí denotamos $H_0$ como la hipótesis nula y $H_1$ como la hipótesis alternativa, existen dos posibles errores que se pueden obtener: 
@@ -143,8 +144,10 @@ En base a los errores señalados, de un ejemplo de cuando es más relevante dism
 #### **Pregunta 8:**
 Explique cual es la diferencia entre el test **one-sided** y **two-sided**, de un ejemplo en donde se pueda utilizar **one-sided** y otro donde se pueda utilizar **two-sided**. ¿Es un método mejor que el otro?
 
+**one-sided** corresponde a una hipotesis de mayor o menor, es decir, se calcula la probabilidad de que un valor sea solo mayor o solo menor al esperado. Por otro lado, **two-sided** es una comparación de igualdad o desigualdad, por lo que se calcula la probabilidad de que un cierto valor se encuentre en un intervalo. 
 
-> Respuesta Aquí
+**one-sided** puede ser utilizado en un caso donde una empresa asegura que su producto no sobrepasa cierto peso. 
+**one-sided** puede ser utilizado en un caso donde una empresa asegura que su medicamente no altera la presión arterial. 
 
 #### **Pregunta 9:**
 
