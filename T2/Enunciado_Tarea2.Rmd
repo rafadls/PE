@@ -165,13 +165,22 @@ En la siguiente sección deberá resolver cada uno de los experimentos computaci
 
 Para el desarrollo preste mucha atención en los enunciados, ya que se le solicitará la implementación de métodos sin uso de funciones predefinidas. Por otro lado, Las librerías permitidas para desarrollar de la tarea 2 son las siguientes:
 
+
 ```{r, eval=FALSE}
+install.packages("plotly", "gridExtra")
+install.packages("gridExtra")
+
+remove.packages("ggplot2") # Unisntall ggplot
+install.packages("ggplot2") # Install it again
+library(ggplot2) 
+
 # Manipulación de estructuras
-library(tidyverse)
+#library(tidyverse)
 
 # Para realizar plots
-library(ggplot2)
-library(plotly)
+
+#library(plotly)
+
 
 # Manipulación de varios plots en una imagen.
 library(gridExtra)
@@ -269,6 +278,8 @@ Cabe señalar que el método de máxima verosimilitud deberá ser programado por
 
 # Primera Parte
 # Plot de densidades de la variables TotalHeight
+df <- read.csv('BodyMeasurements_original.csv', header = TRUE, sep= ",", quote = '\"')
+hist(df$TotalHeight, main = paste("gráfico de densidad en la variable ``TotalHeight``"), ylab = "Frecuencia", xlab = "TotalHeight")
 
 # Plot de Likelihood
 # - Generar una función de la likelihood de la normal
@@ -276,16 +287,15 @@ Cabe señalar que el método de máxima verosimilitud deberá ser programado por
 # los valores
 
 # Plotear gráfico de calor a través filled.contour()
-ll_plot <- function(a, b) {
-  # Definimos la likelhood
-  
+ll_plot <- function(mu, sigma) {
+  return(-sum(dnorm(df$TotalHeight, mean=mu, sd=sigma, log=TRUE)))
 }
 
 # Vectorizamos nuestra función para recorrer y estimar los valores
 ll_plot = Vectorize(ll_plot)
 
-mu = ... # definimos secuencia de 20 -> 80 de 0.5 en 0.5.
-sigma = ... # definimos secuencia de 5 -> 23 de 0.5 en 0.5.
+mu = seq(20, 80, by=0.5) # definimos secuencia de 20 -> 80 de 0.5 en 0.5.
+sigma = seq(5, 23, by=0.5) # definimos secuencia de 5 -> 23 de 0.5 en 0.5.
 ll_plot = outer(X=mu, Y=sigma, ll_plot)
 
 # Obtenemos el mapa de calor con los valores mas probables
@@ -293,22 +303,31 @@ filled.contour(x=mu, y=sigma, z=ll_plot, xlab=expression(mu),
                ylab=expression(sigma))
 
 # Plot de comportamiento de SOLO mu al variar la cantidad de datos
+ll_mean_plot <- function(mu, n) {
+  x = sample(df$TotalHeight,n, replace = FALSE, prob = NULL)
+  return(-sum(dnorm(x, mean=mu, sd=15, log=TRUE)))
+}
+n = c(100,300,716)
+ll_mean_plot = outer(X=mu, Y=n, ll_mean_plot)
+
+filled.contour(x=mu, y=n, z=ll_mean_plot, xlab=expression(mu), 
+               ylab="Número de muestras")
 
 
 
 # Obtener la solución que minimiza o maximiza la likelihood
 # Producto de como funcionan nlminb es necesario definir un nuevo tipo de función
 # para encontrar los parametros de la likelihood, por favor revisar estructura entregada.
-likelihood <- function(param) {
+#likelihood <- function(param) {
   # Definimos los parámetros de entrada de la función
-  mu = param[1]
-  sigma = param[2]
+#  mu = param[1]
+#  sigma = param[2]
   # Definimos la likelihood como la suma logaritmica de la función de densidad
   
-}
+#}
 
-# Optimizador para encontrar los parametros de la likelihood. Referencia: https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nlminb
-nlminb(objective=likelihood, start= , lower= , upper= )
+# Optimizador para encontrar los parametros de la likelihood. Referencia: #https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nlminb
+#nlminb(objective=likelihood, start= , lower= , upper= )
 
 # Segunda Parte
 # Graficar la densidad y obtener el parámetro de la variable propuesta.
