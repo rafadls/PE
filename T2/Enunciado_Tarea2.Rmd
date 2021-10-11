@@ -11,8 +11,8 @@ output:
 <center><strong>CC6104: Statistical Thinking</strong></center>
 #### **Integrantes :** 
 
-- Alumno 1
-- Alumno 2
+- Rafael De La Sotta
+- Felipe Ortúzar
 
 #### **Cuerpo Docente:**
 
@@ -194,8 +194,64 @@ Esta pregunta tiene como objetivo comprobar a través de gráficos las caracter�
 
 - [ ] Sabemos que no todos los estimadores insesgados son consistentes. Considere  el estimador $T_{n} = \hat{p}_{n} + \epsilon_{n}$ donde $\epsilon_{n} \sim \mathcal{N}(0,1)$ es posible verificar que $T_{n}$ es insesgado pero no es consistente, para ver esto repita lo que realizo en el punto anterior y estudie lo que sucede. ¿Porque cree que no es consistente el estimador?, Justifique su respuesta.
 
-**Respuesta:**
+** Punto 1**
 
+```{r, eval=TRUE}
+library("Rlab")
+
+n_val = 1000
+p = 0.5
+
+list_p_gorro <- c(1:n_val)  # valores del estimador de p
+list_p <- c(1:n_val)  # valores de p
+
+list_bern = rbern(n_val, p)
+
+suma_p   <- 0
+contador <- 0
+
+for (i in 1:n_val){
+  contador <- contador + 1
+  suma_p <- suma_p + list_bern[i]
+  p_gorro <- suma_p/contador
+  list_p_gorro[i]=p_gorro
+  list_p[i]=p
+}
+plot(c(1:n_val), list_p_gorro, type = "l", col = "blue", xlim=c(1,n_val), ylim=c(0,1), ylab = "Probabilidad", xlab = "Muestra", main= "P estimado versus valor real de P en función del número de muestras")
+lines(c(1:n_val), list_p, type = "l", col = "orange")
+
+legend(800, 0.9, legend=c("P estimado", "P"),
+       col=c("blue", "orange"), lty=1:2, cex=0.8)
+```
+
+** Punto 2**
+
+```{r, eval=TRUE}
+library("Rlab")
+
+n_val = 1000
+p = 0.5
+
+list_p_gorro <- c(1:n_val)  # valores del estimador de p
+list_p <- c(1:n_val)  # valores de p
+list_e <- rnorm(n_val)
+list_bern = rbern(n_val, p)
+
+suma_p   <- 0
+contador <- 0
+
+for (i in 1:n_val){
+  contador <- contador + 1
+  suma_p <- suma_p + list_bern[i]
+  p_gorro <- suma_p/contador
+  list_p_gorro[i]= p_gorro + list_e[i]
+  list_p[i]=p
+}
+plot(c(1:n_val), list_p_gorro, type = "l", col = "blue", xlim=c(1,n_val), ylim=c(0,1), ylab = "Probabilidad", xlab = "Muestra", main= "P estimado versus valor real de P en función del número de muestras")
+lines(c(1:n_val), list_p, type = "l", col = "orange")
+
+legend(800, 0.9, legend=c("P estimado", "P"), col=c("blue", "orange"), lty=1:2, cex=0.8)
+```
 ---
 
 ### Pregunta 2: Intervalo de Confianza
@@ -271,7 +327,7 @@ b) Para la segunda parte deberá escoger otra de las variables que componen el d
 
 Cabe señalar que el método de máxima verosimilitud deberá ser programado por usted y **no** podrá utilizar librerías que entreguen el valor directo (por ejemplo, la librería MASS).
 
-**Respuesta**
+**Parte 1**
 
 ```{r, eval=FALSE}
 # Carga de dataset
@@ -279,7 +335,9 @@ Cabe señalar que el método de máxima verosimilitud deberá ser programado por
 # Primera Parte
 # Plot de densidades de la variables TotalHeight
 df <- read.csv('BodyMeasurements_original.csv', header = TRUE, sep= ",", quote = '\"')
-hist(df$TotalHeight, main = paste("gráfico de densidad en la variable ``TotalHeight``"), ylab = "Frecuencia", xlab = "TotalHeight")
+
+d <- density(df$TotalHeight)
+plot(d, main = paste("Gráfico de densidad en la variable ``TotalHeight``"))
 
 # Plot de Likelihood
 # - Generar una función de la likelihood de la normal
@@ -288,7 +346,7 @@ hist(df$TotalHeight, main = paste("gráfico de densidad en la variable ``TotalHe
 
 # Plotear gráfico de calor a través filled.contour()
 ll_plot <- function(mu, sigma) {
-  return(-sum(dnorm(df$TotalHeight, mean=mu, sd=sigma, log=TRUE)))
+  -sum(dnorm(df$TotalHeight, mean=mu, sd=sigma, log=TRUE))
 }
 
 # Vectorizamos nuestra función para recorrer y estimar los valores
@@ -300,17 +358,21 @@ ll_plot = outer(X=mu, Y=sigma, ll_plot)
 
 # Obtenemos el mapa de calor con los valores mas probables
 filled.contour(x=mu, y=sigma, z=ll_plot, xlab=expression(mu), 
+               plot.title = title(main = "Mapa de calor con los valores mas probables"),
                ylab=expression(sigma))
 
 # Plot de comportamiento de SOLO mu al variar la cantidad de datos
 ll_mean_plot <- function(mu, n) {
   x = sample(df$TotalHeight,n, replace = FALSE, prob = NULL)
-  return(-sum(dnorm(x, mean=mu, sd=15, log=TRUE)))
+  -sum(dnorm(x, mean=mu, sd=12, log=TRUE))
 }
 n = c(100,300,716)
+ll_mean_plot = Vectorize(ll_mean_plot)
+
 ll_mean_plot = outer(X=mu, Y=n, ll_mean_plot)
 
 filled.contour(x=mu, y=n, z=ll_mean_plot, xlab=expression(mu), 
+               plot.title = title(main = "Mapa de calor con los valores mas probables"),
                ylab="Número de muestras")
 
 
@@ -318,20 +380,93 @@ filled.contour(x=mu, y=n, z=ll_mean_plot, xlab=expression(mu),
 # Obtener la solución que minimiza o maximiza la likelihood
 # Producto de como funcionan nlminb es necesario definir un nuevo tipo de función
 # para encontrar los parametros de la likelihood, por favor revisar estructura entregada.
-#likelihood <- function(param) {
+likelihood <- function(param) {
   # Definimos los parámetros de entrada de la función
-#  mu = param[1]
-#  sigma = param[2]
+  mu = param[1]
+  sigma = param[2]
   # Definimos la likelihood como la suma logaritmica de la función de densidad
-  
-#}
+  return(-sum(dnorm(df$TotalHeight, mean=mu, sd=sigma, log=TRUE)))
+}
 
 # Optimizador para encontrar los parametros de la likelihood. Referencia: #https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nlminb
-#nlminb(objective=likelihood, start= , lower= , upper= )
+resultado <- nlminb(objective=likelihood, start=c(50,15) , lower=c(20,5), upper=c(80,25))
+
+# Compara distribución real con la distribución normal de máxima verosimilitud
+d <- density(df$TotalHeight)
+y <- dnorm(df$TotalHeight, mean=resultado$par[1], sd=resultado$par[2])
+
+
+x1 <- df$TotalHeight
+y1 <- y
+
+x2 <- d$x
+y2 <- d$y
+
+plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)))
+lines(x2,y2,col="green")
+legend(10,0.04,legend=c("y1","y2"), col=c("green","red"),pch=c("-","O"))
+```
+
+
+** Parte 2 **
+
+```{r, eval=FALSE}
+# Carga de dataset
 
 # Segunda Parte
 # Graficar la densidad y obtener el parámetro de la variable propuesta.
+d <- density(df$Age)
+plot(d, main = paste("Gráfico de densidad en la variable ``Age``"))
+
+likelihood <- function(param) {
+  # Definimos los parámetros de entrada de la función
+  lambda = param[1]
+  # Definimos la likelihood como la suma logaritmica de la función de densidad
+  -sum(dpois(df$Age, lambda, log = TRUE))
+}
+
+
+resultado <- nlminb(objective=likelihood, start=c(10) , lower=c(0), upper=c(40))
+
+# Compara distribución real con la distribución normal de máxima verosimilitud
+d <- density(df$Age)
+y <- dpois(df$Age, resultado$par[1])
+
+x1 <- df$Age
+y1 <- y
+
+x2 <- d$x
+y2 <- d$y
+
+plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)))
+lines(x2,y2,col="green")
+legend(10,0.04,legend=c("y1","y2"), col=c("green","red"),pch=c("-","O"))
+
+likelihood <- function(param) {
+  # Definimos los parámetros de entrada de la función
+  d_f = param[1]
+  # Definimos la likelihood como la suma logaritmica de la función de densidad
+  -sum(dchisq(df$Age, d_f, log = TRUE))
+}
+
+resultado <- nlminb(objective=likelihood, start=c(10) , lower=c(0), upper=c(40))
+
+# Compara distribución real con la distribución normal de máxima verosimilitud
+d <- density(df$Age)
+y <- dchisq(df$Age, resultado$par[1])
+
+x1 <- df$Age
+y1 <- y
+
+x2 <- d$x
+y2 <- d$y
+
+plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)))
+lines(x2,y2,col="green")
+legend(-5,0.08,legend=c("y1","y2"), col=c("green","red"),pch=c("-","O"))
+
 ```
+
 
 ---
 
