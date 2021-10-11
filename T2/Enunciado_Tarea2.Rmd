@@ -85,7 +85,7 @@ A continuación, se presenta una serie de declaraciones relacionadas con el sesg
 #### **Pregunta 2:**
 Explique una buena practica para desarrollar un muestreo, ¿Cree que en una encuesta real es factible obtener una muestra sin sesgo?
 
-Una buena práctica de muestreo es el muestreo aleatorio (random sample), el cual puede ser estratificado o no. Este método se utiliza para evitar sesgos en la elección de la población.
+Una buena práctica de muestreo es el muestreo aleatorio (random sample), el cual puede ser estratificado o no. Este método se utiliza para evitar sesgos en la elección de la población. El muestreo aleatorio estratificado, si bien es al azar, asegura ciertos porcentajes de participación de subconjuntos de la población.
 
 Existen distintos tipos de sesgo, algunos son más dependiente de quien realiza la encuesta (sesgo de tamaño, sesgo de conveniencia, etc) y otros de los entrevistados (no respuesta, respuesta inorrecta, etc). Quien realiza la encuesta puede minimizar ciertos sesgos pero anularlos no es factible. Es por esto que en una encuesta real no es factible obtener una muestra sin sesgo.  
 
@@ -106,11 +106,10 @@ $$ ln(f(X_{i};\theta)) = \sum_{i=1}^{n} X_{i} \cdot ln(\theta) - n \cdot \theta 
 Ahora optimizamos, derivando e igualando a cero. Primero, derivamos la expresión:
 
 $$ \frac{d ln(f(X_{i};\theta))}{d \theta} = \sum_{i=1}^{n} X_{i} \cdot \frac{1}{\theta} - n$$
-Luego, igualamos a cero, colo lo cual se obtiene lo siguiente:
+Luego, igualamos a cero, con lo cual se obtiene lo siguiente:
 
 $$ \frac{d ln(f(X_{i};\theta))}{d \theta} = 0 \longrightarrow \theta = \frac{\sum_{i=1}^{n} X_{i}}{n}$$
-Es decir, el estímador de máxima verosimilitud de $\theta$ corresponde al promedio a la media de los valores $X_{i}$.
-
+Es decir, el estímador de máxima verosimilitud de $\theta$ corresponde a la media de los valores $X_{i}$.
 
 #### **Pregunta 5:**
 Suponga que usted ha realizado una `sampling distribution` de dos encuestas diferentes en los que obtiene los datos `Muestreo 1` y `Muestreo 2`, al momento de estimar el parámetro $\beta$ de cada uno de los muestreos, se da cuenta que el estimador para los diferentes datos varia según el tamaño de observaciones (n). Al darse cuenta de esto, gráfica el histograma del comportamiento de los estimadores, obteniendo los siguientes gráficos:
@@ -127,7 +126,7 @@ Suponiendo que la linea roja en los gráficos representa el valor real del pará
 #### **Pregunta 6:**
 Considere que esta trabajando con intervalos de confianza al $95\%$ e intenta estudiar un parámetro $\theta$, ¿porque es incorrecto decir, en la visión frecuentista, que la probabilidad que $\theta$ pertenezca al intervalo es del $95\%$?
 
-En l visión frecuentista los parámetros son constantes pero desconcocidos. Es por esto que el intervalo es el que puede o no incluir el valor real de $\theta$, no que este valor este en el intervalo.
+En la visión frecuentista los parámetros de las distribuciónes son constantes pero desconcocidos, lo que varía son los datos que obtenemos. Es por esto que el intervalo es el que puede o no incluir el valor real de $\theta$, ya que este es el ue varía.
 
 
 #### **Pregunta 7:**
@@ -144,10 +143,12 @@ En base a los errores señalados, de un ejemplo de cuando es más relevante dism
 #### **Pregunta 8:**
 Explique cual es la diferencia entre el test **one-sided** y **two-sided**, de un ejemplo en donde se pueda utilizar **one-sided** y otro donde se pueda utilizar **two-sided**. ¿Es un método mejor que el otro?
 
-**one-sided** corresponde a una hipotesis de mayor o menor, es decir, se calcula la probabilidad de que un valor sea solo mayor o solo menor al esperado. Por otro lado, **two-sided** es una comparación de igualdad o desigualdad, por lo que se calcula la probabilidad de que un cierto valor se encuentre en un intervalo. 
+**one-sided** se utiliza para comprobar una hipotesis de mayor o menor, es decir, se calcula la probabilidad de que un valor sea solo mayor o solo menor al esperado. Por otro lado, **two-sided** se utiliza en hipotesis de igualdad o desigualdad, por lo que se calcula la probabilidad de que un cierto valor se encuentre en un intervalo. 
 
-**one-sided** puede ser utilizado en un caso donde una empresa asegura que su producto no sobrepasa cierto peso. 
-**one-sided** puede ser utilizado en un caso donde una empresa asegura que su medicamente no altera la presión arterial. 
+**one-sided** puede ser utilizado en un caso donde una empresa asegura que su producto no sobrepasa cierto peso. En este caso, para comprobar la factibilidad de la hipótesis nula se debería hacer un test **one-sided**. 
+Por otro lado, **two-sided** puede ser utilizado en un caso donde una empresa asegura que su producto no tiene un peso igual a cierto valor. En este caso, para comprobar la factibilidad de la hipotesis nula se debería calcular la probabilidad de que las muestras esten fuera de un rango del valor en cuestion.
+
+Tanbien se puede utilizar el test **one-sided** en casos que se busca desigualdad y se tiene información de los datos sobre la "dirección" del sesgo. Por ejemplo, si se sabe están obteniendo muchas caras en el lanzamiento de una moneda se puede hacer un test **one-sided** calculando la probabilidad de que esto pase.
 
 #### **Pregunta 9:**
 
@@ -167,11 +168,11 @@ Para el desarrollo preste mucha atención en los enunciados, ya que se le solici
 
 
 ```{r, eval=FALSE}
-install.packages("plotly", "gridExtra")
-install.packages("gridExtra")
+#install.packages("plotly", "gridExtra")
+#install.packages("gridExtra")
 
-remove.packages("ggplot2") # Unisntall ggplot
-install.packages("ggplot2") # Install it again
+#remove.packages("ggplot2") # Unisntall ggplot
+#install.packages("ggplot2") # Install it again
 library(ggplot2) 
 
 # Manipulación de estructuras
@@ -194,11 +195,17 @@ Esta pregunta tiene como objetivo comprobar a través de gráficos las caracter�
 
 - [ ] Sabemos que no todos los estimadores insesgados son consistentes. Considere  el estimador $T_{n} = \hat{p}_{n} + \epsilon_{n}$ donde $\epsilon_{n} \sim \mathcal{N}(0,1)$ es posible verificar que $T_{n}$ es insesgado pero no es consistente, para ver esto repita lo que realizo en el punto anterior y estudie lo que sucede. ¿Porque cree que no es consistente el estimador?, Justifique su respuesta.
 
-** Punto 1**
+**Punto 1**
+
+En el siguiente gráfico se puede ver como al aumentar el número de la muestra el estimador de p, $\hat{p}_{n}$, tiende a p.
+Por medio de este ejercicio gráfico se puede comprobar que $\hat{p}_{n}$ es insesgado y consistente.
+
+$$E(\hat{p}_{n}) = p$$
+
+$$\lim_{n \to \infty}(\hat{p}_{n}) = p$$
 
 ```{r, eval=TRUE}
-library("Rlab")
-
+library(Rlab)
 n_val = 1000
 p = 0.5
 
@@ -224,7 +231,13 @@ legend(800, 0.9, legend=c("P estimado", "P"),
        col=c("blue", "orange"), lty=1:2, cex=0.8)
 ```
 
-** Punto 2**
+**Punto 2**
+
+En el siguiente gráfico se puede ver como al aumentar el número de la muestra el estimador de p, $\hat{p}_{n}$, no logra tender a p, aunque su media sea p, esto se debe a que el error gaussiano se mantiene independiente de la cantidad de valores.
+Por medio de este ejercicio gráfico se puede comprobar que $T_{n}$ es insesgado pero no consistente.
+
+$$E(T_{n}) = E(\hat{p}_{n}) + E(\epsilon_{n}) = p + 0 = p$$
+$$\lim_{n \to \infty}(T_{n}) \neq p$$
 
 ```{r, eval=TRUE}
 library("Rlab")
@@ -327,9 +340,17 @@ b) Para la segunda parte deberá escoger otra de las variables que componen el d
 
 Cabe señalar que el método de máxima verosimilitud deberá ser programado por usted y **no** podrá utilizar librerías que entreguen el valor directo (por ejemplo, la librería MASS).
 
-**Parte 1**
+**Parte a)**
 
-```{r, eval=FALSE}
+- [ ] En el primer gráfico se puede apreciar la función de densidad de la variable ``TotalHeight``
+
+- [ ] En el segundo gráfico se tiene un mapa de calor de -log(likelihood) acumulado, variando $\sigma$ y $\mu$. En este mapa los valores varían entre 1000 y 20000, aproximadamente. Se aprecia que se obtiene un menor valor para valores cercanos a $\sigma=15$ y $\mu=45$, aproximadamente.
+
+- [ ] En el tercer gráfico se puede apreciar un mapa de calor de -log(likelihood) acumulado, variando la muestra y $\mu$. A medida que aumenta el tamaño de la muestra es menos probable que una muestra ocurra, por lo que su likelihood disminuye. Por otro lado, al aumentar el número de muestra la diferencia entre likelihood de distintos valores de $\mu$ se hace notoria, diferenciandose el minimo de estos valores.
+
+- [ ] En el cuarto gráfico se puede apreciar la distribución de máxima verosimilitud, obtenida por `nlminb()`.
+
+```{r, eval=TRUE}
 # Carga de dataset
 
 # Primera Parte
@@ -357,9 +378,7 @@ sigma = seq(5, 23, by=0.5) # definimos secuencia de 5 -> 23 de 0.5 en 0.5.
 ll_plot = outer(X=mu, Y=sigma, ll_plot)
 
 # Obtenemos el mapa de calor con los valores mas probables
-filled.contour(x=mu, y=sigma, z=ll_plot, xlab=expression(mu), 
-               plot.title = title(main = "Mapa de calor con los valores mas probables"),
-               ylab=expression(sigma))
+filled.contour(x=mu, y=sigma, z=ll_plot, plot.title = title(main = "Mapa de calor de -log(likelihood)", xlab=expression(mu), ylab=expression(sigma)))
 
 # Plot de comportamiento de SOLO mu al variar la cantidad de datos
 ll_mean_plot <- function(mu, n) {
@@ -371,9 +390,7 @@ ll_mean_plot = Vectorize(ll_mean_plot)
 
 ll_mean_plot = outer(X=mu, Y=n, ll_mean_plot)
 
-filled.contour(x=mu, y=n, z=ll_mean_plot, xlab=expression(mu), 
-               plot.title = title(main = "Mapa de calor con los valores mas probables"),
-               ylab="Número de muestras")
+filled.contour(x=mu, y=n, z=ll_mean_plot, plot.title = title(main = "Mapa de calor de -log(likelihood)", xlab=expression(mu), ylab="Número de muestras"))
 
 
 
@@ -402,15 +419,19 @@ y1 <- y
 x2 <- d$x
 y2 <- d$y
 
-plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)))
+plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)), main="Comparación entre densidad real de los datos y máxima verosimilitud", xlab="TotalHeight", ylab="Density")
 lines(x2,y2,col="green")
-legend(10,0.04,legend=c("y1","y2"), col=c("green","red"),pch=c("-","O"))
+legend(10,0.04,legend=c("Distribución real","Máxima verosimilitud"), col=c("green","red"),pch=c("-","O"))
 ```
 
 
-** Parte 2 **
+**Parte b)**
 
-```{r, eval=FALSE}
+Se escoge utilizar una distribución chi-cuadrado para la variable ''Age''. Se busca la máxima verosimilitud variando los parámetros shape y scale.
+En el primer gráfico se puede apreciar la densidad de los datos reales. 
+En el segundo gráfico se comparan las densidades de los datos reales con la distribución de máxima verosimilitud.
+
+```{r, eval=TRUE}
 # Carga de dataset
 
 # Segunda Parte
@@ -420,17 +441,17 @@ plot(d, main = paste("Gráfico de densidad en la variable ``Age``"))
 
 likelihood <- function(param) {
   # Definimos los parámetros de entrada de la función
-  lambda = param[1]
+  shape = param[1]
+  scale = param[2]
   # Definimos la likelihood como la suma logaritmica de la función de densidad
-  -sum(dpois(df$Age, lambda, log = TRUE))
+  -sum(dgamma(df$Age, shape=shape, scale=scale, log = TRUE))
 }
 
-
-resultado <- nlminb(objective=likelihood, start=c(10) , lower=c(0), upper=c(40))
+resultado <- nlminb(objective=likelihood, start=c(1,20) , lower=c(0,0.5), upper=c(10,50))
 
 # Compara distribución real con la distribución normal de máxima verosimilitud
 d <- density(df$Age)
-y <- dpois(df$Age, resultado$par[1])
+y <- dgamma(df$Age, shape=resultado$par[1], scale=resultado$par[2])
 
 x1 <- df$Age
 y1 <- y
@@ -438,32 +459,10 @@ y1 <- y
 x2 <- d$x
 y2 <- d$y
 
-plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)))
+plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)), main="Comparación entre densidad real de los datos y máxima verosimilitud", xlab="Age", ylab="Density")
 lines(x2,y2,col="green")
-legend(10,0.04,legend=c("y1","y2"), col=c("green","red"),pch=c("-","O"))
+legend(40,0.05,legend=c("Distribución real","Máxima verosimilitud"), col=c("green","red"),pch=c("-","O"))
 
-likelihood <- function(param) {
-  # Definimos los parámetros de entrada de la función
-  d_f = param[1]
-  # Definimos la likelihood como la suma logaritmica de la función de densidad
-  -sum(dchisq(df$Age, d_f, log = TRUE))
-}
-
-resultado <- nlminb(objective=likelihood, start=c(10) , lower=c(0), upper=c(40))
-
-# Compara distribución real con la distribución normal de máxima verosimilitud
-d <- density(df$Age)
-y <- dchisq(df$Age, resultado$par[1])
-
-x1 <- df$Age
-y1 <- y
-
-x2 <- d$x
-y2 <- d$y
-
-plot(x1,y1,col="red",ylim=range(c(y1,y2)),xlim=range(c(x1,x2)))
-lines(x2,y2,col="green")
-legend(-5,0.08,legend=c("y1","y2"), col=c("green","red"),pch=c("-","O"))
 
 ```
 
