@@ -92,7 +92,9 @@ Existen distintos tipos de sesgo, algunos son más dependiente de quien realiza 
 #### **Pregunta 3:**
 Nombre una ventaja y una desventaja del método de máxima verosimilitud. Justifique cada una de las ventajas y desventajas señaladas.
 
-> Respuesta Aquí
+Para utilizar este método se le debe entregar una diistribución a priori, es decir, se deben visualizar y analizar los datos. Esto representa una **desventaja** a la hora de buscar la distribución óptima de los datos, pues la selección de la distribución representa gran parte del trabajo.
+
+Por medio de este método el problema de estimación se transforma en un problema de optimización. Esto representa una **ventaja**, pues se puede encontrar un óptimo minimizando una ecuación.
 
 #### **Pregunta 4:**
 Considere que recopila $X_{1},...,X_{n} \sim Poisson(\theta)$ donde $\theta$ es un parámetro desconocido. Calcule el estimador de máxima verosimilitud para $\theta$. Considere la siguiente expresión para la Poisson:
@@ -121,7 +123,10 @@ Suponga que usted ha realizado una `sampling distribution` de dos encuestas dife
 
 Suponiendo que la linea roja en los gráficos representa el valor real del parámetro para cada muestra, comente las características que observa en la evolución del estimador para el `Muestreo 1` y el `Muestreo 2`.
 
-> Respuesta Aquí
+La muestra 1 representa de mejor forma al conjunto total. Esta debe ser una muestra insesgada, la cual probablemente se obtiene al azar (random sampling). Al ser una muestra insesgada, esta representa al conjunto y por ley de los grandes números el parámetro $\beta$ tiende al valor real. 
+
+La muestra 2 no representa al conjunto total, lo que significa que existe por lo menos un tipo de sesgo en esta muestra. Se puede ver claramente como los datos convergen a un valor erroneo de $\beta$, con esto podemos saber que el sesgo no es de tamaño, sino que del grupo escogido.
+
 
 #### **Pregunta 6:**
 Considere que esta trabajando con intervalos de confianza al $95\%$ e intenta estudiar un parámetro $\theta$, ¿porque es incorrecto decir, en la visión frecuentista, que la probabilidad que $\theta$ pertenezca al intervalo es del $95\%$?
