@@ -167,7 +167,9 @@ Explique, con sus palabras, a que se refiere la siguiente afirmación: "Un resul
 
     'Se tienen datos normales de media desconocida. Con los datos, se realiza un test de hipótesis donde la hipótesis nula especifica que la media es cero. Realizando el test, se obtuvo un p-valor de $10^{-10}$, luego producto de este resultado la media necesariamente tiene que ser muy distinta a cero.'
 
-> Respuesta Aquí
+> Tener una significancia estadistica en un test de hipótesis (p-valor pequeño) no asegura que la hipotesis tenga un sentido práctico, pues no se incluyen los rangos del caso de uso. 
+
+> En una distribución gaussiana se puede tener una desviación muy baja, con lo cual datos "cercanos" a la media no obtienen un p-valor grande. En casos de este estilo la significancia estadistica del p-valor nos diría que el valor está lejos, mientras que la práctica que está cerca. En la frase entregada se puede ver como se asume significancia práctiva ante la existencia de significancia estadística.
 
 ---
 
