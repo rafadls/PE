@@ -71,15 +71,17 @@ A continuación, se presenta una serie de declaraciones relacionadas con el sesg
 
   1. La Tercera quiere conocer la opinión de la gente sobre una propuesta de ley sobre el matrimonio igualitario. Un reportero del diario sale de la central ubicada en Las Condes y selecciona al azar a 300 personas que pasean por allí, preguntándoles sobre la ley propuesta. ¿Qué podemos decir de este plan de muestreo?.
 
-> Respuesta Aquí
+>Si bien es una muestra al azar, no es representativa, púes es al azar solo dentro de cierto subjunto. Este sería un sesgo de **conveniencia**, pues se escogen personas que son más faciles de entrevistar en vez de priorizar la representatividad del conjunto.
 
   2. Una empresa de telefonía quiere conocer el grado de satisfacción de los propietarios de su nuevo servicio 5g, para ver que tal es la calidad del servicio entregado. Para ello, selecciona al azar 500 números entre todo el conjunto de clientes, colocándose en contacto telefónico con ellos. ¿Qué podemos decir de este plan de muestreo?
 
-> Respuesta Aquí
+> Quien tenga problemas de conectividad no podrá responder la encuesta. En esta muestra el sesgo más probable de ocurrir es del marco de muestreo (**sampling frame bias**), pues el grupo de personas con problemas de conexión no está incluida en el espacio muestral.
 
   3. Una compañía aérea quiere hacer una encuesta a sus clientes para mejorar su servicio. Durante un mes, envía un correo electrónico a una muestra aleatoria de clientes que hayan volado con la aerolínea el día anterior (ningún cliente será contactado más de una vez). En el correo electrónico se indica que la compañía aérea desea que el cliente rellene una encuesta de 10 minutos para ayudar a la compañía a mejorar su servicio. ¿Qué podemos decir de este plan de muestreo? ¿el sorteo de un producto podría solventar esto?.
   
-> Respuesta Aquí
+> Las personas que respondan las encuesta serán quienes logren destinar 10 minutos en ella, para lo cual se requiere de tiempo y motivación. Este grupo de personas no necesariamente es un grupo representativo. Es por esto que probablemente existirá un sesgo de **no respuesta**.
+
+>El sorteo de un producto podría aumentar el número de personas y como consecuencia reducir el sesgo. Aun así, el grupo de personas que no quieren responder no necesariamente se anularía, por lo que seguiria parte del sesgo, aunque probablemente menor.
 
 
 #### **Pregunta 2:**
