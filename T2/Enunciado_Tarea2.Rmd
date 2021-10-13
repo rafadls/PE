@@ -311,20 +311,58 @@ Del gráfico es posible observar que la línea punteada es la media de la poblac
 </details>  
 
 ---
+```{r, eval=TRUE}
+library(ggplot2)
+library(reshape2)
 
-
-**Respuesta:**
-
-```{r, eval=FALSE}
 # Definimos tamaños de muestreo
 tamano_muestra = 30
 n_muestras = 5000
 
 # Generamos una exponencial para luego generar el subsampling de ella
 exponencial = rexp(10000, rate = 2)
+#exponencial = rnorm(10000)
 # Obtenemos la media poblacional de la exponencial
+media_poblacional <- mean(exponencial)
+
 
 # Sampling distribution, calculo del intervalo de confianza y proporción.
+bool_c <- c()
+medias <- c()
+left <- c()
+right <- c()
+alpha <- 0.05
+conteo_inside = 0
+for (i in (1:n_muestras)){
+  sp <- sample(exponencial, tamano_muestra)
+  
+  media <- mean(sp)
+  sigma <- sd(sp)
+  
+  se <- sigma/sqrt(tamano_muestra)
+  error <- qnorm(1-alpha/2)*se
+  
+  left <-rbind(left, media - error)
+  right <- rbind(right, media + error)
+  medias <- rbind(medias, media)
+  if((media - error) < media_poblacional & media_poblacional < (media + error)){
+    conteo_inside = conteo_inside + 1
+  }
+  bool_c <- rbind(bool_c, (media - error) < media_poblacional & media_poblacional < (media + error))
+}
+df <- data.frame(id = c(1:5000), mean = medias, right_bound = right,  left_bound = left)
+
+
+#melt data frame into long format
+df <- melt(df ,  id.vars = 'id', variable.name = 'series')
+
+#create line plot for each column in data frame
+ggplot(df, aes(id, value)) +
+  geom_jitter(size = 0.5, aes(colour = series)) +
+  geom_hline(yintercept = media_poblacional, show.legend = "media poblacional")
+
+print(conteo_inside)
+print(conteo_inside/n_muestras)
 # - En base a la distribución exponencial, generamos multiples sampling 
 # distribution.
 # - Se estima la media del muestreos y obtenemos el intervalo de confianza de 
@@ -335,6 +373,38 @@ exponencial = rexp(10000, rate = 2)
 # Plot de proporción de Intervalos de confianza
 
 ```
+
+
+La línea negra corresponde a la media poblacional, por lo tanto, si algún punto del color
+de "right bound" está más abajo que la media poblacional o punto del color
+de "left bound" está más arriba que la media poblacional, entonces esos muestreos dejan
+afuera a la media poblacional. Haciendo una inspección visual, existe una mayor incertidumbre
+respecto al límite superior (right_bound) en comparación al inferior. Ahora bien, las áreas están notablemente separadas, habiendo una intersección leve en la media poblacional.
+
+```{r, eval=TRUE}
+comportamiento = bool_c
+list_ratio <- data.frame(1:n_muestras)
+suma_true <- 0
+suma_falsa <- 0
+for (tirada  in comportamiento){
+  if (tirada){suma_true  <- suma_true  + 1}
+  else{       suma_falsa <- suma_falsa + 1}
+  list_ratio[1+suma_falsa+suma_true, 1] <- suma_true/(suma_falsa + suma_true)
+}
+dt2 <- data.frame(id2 = c(0:n_muestras), mena = c(list_ratio$X1.n_muestras))
+ggplot(dt2, aes(id2, mena)) +
+  geom_line(size = 0.5) +
+  geom_hline(yintercept = 1- alpha) +
+  geom_hline(yintercept = dt2$mena[n_muestras]) +
+  ylim(0.8, 1)
+
+```
+
+Con respecto a la proporción de intervalos de confianza, este valor no es igual al 95% (línea superior)
+teórico usado para calcularlo. Es, de manera consistente, menor a ese valor y aproximadamente
+cercano a un 92% (línea inferior). Esta diferencia se puede deber a que se asume que las muestras se toman
+de una población con distribución normal en la característica tomada, por lo que hay ligeras diferencias en las medias y desviación estándar cuando se considera una distribución
+exponencial en la población.
 
 ---
 
@@ -496,6 +566,55 @@ Las actividades por realizar en esta pregunta son las siguientes:
 **Nota:** No se permite la utilización de librerías de bootstrap para esta parte.
 
 **Respuesta:**
+```{r, eval=TRUE}
+library(corrplot)
+
+data <- read.csv('SAT_GPA.csv', header = TRUE, sep= ",", quote = '\"')
+data.cor <- cor(data)
+corrplot(data.cor)
+
+```
+```{r, eval=TRUE}
+Total_USA_cor <- data.cor[10, 11]
+print(Total_USA_cor)
+```
+
+
+
+```{r, eval=TRUE}
+nRuns <- 50
+x <- x_test <- data[, c(10:11)]
+sampleSize <- 126
+alpha <-  0.05
+
+values <- vector()
+for (i in 1:nRuns){
+  values[i] <- cor(x[sample(nrow(x), size = sampleSize, replace = T), ])[2, 1]
+  
+}
+point.est <- cor(x)
+se <- sd(values)
+lower <- quantile(values, alpha/2)
+upper <- quantile(values, 1-alpha/2)
+
+print("Error estandar de correlación")
+print(se)
+print("\nLímite Superior del intervalo confianza al 95%")
+print(upper)
+print("\nLímite Inferior del intervalo confianza al 95%")
+print(lower)
+
+```
+
+```{r, eval=TRUE}
+library(ggplot2)
+
+x1 <- data.frame(Values = values*100)
+ggplot( x1 , aes(x = Values)) + 
+  geom_histogram(binwidth=0.5, color="black", fill="white") +
+  geom_density(alpha=.2, fill="#FF6666") 
+```
+
 
 ---
 
