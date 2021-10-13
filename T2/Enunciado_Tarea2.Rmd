@@ -133,7 +133,7 @@ La muestra 2 no representa al conjunto total, lo que significa que existe por lo
 #### **Pregunta 6:**
 Considere que esta trabajando con intervalos de confianza al $95\%$ e intenta estudiar un parámetro $\theta$, ¿porque es incorrecto decir, en la visión frecuentista, que la probabilidad que $\theta$ pertenezca al intervalo es del $95\%$?
 
-En la visión frecuentista los parámetros de las distribuciónes son constantes pero desconcocidos, lo que varía son los datos que obtenemos. Es por esto que el intervalo es el que puede o no incluir el valor real de $\theta$, ya que este es el ue varía.
+En la visión frecuentista los parámetros de las distribuciónes son constantes pero desconocidos, lo que varía son los datos que obtenemos. Es por esto que el intervalo es el que puede o no incluir el valor real de $\theta$, ya que este es el ue varía.
 
 
 #### **Pregunta 7:**
@@ -371,15 +371,61 @@ print(conteo_inside/n_muestras)
 # Plot de Intervalos de confianza (ver respuesta esperada)
 
 # Plot de proporción de Intervalos de confianza
-
 ```
-
 
 La línea negra corresponde a la media poblacional, por lo tanto, si algún punto del color
 de "right bound" está más abajo que la media poblacional o punto del color
 de "left bound" está más arriba que la media poblacional, entonces esos muestreos dejan
 afuera a la media poblacional. Haciendo una inspección visual, existe una mayor incertidumbre
 respecto al límite superior (right_bound) en comparación al inferior. Ahora bien, las áreas están notablemente separadas, habiendo una intersección leve en la media poblacional.
+
+```{r, eval=TRUE}
+library(ggplot2)
+library(reshape2)
+
+# Definimos tamaños de muestreo
+tamano_muestra = 30
+n_muestras = 500
+
+# Generamos una exponencial para luego generar el subsampling de ella
+exponencial = rexp(10000, rate = 2)
+#exponencial = rnorm(10000)
+# Obtenemos la media poblacional de la exponencial
+media_poblacional <- mean(exponencial)
+
+
+# Sampling distribution, calculo del intervalo de confianza y proporción.
+bool_c <- c()
+medias <- c()
+left <- c()
+right <- c()
+alpha <- 0.05
+conteo_inside = 0
+for (i in (1:n_muestras)){
+  sp <- sample(exponencial, tamano_muestra)
+  
+  media <- mean(sp)
+  sigma <- sd(sp)
+  
+  se <- sigma/sqrt(tamano_muestra)
+  error <- qnorm(1-alpha/2)*se
+  
+  left <-rbind(left, media - error)
+  right <- rbind(right, media + error)
+  medias <- rbind(medias, media)
+  if((media - error) < media_poblacional & media_poblacional < (media + error)){
+    conteo_inside = conteo_inside + 1
+  }
+  bool_c <- rbind(bool_c, (media - error) < media_poblacional & media_poblacional < (media + error))
+}
+df <- data.frame(id = c(1:500), mean = medias, right_bound = right,  left_bound = left)
+
+ggplot(df, aes(mean, id,  colour = factor(bool_c))) +
+  geom_pointrange(aes(xmin = left_bound, xmax = right_bound), size=0.1) + 
+  geom_vline(xintercept = media_poblacional)
+```
+
+El gráfico anterior corresponde al esperado por la pregunta, por lo que corresponde a otra visualización de lo mismo. El color azul corresponde a casos donde las muestras cumplen con que el intervalo de confianza incluye a la media poblacional, mientras que el rojo son muestras que no la incluyen. 
 
 ```{r, eval=TRUE}
 comportamiento = bool_c
