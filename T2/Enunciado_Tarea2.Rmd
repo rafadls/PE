@@ -144,8 +144,12 @@ Se sabe que al realizar un test de hipótesis es posible equivocarse al tomar un
 
 En base a los errores señalados, de un ejemplo de cuando es más relevante disminuir las opciones de aceptar $H_0$, si $H_1$ es la correcta.
 
+> Supongamos que se le está haciendo un test de COVID a una persona. Nuestras hipótesis son las siguientes: 
 
-> Respuesta Aquí
+- $H_1$ tiene COVID. 
+- $H_0$ no tiene COVID.
+
+> En este caso es importante disminuir las probabilidades de que $H_0$ sea aceptado cuando $H_1$ es la correcta, pues tendríamos un contagiado por las calles que cree que está bien. Por el contrario, si se le dice que tiene COVID y no tiene esto no compromete la salud de las personas.
 
 #### **Pregunta 8:**
 Explique cual es la diferencia entre el test **one-sided** y **two-sided**, de un ejemplo en donde se pueda utilizar **one-sided** y otro donde se pueda utilizar **two-sided**. ¿Es un método mejor que el otro?
