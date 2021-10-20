@@ -11,8 +11,8 @@ output:
 <center><strong>CC6104: Statistical Thinking</strong></center>
 #### **Integrantes :** 
 
-- Alumno 1
-- Alumno 2
+- Rafael De La Sotta
+- Felipe Ortúzar
 
 #### **Cuerpo Docente:**
 
@@ -86,9 +86,9 @@ $$\hat{N°\_de\_fanaticos\_del\_anime}=300+90*numero\_de\_semestres$$
 
 
 #### **Pregunta 3:**
-Considere un test con dos muestras aparejado, explique porque se hace una corrección a los grados de libertad en el test de Welsh.
+Considere un test con dos muestras no aparejado, explique porque se hace una corrección a los grados de libertad en el test de Welsh.
 
-> Respuesta Aquí
+> El test de Welsh se utiliza para "castigar" diferencias entre números de conjuntos de test no apareados. Si se utiliase el métono comun (n-1) no influiría que cantidad de datos tiene cada conjunto, siendo esto de extrema relevancia. 
 
 
 #### **Pregunta 4:**
@@ -104,7 +104,9 @@ Discuta la siguiente frase:
 Hacer una regresión lineal mediante máxima verosimilitud requiere tener ciertas hipótesis probabilisticas de los datos, mientras que una regresión realizada mediante mínimos cuadrados no necesita tener ninguna hipótesis probabilista.
 "
 
-> Respuesta Aquí
+> Primero, es importante saber que ambos métodos son equivalentes, la máxima verosimilitud se alcanza solo si se minimiza el error cuadratico medio, y vice versa.
+
+> Para la máxima verosimilitud se asume que el error tiene una distribución normal, pero no se tiene una hipotesis sobre la distribución probabilistica de estos. 
 
 #### **Pregunta 6:**
 

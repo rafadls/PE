@@ -208,6 +208,7 @@ Justificación: En particular, las funcinones continuas valen 0 evaluando en un 
 Justificación: Una PDF bien definida sí puede tener valores mayores a 1.
 
 - [V] La CDF(cummulative distribuitive f) puede ser representada como la integral de la PDF(probability dens. f) y PMF (probability mass func.).
+
 - [V] Una CDF es definida para todo x, continua hacia la derecha y no es decreciente.
 
 #### **Pregunta 9:**
