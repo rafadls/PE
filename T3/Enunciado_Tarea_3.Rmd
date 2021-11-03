@@ -72,8 +72,14 @@ Determine si las siguientes regresiones son lineales para los parámetros $\beta
 
 - [ ] $y(x) = \ln(x^{2}+\beta_{0})$
 
-> Respuesta Aquí
+> Para que una expresión multivariable sea lineal se debe asegurar que pueda ser expresada de forma matricial, $Y = X \beta$. 
 
+> En el primer caso, $y(x) = \beta_{0} + \beta_{1} x$ puede ser expresada como:
+$$ Y(x) =  \left( \begin{array}{ll} \beta_{0} \\ \beta_{1} \end{array} \right)^T \left( \begin{array}{ll} 1 \\ x \end{array} \right) $$
+
+> Para el caso dos, este tiene a $\beta^2$ y $\beta^3$, como consecuencia del cubo del binomio. Con esto valores es imposible expresar la función como $Y = X \beta$.
+
+> Para el caso tres, este tiene una funcion logaritnica que impide separar a $\beta_{0}$ del resto de las expreciones y tambien impide expresar a la función como $Y = X \beta$.
 
 #### **Pregunta 2:**
 Una universidad esta interesada en saber cuantos alumnos gustan del anime, para esto realiza una recopilación de datos y llega a la construcción del siguiente modelo lineal simple:
@@ -88,7 +94,7 @@ $$\hat{N°\_de\_fanaticos\_del\_anime}=300+90*numero\_de\_semestres$$
 #### **Pregunta 3:**
 Considere un test con dos muestras no aparejado, explique porque se hace una corrección a los grados de libertad en el test de Welsh.
 
-> El test de Welsh se utiliza para "castigar" diferencias entre números de conjuntos de test no apareados. Si se utiliase el métono comun (n-1) no influiría que cantidad de datos tiene cada conjunto, siendo esto de extrema relevancia. 
+> El test de Welsh se utiliza para, al asignar grados de libertad, "castigar" diferencias entre números de conjuntos de test no apareados. Si se utiliase el métono comun (n-m) no influiría que cantidad de datos tiene cada conjunto, siendo esto de extrema relevancia para casos desiguales. 
 
 
 #### **Pregunta 4:**
@@ -104,9 +110,10 @@ Discuta la siguiente frase:
 Hacer una regresión lineal mediante máxima verosimilitud requiere tener ciertas hipótesis probabilisticas de los datos, mientras que una regresión realizada mediante mínimos cuadrados no necesita tener ninguna hipótesis probabilista.
 "
 
-> Primero, es importante saber que ambos métodos son equivalentes, la máxima verosimilitud se alcanza solo si se minimiza el error cuadratico medio, y vice versa.
+> Primero, es importante saber que ambos métodos son equivalentes en una regresión lineal, la máxima verosimilitud se alcanza solo si se minimiza el error cuadratico medio, y vice versa. De hecho, por medio del método de máxima veosilitud se obtiene que se debe minimizar el error cuadrático en una regresión, y para esto se asume la distribución del error de esta. 
 
-> Para la máxima verosimilitud se asume que el error tiene una distribución normal, pero no se tiene una hipotesis sobre la distribución probabilistica de estos. 
+> En resumen, la minimización del error cuadratico es un resultado de la máxima verosimilitud y de sus hipotesis. Además, es importante recalcar que la hipotesis coresponde a la distribución del error, no de los datos en si.
+
 
 #### **Pregunta 6:**
 
@@ -119,7 +126,11 @@ Explique porque el test de significancia sobre los parámetros de una regresión
 
 ¿Que nos dice la equivalencia de la máxima verosimilitud sobre los parámetros que componen una regresión lineal? ¿Qué nos permitirían calcular?
 
-> Respuesta Aquí
+> Asumiendo que el error entre la regresión lineal y los valores reales tiene un distribución gaussiana, se busca la máxima verosimilitud para este, la cual se alcanza cuando la suma de los erroes cuadraticos es mínima. 
+
+> Como consecuencia de esto se tiene que minimizar el error cuadratico para que el ajuste sea optimo y este tenga un error aleatorio (no sistemático).
+
+> Los parámetros "$\beta$", tal cómo sabemos, son los interseptos del plano. Debido a las equivalencias explicadas estos resultan ser valores promedio, diferencias de promedios o valores base. 
 
 
 ### **Pregunta 8**
@@ -137,7 +148,9 @@ Explique en que se diferencia con mínimos cuadrados, de una posible ventaja y d
 #### **Pregunta 9:**
 Explique porque el coeficiente $R^2$ tiende a crecer con el numero de variables.
 
-> Respuesta Aqui
+> Existen muchas maneras de expresar este termino, una de ellas es $R^{2} = 1 - \frac{SSE}{SST}$. Tal como sabemos, el término a minimizar corresponde a SSE, por lo que este, si bien aumenta constantemente, al ser la variable minimizada debiese aumentar a una tasa menor que SST, el cual no es controlado por la regresión y tambien aumenta constantemente.
+
+> Dicho esto, se entiende que $\frac{SSE}{SST}$ tiende a decrecer, y producto de esto R tiende a aumentar su valor.
 
 
 #### **Pregunta 10**
@@ -407,18 +420,24 @@ z_test <- function(data1=NULL, sigma1=0.5, data2=NULL, sigma2=0.5,
     return()
   }
   else if(is.null(data2)){
-    
+    mu_1 = mean(data1, na.rm=TRUE)
+    n_1 = length(data1)
+    Z_score = (mu_1 - mu.Ha)/(sigma1/sqrt(n_1))
     # P-value
     if(test.type=='menor'){
-
+      p_value = pnorm(Z_score)
     }
     else if(test.type=='mayor'){
-
+      p_value = 1 - pnorm(Z_score)
     }
     else if(test.type=='two-sided'){
-
+      if(mu_1>=mu.Ha){
+        p_value = (1 - pnorm(Z_score))*2
+      }
+      else if(mu_1<mu.Ha){
+        p_value = (pnorm(Z_score))*2
+      }
     }
-    
     # Texto de Salida
     if(verbose){
       cat("\tOne-sample Z-Test:\n\nData analizada:",
@@ -431,16 +450,25 @@ z_test <- function(data1=NULL, sigma1=0.5, data2=NULL, sigma2=0.5,
   }
   else if(!is.null(data2)){
     # Hypothesis test
-    
+    mu_1 = mean(data1, na.rm=TRUE)
+    mu_2 = mean(data2, na.rm=TRUE)
+    n_1 = length(data1)
+    n_2 = length(data2)
+    Z_score = (mu_2 - mu_1)/(sigma1/sqrt(n_1) +  sigma2/sqrt(n_2))
     # p-value
     if(test.type=='menor'){
-      p_value = ...
+      p_value = pnorm(Z_score)
     }
     else if(test.type=='mayor'){
-      p_value = ...
+      p_value = 1 - pnorm(Z_score)
     }
     else if(test.type=='two-sided'){
-      p_value = ...
+      if(Z_score>=0){
+        p_value = (1 - pnorm(Z_score))*2
+      }
+      else if(Z_score<0){
+        p_value = pnorm(Z_score)*2
+      }
     }
     # Texto de Salida
     if(verbose){
@@ -456,8 +484,20 @@ z_test <- function(data1=NULL, sigma1=0.5, data2=NULL, sigma2=0.5,
 ```
 
 ```{r}
+vec_income_PhD = filter(df, Education == 'PhD')$Income 
+vec_income_Master = filter(df, Education == 'Master')$Income 
+vec_income_Graduation = filter(df, Education == 'Graduation')$Income 
+
+
 z.test.multiple_testing <- function(){
+  p_value_1 = z_test(data1=vec_income_Graduation, sigma1=28180, mu.Ha=52000, test.type='two-sided', verbose=TRUE)
+  p_value_2 = z_test(data1=vec_income_Graduation, sigma1=28180, data2=vec_income_Master, sigma2=20160, test.type='two-sided', verbose=TRUE)
+  p_value_3 = z_test(data1=vec_income_Graduation, sigma1=28180, data2=vec_income_PhD, sigma2=20615, test.type='two-sided', verbose=TRUE)
 }
+```
+
+```{r}
+z.test.multiple_testing()
 ```
 
 ### Pregunta 3: Testeando multiples hipotesis y Bonferroni Correction
@@ -534,6 +574,10 @@ b) Estudie si el modelo multivariable posee mejor desempeño que el modelo simpl
 
 ```{r}
 lm_reg <- function(X, Y){
+  X_barra = mean(data1, na.rm=TRUE)
+  Y_barra = mean(data1, na.rm=TRUE)
+  b_1 = sum((X-X_barra)*(Y-Y_barra))/sum((X-X_barra)^2)
+  b_0 = Y_barra - b_1*X_barra
   
   
 }
