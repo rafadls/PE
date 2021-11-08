@@ -174,7 +174,7 @@ library(dplyr)
 library(tidyr)
 
 # Para realizar plots
-library(scatterplot3d)
+#library(scatterplot3d)
 library(ggplot2)
 library(plotly)
 
@@ -203,7 +203,7 @@ Donde $\bar x$ es la media de la muestra, $\mu$ es la media de la población, $\
 
 Por otro lado, se utiliza Two-Sample cuando queremos comparar la media de dos muestras. El Z-score de Two-Sample se define con la ecuación:
 
-$$Z-score_{Two-Sample} = \dfrac{(\bar x_2 - \bar x_1) - (\mu_1 - \mu_2)}{\dfrac{\sigma_1}{\sqrt n_1}+\dfrac{\sigma_2}{\sqrt n_2}}$$	
+$$Z-score_{Two-Sample} = \dfrac{(\bar x_2 - \bar x_1) - (\mu_1 - \mu_2)}{\sqrt{\dfrac{\sigma_1^2}{\sqrt n_1}+\dfrac{\sigma_2^2}{\sqrt n_2}}}$$	
 Donde $(\bar x_2 - \bar x_1)$ es la diferencia de las medias de la muestra, $(\mu_1 - \mu_2)$ la diferencia de las medias de la población, $\sigma_{1,2}$ la desviación estándar de la población y $n_{1,2}$ el tamaño de las muestras.
 
 ## Multiples Test
@@ -483,6 +483,17 @@ z_test <- function(data1=NULL, sigma1=0.5, data2=NULL, sigma2=0.5,
 }
 ```
 
+
+```{r}
+mean_income_PhD = mean(vec_income_PhD, na.rm=TRUE)
+mean_income_Master = mean(vec_income_Master, na.rm=TRUE) 
+mean_income_Graduation = mean(vec_income_Graduation, na.rm=TRUE)
+
+length_income_PhD = length(vec_income_PhD)
+length_income_Master = length(vec_income_Master) 
+length_income_Graduation = length(vec_income_Graduation)
+```
+
 ```{r}
 vec_income_PhD = filter(df, Education == 'PhD')$Income 
 vec_income_Master = filter(df, Education == 'Master')$Income 
@@ -490,8 +501,13 @@ vec_income_Graduation = filter(df, Education == 'Graduation')$Income
 
 
 z.test.multiple_testing <- function(){
+  print('Comprobar si la media de los ingresos para la variable Graduation es similar a 52000.')
   p_value_1 = z_test(data1=vec_income_Graduation, sigma1=28180, mu.Ha=52000, test.type='two-sided', verbose=TRUE)
+
+  print('Compruebe si la diferencia entre los ingresos de las personas con el grado académico `Graduation` y `Master` es cercana a cero')
   p_value_2 = z_test(data1=vec_income_Graduation, sigma1=28180, data2=vec_income_Master, sigma2=20160, test.type='two-sided', verbose=TRUE)
+
+  print('Compruebe si la diferencia entre los ingresos de las personas con el grado académico `Graduation` y `PhD` es cercana a cero')
   p_value_3 = z_test(data1=vec_income_Graduation, sigma1=28180, data2=vec_income_PhD, sigma2=20615, test.type='two-sided', verbose=TRUE)
 }
 ```
@@ -518,29 +534,54 @@ $$\mathbb{P}(\text{obtener al menos resultado significativo por azar})=1-(1-\alp
 
 ```{r, eval=FALSE}
 data <- read.csv("ratones.csv",sep= ";", stringsAsFactors = T)
+data$p.value <- sub(",",".",data$p.value)
+data$p.value <- as.numeric(data$p.value)
+data$p.value.Bonferroni <- sub(",",".",data$p.value.Bonferroni)
+data$p.value.Bonferroni <- as.numeric(data$p.value.Bonferroni)
 head(data)
 ```
 
 **Respuesta Aquí:**
 
 ```{r}
-
-probEmpirica <- function(alpha,m){
-  n <- 10000 # Cantidad de veces que se va a repetir el experimento para estimar la probabilidad, pueden cambiar este valor si lo desean
-  
-
-  res <-... #Resultados de los experimentos
+probEmpirica <- function(alpha,m,n=100, Bonferroni = FALSE){
+  if (Bonferroni){
+    res = c(data$p.value.Bonferroni) #Resultados de los experimentos
+  }
+  else{
+    res = c(data$p.value) #Resultados de los experimentos
+  }
   
   # Puede agergar todo el codigo que estime conveniente para calcular la probabilidad empirica
-  ...
-  ...
-  #
-  prob <-... # Probabilidad empirica
+  values <- vector()
+  for (i in 1:n){
+    muestra = sample(res, size = m, replace = T)
+    values[i] = any(alpha>=muestra)
+  }
+
+  prob <-sum(values)/n # Probabilidad empirica
   
   return(prob)
-  
 }
+```
 
+**P valor**
+
+```{r}
+for (n in c(10,100,1000)){
+  prob_estimada <- c(1:m)
+  prob_real <- c(1:m)
+  alpha = 0.05
+  for (m in 1:length(data$p.value)){
+    prob_estimada[m] = 1-(1-alpha)^m
+    prob_real[m] = probEmpirica(alpha,m,n, Bonferroni = TRUE)
+  }
+  plot(c(1:m), prob_estimada, type = "l", col = "blue", xlim=c(1,m), ylim=c(0,1), ylab = "Probabilidad", xlab = "Número de muestras", main=
+         paste("Probabilidad de obtener un resultado significatívo, N = ",n))
+  lines(c(1:m), prob_real, type = "l", col = "orange")
+  legend(16, 0.2, legend=c("Probabilidad estimada", "Probabilidad real"),
+         col=c("blue", "orange"), lty=1:2, cex=0.8)
+}
 ```
 
 ---
@@ -574,15 +615,14 @@ b) Estudie si el modelo multivariable posee mejor desempeño que el modelo simpl
 
 ```{r}
 lm_reg <- function(X, Y){
-  X_barra = mean(data1, na.rm=TRUE)
-  Y_barra = mean(data1, na.rm=TRUE)
-  b_1 = sum((X-X_barra)*(Y-Y_barra))/sum((X-X_barra)^2)
-  b_0 = Y_barra - b_1*X_barra
-  
-  
 }
 ```
 
+
+```{r}
+lm_reg(X,Y)
+
+```
 
 
 &nbsp;
