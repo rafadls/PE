@@ -88,7 +88,8 @@ $$\hat{N°\_de\_fanaticos\_del\_anime}=300+90*numero\_de\_semestres$$
 
 ¿Como podemos interpretar el intercepto y pendiente del modelo?, ¿El intercepto y la pendiente tienen una interpretación coherente para cualquier modelo lineal?, si no es así, de un ejemplo.
 
-> Respuesta
+> El intercepto sería la cantidad de estudiantes, fánaticos del anime, que todavían no han cursado algún semestre en la universidad (0 semestres; proto-mechones coloquialmente). Y la pendiente sería cuánto aumenta la cantidad de estudiantes fanáticos del anime por cada semestre cursado en la universidad.
+En modelos de la vida real hay que tener cierto cuidado en los límites del modelo lineal, esto es, cuando el dominio o el recorrido valen 0. Por ejemplo, si una panadería tiene este modelo lineal para sus ventas: #Ventas = 100 + 10 * #Panes cocinados, entonces, eso significa que cuando no cocinan panes tienen 100 ventas? No, y es en casos como estos en donde se pierde la interpretación del modelo lineal. 
 
 
 #### **Pregunta 3:**
@@ -101,7 +102,7 @@ Considere un test con dos muestras no aparejado, explique porque se hace una cor
 
 Al realizar una regresión lineal simple con una variable categórica $(\beta_{0} + \beta_{1} \cdot \text{categroica})$  ¿que interpretación puede obtenerse del coeficiente que acompaña a la variable categórica?
 
-> Respuesta Aquí
+>La interpretación sería que por cada unidad de la categoría, el resultado final aumenta (o disminuye, si $\beta_{1} \cdot \text{categorica}) < 0$) en un valor de $\beta_{1}$.
 
 #### **Pregunta 5:**
 Discuta la siguiente frase:
@@ -119,7 +120,7 @@ Hacer una regresión lineal mediante máxima verosimilitud requiere tener cierta
 
 Explique porque el test de significancia sobre los parámetros de una regresión lineal se realiza bajo la hipótesis nula $\beta_{H_{0}}=0$.
 
-> Respuesta Aquí
+> Principalmente porque se desea *rechazar* la hipótesis nula de que $\beta_{H_{0}}=0$ para $beta_0$ o "intercepto" y $beta_1$ o "la pendiente". Entonces, al rechazar la hipótesis nula de que $beta_0 = 0$ se está "diciendo" que al inicio de la función, en $x=0$, el valor es muy diferente de 0 con cierto nivel de confianza. Por otro lado, al rechazar la hipótesis nula de que $beta_1 = 0$, significa que existe una relación lineal entre la variable y el objetivo.
 
 
 #### **Pregunta 7:**
@@ -142,7 +143,9 @@ $$
 $$
 Explique en que se diferencia con mínimos cuadrados, de una posible ventaja y desventaja de este método (en comparación a mínimos cuadrados).
 
-> Respuesta Aqui
+>En primer lugar, hay que analizar qué ocurre cuando intentamos resolver analíticamente la solución de encontrar el mínimo error. Lamentablemente no existe una solución analítica debido a la presencia de la función absoluto sobre los betas. En particular, $\beta_0$ no tiene solución ($-n = 0$ o$n = 0$) y hay que cambiar la aproximación de la solución a una de carácter iterativo. Estos dos problemas, (1) sin solución analítica y (2) cálculo de la solución de manera iterativa, se consideran desventajas. Además es posible que existan múltiples soluciones, dependiendo de los datos.
+
+>Por otro lado, el uso de valor absoluto para el cálculo del error constituye una ventaja, al presentar mayor robustez frente a $\textit{outliers}$, ya que valores extremadamente grandes en comparación a la media ya no van a generar desviaciones aún mayores (al quedar al cuadrado).
 
 
 #### **Pregunta 9:**
@@ -157,7 +160,7 @@ Explique porque el coeficiente $R^2$ tiende a crecer con el numero de variables.
 
 Un estudio de cáncer realizado por la institución X ha señalado que las personas que beben café poseen mayores probabilidades de padecer algún cáncer pulmonar.  El estudio causo un gran revuelo en la población, por lo que una segunda institución ha decidido replicar el experimento, llegando a la conclusión que las personas que toman café tienden a fumar cigarrillos mientras beben esta bebida. Señale que tipo de variable serían los fumadores de cigarrillos en el estudio de cáncer pulmonar y explique cual es la característica de estas variables.
 
-> Respuesta Aquí
+> En este caso los fumadores de cigarrillos corresponde a una *variable de confusión*. Las variables de confusión son factores que no son claros al iniciar un experimento, pero al ser identificadas explican la relación entre otras dos o más variables que "inexplicablemente" estaban relacionadas, y esta variable de confusión es aquella que explica la conexión.
 
 ---
 
@@ -290,30 +293,64 @@ Para el diseño de experimentos y/o comprobación de sus métodos puede serles �
 - Two-Sample: [Simple Power Calculation for Two-Sample Z Test](https://ytliu0.github.io/Stat_Med/power2.html)
 
 **Respuesta**
-```{r, eval=FALSE}
+```{r, eval=TRUE}
+library(ggplot2)
 # Power Function, El esqueleto posee como ejemplo como obtener la potencia de un z-test one-sample.
 # Si utiliza este esqueleto deberá comentar la función que cumple cada una de las partes entregadas
 power.z.test <- function(n1=NULL, sigma1=0.5, 
                          n2=NULL,sigma2=0.5, mu.Ha=0 , 
                          mu.True=0, alfa=0.05){
+  Z = qnorm(1-alfa)
+  
   if(is.null(n2)){
-    # 
-    Z = qnorm(1-alfa)
+    # Se calcula el valor del test estadístico Z, para alpha, para ver cuándo rechazar el test de        hipotesis nula
     
+    
+    #se obtiene el aproximado de la dev std de la poblacion (que termina siendo el de la muestra)
     denominador = sigma1/sqrt(n1)
+    #se obtiene el valor para rechazar la hip nula en los datos
     X_bar = Z*denominador + mu.Ha
     
+    # se obtiene la diferencia entre el valor de rechazo y el valor de la media
     numerador = X_bar - mu.True
+    
     Z = numerador/denominador
+    x_label <- expression(bar("X"))
+    # se calcula la probabilidad de rechazar la hipotesis nula p = 1 - beta
     Power = 1 - pnorm(Z)
     
+
+  }
+  if(!is.null(n2)){
+    
+    #n1=NULL, sigma1=0.5,n2=NULL,sigma2=0.5, mu.Ha=0 , mu.True=0, alfa=0.05
+    # Calculamos el error estandar de ambas distribuciones
+    denominador = sqrt((sigma1^2)/n1 + (sigma2^2)/n2)
+    
+    # mu.Ha representará la diferencia entre las medias de las muestras
+    # mu.True la diferencia de las medias de la población de las muestras 1 y 2.
+    
+    # Z-score = mu.Ha / error standard
+      Z_score = mu.Ha / denominador
+      
+      X_bar = Z*denominador + mu.Ha
+      
+      Power = 2*pnorm(-abs(Z_score))
+    
+      x_label <- expression(bar(X2) - bar(X1))
     # 
+    plot = NULL # Solo esta null para que puedan ejecutarlo.
+  
+  }
+    
+    
+        # Calculamos el mínimo y máximo de la distribucion normal con media mu.ha y sd = se
     min_lim = min(rnorm(1000, mean=mu.Ha, sd=denominador)) - 
       round(min(rnorm(1000, mean=mu.Ha, sd=denominador)))%%10
     max_lim = max(rnorm(1000, mean=mu.True, sd=denominador)) +
       round(max(rnorm(1000, mean=mu.True, sd=denominador)))%%10
       
-    # 
+    # Generamos el plot con las curvas de la distribucion normal de la poblacion y la muestra
     plot <- ggplot(data.frame(x = c(min_lim, max_lim)), aes(x)) + 
       stat_function(fun = dnorm, args = list(mean = mu.Ha, sd = denominador), 
                     col='red') +
@@ -325,30 +362,71 @@ power.z.test <- function(n1=NULL, sigma1=0.5,
       annotate(x=X_bar, y=+Inf,label="alpha", vjust=2, geom="label") +
       theme_minimal() +
       ggtitle("H0 vs Ha") +
-      xlab(expression(bar(X))) + ylab("Density")
-    }
-  
-  if(!is.null(n2)){
-    #
-    
-    # 
-      
-    # 
-      
-    # 
-    plot = NULL # Solo esta null para que puedan ejecutarlo.
-  
-  }
-  
+      xlab(x_label) +
+      ylab("Density")
+
   # Como R no permite retornar dos salidas usamos una lista
   # Los resultados se llaman con $plot o $power
-  return(list(plot=plot,power=Power))
+  return(list(plot=plot, power=Power))
 }
 
 
-# Plot de gráfico de potencia
+```
 
-# Experimentos
+# Gráficos One-sided usando varios ejemplos modificando alpha. Se usó y modificó ligeramente el esqueleto de ejemplo.
+
+```{r, eval=TRUE}
+one_sided <- power.z.test(n1=16, sigma1=16, mu.True=8, alfa=0.01)
+one_sided2 <- power.z.test(n1=16, sigma1=16, mu.True=8, alfa=0.05)
+one_sided3 <- power.z.test(n1=16, sigma1=16, mu.True=8, alfa=0.1)
+plot(one_sided$plot)
+plot(one_sided2$plot)
+plot(one_sided3$plot)
+```
+
+# Gráficos Two-sided usando varios ejemplos modificando alpha.
+```{r, eval=TRUE}
+two_sided <- power.z.test(n1=16, sigma1=16, n2=40, sigma2 = 25, mu.Ha=100 , mu.True=110, alfa=0.01)
+two_sided2 <- power.z.test(n1=16, sigma1=16, n2=40, sigma2 = 25, mu.Ha=100 , mu.True=110, alfa=0.05)
+two_sided3 <- power.z.test(n1=16, sigma1=16, n2=40, sigma2 = 25, mu.Ha=100 , mu.True=110, alfa=0.1)
+plot(two_sided$plot)
+plot(two_sided2$plot)
+plot(two_sided3$plot)
+```
+
+
+
+
+## Experimentos one_tail variando alfa y mu.Ha *usando el esqueleto propuesto*. 
+
+```{r, eval=TRUE}
+lista2 <- c()
+lista3 <- c()
+lista4 <- c()
+
+for (val in c( 85:125)){
+  uw <-  power.z.test(n1=16, sigma1=16, mu.Ha=100 , mu.True=val, alfa=0.01)
+  uw1 <- power.z.test(n1=16, sigma1=16, mu.Ha=100 , mu.True=val, alfa=0.05)
+  uw2 <- power.z.test(n1=16, sigma1=16, mu.Ha=100 , mu.True=val, alfa=0.1)
+  lista2 <- c(lista2, uw$power)
+  lista3 <- c(lista3, uw1$power)
+  lista4 <- c(lista4, uw2$power)
+} 
+df_lista <- data.frame(mu_True = c( 85:125), 
+                       p_value_001 = lista2, 
+                       p_value_005 = lista3, 
+                       p_value_01 = lista4)
+
+ggplot() + 
+    geom_line(data=df_lista, aes(x = mu_True, y = p_value_001, color="0.01"),   size=1) +
+  geom_line(data=df_lista, aes(x = mu_True, y = p_value_005, color="0.05"), size=1) +
+  geom_line(data=df_lista, aes(x = mu_True, y = p_value_01,  color="0.1"),  size=1) + 
+  xlab("Diferencia de las medias de la población entre x1 y x2") +
+  ylab("p-value") +
+  scale_color_manual(name = "Alpha", values = c("0.01"= "red", "0.05"= "green", "0.1"= "blue"))
+
+
+
 ```
 
 ---
@@ -402,7 +480,7 @@ $$\sigma_{PhD} = 20615$$
 
 **Respuesta:**
 
-```{r}
+```{r, eval=TRUE}
 df = read.csv('marketing_campaign.csv', sep='\t')
 
 # Implementación de Z-test one-sided y two-sided
@@ -484,20 +562,15 @@ z_test <- function(data1=NULL, sigma1=0.5, data2=NULL, sigma2=0.5,
 ```
 
 
-```{r}
-mean_income_PhD = mean(vec_income_PhD, na.rm=TRUE)
-mean_income_Master = mean(vec_income_Master, na.rm=TRUE) 
-mean_income_Graduation = mean(vec_income_Graduation, na.rm=TRUE)
 
-length_income_PhD = length(vec_income_PhD)
-length_income_Master = length(vec_income_Master) 
-length_income_Graduation = length(vec_income_Graduation)
-```
 
-```{r}
-vec_income_PhD = filter(df, Education == 'PhD')$Income 
-vec_income_Master = filter(df, Education == 'Master')$Income 
-vec_income_Graduation = filter(df, Education == 'Graduation')$Income 
+```{r, eval=TRUE}
+vec_income_PhD <- df[df$Education == 'PhD', ]$Income
+vec_income_Master <- df[df$Education == 'Master', ]$Income
+vec_income_Graduation <- df[df$Education == 'Graduation', ]$Income
+#vec_income_PhD = filter(df, Education == 'PhD')$Income 
+#vec_income_Master = filter(df, Education == 'Master')$Income 
+#vec_income_Graduation = filter(df, Education == 'Graduation')$Income 
 
 
 z.test.multiple_testing <- function(){
@@ -512,7 +585,18 @@ z.test.multiple_testing <- function(){
 }
 ```
 
-```{r}
+```{r, eval=TRUE}
+
+mean_income_PhD = mean(vec_income_PhD, na.rm=TRUE)
+mean_income_Master = mean(vec_income_Master, na.rm=TRUE) 
+mean_income_Graduation = mean(vec_income_Graduation, na.rm=TRUE)
+
+length_income_PhD = length(vec_income_PhD)
+length_income_Master = length(vec_income_Master) 
+length_income_Graduation = length(vec_income_Graduation)
+```
+
+```{r, eval=TRUE}
 z.test.multiple_testing()
 ```
 
@@ -532,7 +616,7 @@ $$\mathbb{P}(\text{obtener al menos resultado significativo por azar})=1-(1-\alp
 - [ ] Ejecute el siguiente código que calcula el $p$-valor usual y el $p$-valor asociado a Bonferroni (que corresponde al $p$-valor * m donde $m$ es el numero de experimentos), ¿Cuantos valores que originalmente se hubieran aceptado fueron rechazados si $\alpha = 0.05$? ¿Que implica esto sobre el nivel de falsos negativos de este metodo?
 
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 data <- read.csv("ratones.csv",sep= ";", stringsAsFactors = T)
 data$p.value <- sub(",",".",data$p.value)
 data$p.value <- as.numeric(data$p.value)
@@ -543,7 +627,7 @@ head(data)
 
 **Respuesta Aquí:**
 
-```{r}
+```{r, eval=TRUE}
 probEmpirica <- function(alpha,m,n=100, Bonferroni = FALSE){
   if (Bonferroni){
     res = c(data$p.value.Bonferroni) #Resultados de los experimentos
@@ -567,12 +651,13 @@ probEmpirica <- function(alpha,m,n=100, Bonferroni = FALSE){
 
 **P valor**
 
-```{r}
+```{r, eval=TRUE}
 for (n in c(10,100,1000)){
-  prob_estimada <- c(1:m)
-  prob_real <- c(1:m)
+  largo_del_dataset = length(data$p.value)
+  prob_estimada <- c(1:largo_del_dataset)
+  prob_real <- c(1:largo_del_dataset)
   alpha = 0.05
-  for (m in 1:length(data$p.value)){
+  for (m in 1:largo_del_dataset){
     prob_estimada[m] = 1-(1-alpha)^m
     prob_real[m] = probEmpirica(alpha,m,n, Bonferroni = TRUE)
   }
@@ -607,23 +692,136 @@ a) Programe un modelo lineal simple escogiendo la variable numérica que tiene m
 b) Señale tanto el $R^2$ como el $R^2-adjustado$ del modelo.
 c) Grafique el scatterplot de los datos y la linea que ajusta a la regresión lineal obtenida.
 
+```{r, eval=TRUE}
+library(ggplot2)
+library(corrplot)
+
+my_dat<- read.csv('insurance.csv', header = TRUE, sep= ",", quote = '\"')
+my_dat <-  my_dat[c(1, 3, 4, 5, 7)]
+
+fumadores    <- my_dat[my_dat$smoker == 'yes', ]
+no_fumadores <- my_dat[my_dat$smoker == 'no' , ]
+
+corrplot(cor(fumadores[c(1, 2, 3, 5)]))
+corrplot(cor(no_fumadores[c(1, 2, 3, 5)]))
+```
+## Análisis de los datos
+- Para fumadores: Podemos observar usando herramientas como la correlación de Pearson que la mayor relación para 'charges' es con 'bmi'. 
+- Para no fumadores: Con el mismo método podemos observar que la mayor relación para este grupo con 'charges' es con 'age'.
+
+Por lo anterior, para fumadores se utilizará la variable 'bmi' y para no fumadores la variable 'age'.
+
+```{r, eval=TRUE}
+mod_lin_funct <- function(x, y){
+  media_x = mean(x); media_y = mean(y)
+  dif_x <- x - media_x
+  dif_y <- y - media_y
+  b_1 <- sum(dif_x * dif_y) / sum(dif_x ^ 2)
+  b_0 <- media_y - b_1 * media_x
+  y_gorro <- b_0 + x * b_1
+  SSM <- sum((y_gorro - media_y)^2)
+  SST <- sum((y - media_y)^2)
+  
+  r_sqr <- SSM / SST
+  N = length(x); k = 1
+  r_sqr_a <- 1 - ((N - 1)/(N - k - 1))*(1 - r_sqr)
+    
+  data.frame(b_0, b_1, r_sqr, r_sqr_a)
+}
+
+fum_age <- mod_lin_funct(fumadores$age, fumadores$charges)
+fum_bmi <- mod_lin_funct(fumadores$bmi, fumadores$charges)
+fum_children <- mod_lin_funct(fumadores$children, fumadores$charges)
+
+no_fum_age <- mod_lin_funct(no_fumadores$age, no_fumadores$charges)
+no_fum_bmi <- mod_lin_funct(no_fumadores$bmi, no_fumadores$charges)
+no_fum_children <- mod_lin_funct(no_fumadores$children, no_fumadores$charges)
+
+Tags <- c("fum_age", "fum_bmi", "fum_children", 
+          "no_fum_age", "no_fum_bmi", "no_fum_children")
+b_0 <- c(fum_age$b_0, fum_bmi$b_0, fum_children$b_0, 
+         no_fum_age$b_0, no_fum_bmi$b_0, no_fum_children$b_0)
+b_1 <-c(fum_age$b_1, fum_bmi$b_1, fum_children$b_1, 
+         no_fum_age$b_1, no_fum_bmi$b_1, no_fum_children$b_1)
+r_sqr <- c(fum_age$r_sqr, fum_bmi$r_sqr, fum_children$r_sqr, 
+         no_fum_age$r_sqr, no_fum_bmi$r_sqr, no_fum_children$r_sqr)
+r_sqr_a <- c(fum_age$r_sqr_a, fum_bmi$r_sqr_a, fum_children$r_sqr_a, 
+         no_fum_age$r_sqr_a, no_fum_bmi$r_sqr_a, no_fum_children$r_sqr_a)
+         
+resultados <- data.frame(Tags, b_0, b_1, r_sqr, r_sqr_a)
+print(resultados)
+
+```
+## Resultados
+A partir de estos datos, el modelo lineal para los fumadores consiste en:
+$$charges_{fumadores} = -13186 + 1473 * bmi,\,  R^2 = 0.650,\, R^2 \, ajustado = 0.649$$
+Para los no fumadores:
+$$charges_{no\_fumadores} = -2091 + 267 * age,\,  R^2 = 0.394,\, R^2 \, ajustado = 0.393$$
+
+
+```{r, eval=TRUE}
+
+
+ggplot(fumadores, aes(x=bmi, y=charges)) +
+  geom_point(size=2, shape=23) +
+  geom_line(y = (fum_bmi[1, 1] + sort(fumadores$bmi) * fum_bmi[1, 2]))
+
+
+
+
+```
+
+
+```{r, eval=TRUE}
+ggplot(no_fumadores, aes(x=age, y=charges)) +
+  geom_point(size=2, shape=23) +
+  geom_line(y = (no_fum_age[1, 1] + sort(no_fumadores$age) * no_fum_age[1, 2]))
+```
+
+
 #### Parte II
 a) Entrene un modelo lineal multivariable escogiendo dos variables numéricas que posean la mayor relación con `charges`.
 b) Estudie si el modelo multivariable posee mejor desempeño que el modelo simple y comente los resultados. ¿Es recomendable la utilización de los modelos creados para la predicción de nuevas entradas?. Para este análisis puede utilizar los valores de test de hipótesis entregados por el comando `lm()`, ya que esto le servirá para observar si la regresión lineal es significativa.
 
 **Nota:** No esta permitido utilizar comandos que obtengan los valores solicitados directamente a menos que se le permita en la pregunta.
 
-```{r}
+```{r, eval=TRUE}
 lm_reg <- function(X, Y){
+  X$Intercepto = 1  
+  
+  X <- as.matrix(X)
+  Y <- as.matrix(Y)
+  
+  u1 <- solve(t(X) %*% X)
+  
+  u1 %*% t(X) %*% Y
+  
 }
 ```
 
+Usando la misma correlación y resultados de la primera parte de la pregunta:
+- Para fumadores se utilizarán los factores 'bmi' y 'age'.
+- Para no fumadores se utilizarán 'children' y 'age'.
 
-```{r}
-lm_reg(X,Y)
+```{r, eval=TRUE}
+res_fum <- lm_reg(fumadores[c(1, 2)], fumadores[c(5)])
+res_no_fum <- lm_reg(no_fumadores[c(1, 3)], no_fumadores[c(5)])
 
+res_fum_teorico_single <- lm(charges~bmi, fumadores)
+res_no_fum_teorico_single <- lm(charges~age, fumadores)
+summary(res_fum_teorico_single)$adj.r.squared
+summary(res_no_fum_teorico_single)$adj.r.squared
+
+
+res_fum_teorico <- lm(charges~age+bmi, fumadores)
+res_no_fum_teorico <- lm(charges~age+children, no_fumadores)
+summary(res_fum_teorico)$adj.r.squared
+summary(res_no_fum_teorico)$adj.r.squared
 ```
 
+Bajo la comparación con la fumción _lm()_ integrada en R, observamos que los valores son los correctos.
+Con respecto a si los modelos lineales con un factor son mejores predictores o no frente a aquellos modelos multivariable, la respuesta es que no. Los modelos multivariables presentan un coeficiente
+$R^2\,ajustado$ mayor a los de una variable, dándonos claves importantes de que en este caso predijeron los datos.
 
 &nbsp;
 <hr />
