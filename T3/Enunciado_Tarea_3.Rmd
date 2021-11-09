@@ -79,7 +79,7 @@ $$ Y(x) =  \left( \begin{array}{ll} \beta_{0} \\ \beta_{1} \end{array} \right)^T
 
 > Para el caso dos, este tiene a $\beta^2$ y $\beta^3$, como consecuencia del cubo del binomio. Con esto valores es imposible expresar la función como $Y = X \beta$.
 
-> Para el caso tres, este tiene una funcion logaritnica que impide separar a $\beta_{0}$ del resto de las expreciones y tambien impide expresar a la función como $Y = X \beta$.
+> Para el caso tres, este tiene una función logarítnica que impide separar a $\beta_{0}$ del resto de las expresiones y tambien impide expresar a la función como $Y = X \beta$.
 
 #### **Pregunta 2:**
 Una universidad esta interesada en saber cuantos alumnos gustan del anime, para esto realiza una recopilación de datos y llega a la construcción del siguiente modelo lineal simple:
@@ -95,7 +95,9 @@ En modelos de la vida real hay que tener cierto cuidado en los límites del mode
 #### **Pregunta 3:**
 Considere un test con dos muestras no aparejado, explique porque se hace una corrección a los grados de libertad en el test de Welsh.
 
-> El test de Welsh se utiliza para, al asignar grados de libertad, "castigar" diferencias entre números de conjuntos de test no apareados. Si se utiliase el métono comun (n-m) no influiría que cantidad de datos tiene cada conjunto, siendo esto de extrema relevancia para casos desiguales. 
+> El test de Welsh se utiliza para, al asignar grados de libertad, "castigar" diferencias entre números de conjuntos de test de dos muestras. Si se utilisa el métono común (n-m) no influiye que cantidad de datos tiene cada conjunto, siendo esto de extrema relevancia para casos desiguales.
+
+> Por ejemplo, si se tiene un test de dos muestras donde una muestra tiene muchos datos y la otra muy pocos. Para el método común, se tendría una gran confianza en los datos dado la cantidad total de los datos, lo cual, como sabemos, no sería correcto.
 
 
 #### **Pregunta 4:**
@@ -111,10 +113,14 @@ Discuta la siguiente frase:
 Hacer una regresión lineal mediante máxima verosimilitud requiere tener ciertas hipótesis probabilisticas de los datos, mientras que una regresión realizada mediante mínimos cuadrados no necesita tener ninguna hipótesis probabilista.
 "
 
-> Primero, es importante saber que ambos métodos son equivalentes en una regresión lineal, la máxima verosimilitud se alcanza solo si se minimiza el error cuadratico medio, y vice versa. De hecho, por medio del método de máxima veosilitud se obtiene que se debe minimizar el error cuadrático en una regresión, y para esto se asume la distribución del error de esta. 
+> Es importante saber que ambos métodos son equivalentes. En una regresión lineal la máxima verosimilitud se alcanza solo si se minimiza el error cuadratico medio, y vice versa. De hecho, por medio del método de máxima veosilitud se obtiene que se debe minimizar el error cuadrático en una regresión, y para esto se asume la distribución del error de esta. Y para utilizar este método se realizan asumen los siguientes puntos:
 
-> En resumen, la minimización del error cuadratico es un resultado de la máxima verosimilitud y de sus hipotesis. Además, es importante recalcar que la hipotesis coresponde a la distribución del error, no de los datos en si.
+  * Linealidad de los datos
+  * error con distribución gausiana
+  * varianza del error constante
+  * Error independiente
 
+> Como consecuencia de todo lo anterior, podemos decir que al utilizar la minimización del error cuadrado se están haciendo las mismas hipótesis realizadas para linealizar mediante máxima verosimilitud.
 
 #### **Pregunta 6:**
 
@@ -127,11 +133,32 @@ Explique porque el test de significancia sobre los parámetros de una regresión
 
 ¿Que nos dice la equivalencia de la máxima verosimilitud sobre los parámetros que componen una regresión lineal? ¿Qué nos permitirían calcular?
 
-> Asumiendo que el error entre la regresión lineal y los valores reales tiene un distribución gaussiana, se busca la máxima verosimilitud para este, la cual se alcanza cuando la suma de los erroes cuadraticos es mínima. 
+> Asumiendo que el error entre la regresión lineal y los valores reales tiene un distribución gaussiana, se busca la máxima verosimilitud para este, la cual se alcanza cuando la suma de los errores cuadraticos es mínima. 
 
-> Como consecuencia de esto se tiene que minimizar el error cuadratico para que el ajuste sea optimo y este tenga un error aleatorio (no sistemático).
+> Luego, los parámetros de linealización son escogidos de acuerdo a minimizar el error cuadrático medio. 
 
-> Los parámetros "$\beta$", tal cómo sabemos, son los interseptos del plano. Debido a las equivalencias explicadas estos resultan ser valores promedio, diferencias de promedios o valores base. 
+
+> Por ejemplo, para una regresión simple, se quiere tiene la siguiente linealización:
+
+$$
+h(x) = \beta_{0} + \beta_{1} \cdot x
+$$
+
+> Los parámetros escogidos deben ser los que minimicen el error cuadratico entre los datos reales y, y h(x).
+
+$$
+SSE = \sum_{i}^{n}(y - h(x))
+$$
+
+> En este caso, los parámetros que minimizan este errro son los siguientes: 
+
+$$
+\hat{\beta_{1}} = \frac{\sum_{i}^{n}(x_i - \bar{x}) (y_i - \bar{y})}{\sum_{i}^{n}(x_i - \bar{x})^2}
+$$
+
+$$
+\hat{\beta_{0}} = \bar{y} - \hat{\beta_{1}} \cdot \bar{x}
+$$
 
 
 ### **Pregunta 8**
@@ -206,7 +233,7 @@ Donde $\bar x$ es la media de la muestra, $\mu$ es la media de la población, $\
 
 Por otro lado, se utiliza Two-Sample cuando queremos comparar la media de dos muestras. El Z-score de Two-Sample se define con la ecuación:
 
-$$Z-score_{Two-Sample} = \dfrac{(\bar x_2 - \bar x_1) - (\mu_1 - \mu_2)}{\sqrt{\dfrac{\sigma_1^2}{\sqrt n_1}+\dfrac{\sigma_2^2}{\sqrt n_2}}}$$	
+$$Z-score_{Two-Sample} = \dfrac{(\bar x_2 - \bar x_1) - (\mu_1 - \mu_2)}{\sqrt{\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}}}$$	
 Donde $(\bar x_2 - \bar x_1)$ es la diferencia de las medias de la muestra, $(\mu_1 - \mu_2)$ la diferencia de las medias de la población, $\sigma_{1,2}$ la desviación estándar de la población y $n_{1,2}$ el tamaño de las muestras.
 
 ## Multiples Test
@@ -532,7 +559,7 @@ z_test <- function(data1=NULL, sigma1=0.5, data2=NULL, sigma2=0.5,
     mu_2 = mean(data2, na.rm=TRUE)
     n_1 = length(data1)
     n_2 = length(data2)
-    Z_score = (mu_2 - mu_1)/(sigma1/sqrt(n_1) +  sigma2/sqrt(n_2))
+    Z_score = (mu_2 - mu_1)/sqrt(((sigma1^2)/n_1 +  (sigma2^2)/n_2))
     # p-value
     if(test.type=='menor'){
       p_value = pnorm(Z_score)
@@ -562,28 +589,31 @@ z_test <- function(data1=NULL, sigma1=0.5, data2=NULL, sigma2=0.5,
 ```
 
 
-
-
 ```{r, eval=TRUE}
 vec_income_PhD <- df[df$Education == 'PhD', ]$Income
 vec_income_Master <- df[df$Education == 'Master', ]$Income
 vec_income_Graduation <- df[df$Education == 'Graduation', ]$Income
-#vec_income_PhD = filter(df, Education == 'PhD')$Income 
-#vec_income_Master = filter(df, Education == 'Master')$Income 
-#vec_income_Graduation = filter(df, Education == 'Graduation')$Income 
+
+sigma_PhD = 20615
+sigma_Master = 20160
+sigma_Graduation = 28180
 
 
 z.test.multiple_testing <- function(){
   print('Comprobar si la media de los ingresos para la variable Graduation es similar a 52000.')
-  p_value_1 = z_test(data1=vec_income_Graduation, sigma1=28180, mu.Ha=52000, test.type='two-sided', verbose=TRUE)
+  p_value_1 = z_test(data1=vec_income_Graduation, sigma1=sigma_Graduation, mu.Ha=52000, test.type='two-sided', verbose=TRUE)
 
   print('Compruebe si la diferencia entre los ingresos de las personas con el grado académico `Graduation` y `Master` es cercana a cero')
-  p_value_2 = z_test(data1=vec_income_Graduation, sigma1=28180, data2=vec_income_Master, sigma2=20160, test.type='two-sided', verbose=TRUE)
+  p_value_2 = z_test(data1=vec_income_Graduation, sigma1=sigma_Graduation, data2=vec_income_Master, sigma2=sigma_Master, test.type='two-sided', verbose=TRUE)
 
   print('Compruebe si la diferencia entre los ingresos de las personas con el grado académico `Graduation` y `PhD` es cercana a cero')
-  p_value_3 = z_test(data1=vec_income_Graduation, sigma1=28180, data2=vec_income_PhD, sigma2=20615, test.type='two-sided', verbose=TRUE)
+  p_value_3 = z_test(data1=vec_income_Graduation, sigma1=sigma_Graduation, data2=vec_income_PhD, sigma2=sigma_PhD, test.type='two-sided', verbose=TRUE)
 }
 ```
+
+**Distribuciones**
+
+Antes de hacer el test se muestran las curvas de ingresosos utilizadas, esto con el fin de tener un mejor entendimiento de los resultados. Además, visualizar los datos ayuda a corroborar el sentido de estos.
 
 ```{r, eval=TRUE}
 
@@ -594,11 +624,31 @@ mean_income_Graduation = mean(vec_income_Graduation, na.rm=TRUE)
 length_income_PhD = length(vec_income_PhD)
 length_income_Master = length(vec_income_Master) 
 length_income_Graduation = length(vec_income_Graduation)
+
+
+x <- seq(0,140000,length=1000)
+plot(x, dnorm(x,mean=mean_income_Graduation,sd=sigma_Graduation), type = "l",lty=1,lwd=3, col = "blue", xlim=c(0,140000), ylim=c(0,0.00003), ylab = "Probabilidad", xlab = "Income", main="Distribuciones de sueldos según grado académico")
+lines(x, dnorm(x,mean=mean_income_Master,sd=sigma_Master), type = "l", col = "orange")
+lines(x, dnorm(x,mean=mean_income_PhD,sd=sigma_PhD), type = "l", col = "red")
+
+legend(100000, 0.00003, legend=c("Graduation", "Maste", "PhD"),
+       col=c("blue", "orange","red"), lty=1:2, cex=0.8)
+
 ```
+
+**Test**
+Se realiza el multitest definido anteriormente.
 
 ```{r, eval=TRUE}
 z.test.multiple_testing()
 ```
+
+Como resputado del test se tienen los siguientes resultados
+
+* Se rechaza que los valores estén distanciados. Se concluye que la variable Graduation es similar a 52000.
+* Se rechaza que los valores estén distanciados. Se concluye que la variable Graduation es similar a la variable Magister.
+* Se acepta que los valores están distnaciados. Se concluye que la variable Graduation es diferente a la variable PhD.
+
 
 ### Pregunta 3: Testeando multiples hipotesis y Bonferroni Correction
 
@@ -627,6 +677,8 @@ head(data)
 
 **Respuesta Aquí:**
 
+A continuación se tiene la función para calcular la probabilidad empírica de obtener un resultado signifiativo. Esta probabilidad depende del umbral del p valor ($\alpha$), el número de muestras (m), el número de experimentos (n) y el tipo de p valor utilizado (normal o Bonferroni). 
+
 ```{r, eval=TRUE}
 probEmpirica <- function(alpha,m,n=100, Bonferroni = FALSE){
   if (Bonferroni){
@@ -649,7 +701,46 @@ probEmpirica <- function(alpha,m,n=100, Bonferroni = FALSE){
 }
 ```
 
+A continuación se muestran los gráficos obtenidos de las distintas pruebas.
+
 **P valor**
+
+```{r, eval=TRUE}
+for (n in c(10,100,1000)){
+  largo_del_dataset = length(data$p.value)
+  prob_estimada <- c(1:largo_del_dataset)
+  prob_real <- c(1:largo_del_dataset)
+  alpha = 0.05
+  for (m in 1:largo_del_dataset){
+    prob_estimada[m] = 1-(1-alpha)^m
+    prob_real[m] = probEmpirica(alpha,m,n)
+  }
+  plot(c(1:m), prob_estimada, type = "l", col = "blue", xlim=c(1,m), ylim=c(0,1), ylab = "Probabilidad", xlab = "Número de muestras", main=
+         paste("Probabilidad de obtener un resultado significatívo, N = ",n))
+  lines(c(1:m), prob_real, type = "l", col = "orange")
+  legend(16, 0.2, legend=c("Probabilidad estimada", "Probabilidad real"),
+         col=c("blue", "orange"), lty=1:2, cex=0.8)
+}
+```
+
+¿Se parecen sus resultados?
+
+> Ambas son crecientes pero no se parecen mucho, la probabilidad empírica es mayor, alcanzando su límite mucho antes. 
+
+¿Que sucede cuando la cantidad de experimentos crece mucho?
+
+> La unica curva que cambia con la cantidad de experimentos (n) es la probabilidad empirica. Su curva se suavisa, esto porque converge a probabilidades dado la ley de los grandes números. 
+> A medida que aumenta el número de muestras (m) la probabilidad aumenta, lo cual tiene sentido porque aumenta la oportunidad de obtener un resultado significativo.
+
+¿Este comportamiento depende del valor de significancia $\alpha$?
+
+> El resultado empírico si depende del valor de $\alpha$, pero la forma de la curva sigue siendo similar.
+
+¿Es útil este método para la realización de múltiples test de hipótesis?
+
+> Si es útil, pero la gran desventaja se aprecia en que la curva empírica no coincide con la curva teórica. Podría ser mejor. 
+
+**P valor Bonferroni**
 
 ```{r, eval=TRUE}
 for (n in c(10,100,1000)){
@@ -668,6 +759,28 @@ for (n in c(10,100,1000)){
          col=c("blue", "orange"), lty=1:2, cex=0.8)
 }
 ```
+
+¿Mejoran los resultados?
+
+> Ahora los resultados empíricos son más cercanos a los estimados.
+
+¿Cual podría ser un problema si es que $m$ es muy grande?
+
+> Al multiplicarse m por el p valor, un m grande puede reducir la probabilidad de obtener resultados significativos. Un m muy grande puede anular mucho la probabilidad de obtener resultados significativos, es similar a disminuir $\alpha$.
+
+**Preguntas generales**
+¿Cuantos valores que originalmente se hubieran aceptado fueron rechazados si $\alpha = 0.05$?
+
+```{r, eval=TRUE}
+print(sum(alpha>=data$p.value))
+print(sum(alpha>=data$p.value.Bonferroni))
+```
+
+> Existen 6 valores que originalmente hubieran sido aceptados, pero con el cambio no lo fueron.
+
+¿Que implica esto sobre el nivel de falsos negativos de este metodo?
+
+> Bajo la definicion de que un positivo corresponde a un resultado significativo, esto implica un aumento en los falsos negativos. Esto se puede ver en el ejemplo anterior, donde valores positivos se transforman en valores negativos. 
 
 ---
 
