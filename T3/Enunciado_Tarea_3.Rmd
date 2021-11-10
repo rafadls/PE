@@ -106,6 +106,7 @@ Al realizar una regresión lineal simple con una variable categórica $(\beta_{0
 
 >La interpretación sería que por cada unidad de la categoría, el resultado final aumenta (o disminuye, si $\beta_{1} \cdot \text{categorica}) < 0$) en un valor de $\beta_{1}$.
 
+> La interpretación de la variable \beta_{1} es que corresponde a la diferencia entre valores de cada grupo en esa categoría. Por ejemplo, en un dataset con una categoría de "deportistas" y "no deportistas", una columna "proteína diaria ingerida" y otra "masa muscular", y considerando la función lineal: Masa muscular = \beta_{0} + \beta_{1} * proteína diaria ingerida, entonces \beta_{1} sería igual a la diferencia entre la proteína diaria ingerida de los deportistas y los no deportistas. Cabe destacar que la interpretación de \beta_{1} en el modelo implica que se está realizando un test de hipótesis sobre las variables que definen a la variable objetivo.
 #### **Pregunta 5:**
 Discuta la siguiente frase:
 
