@@ -402,7 +402,7 @@ power.z.test <- function(n1=NULL, sigma1=0.5,
 
 ```
 
-# Gráficos One-sided usando varios ejemplos modificando alpha. Se usó y modificó ligeramente el esqueleto de ejemplo.
+### Gráficos one-sample usando varios ejemplos modificando alpha. Se usó y modificó ligeramente el esqueleto de ejemplo.
 
 ```{r, eval=TRUE}
 one_sided <- power.z.test(n1=16, sigma1=16, mu.True=8, alfa=0.01)
@@ -413,7 +413,7 @@ plot(one_sided2$plot)
 plot(one_sided3$plot)
 ```
 
-# Gráficos Two-sided usando varios ejemplos modificando alpha.
+### Gráficos two-sample usando varios ejemplos modificando alpha.
 ```{r, eval=TRUE}
 two_sided <- power.z.test(n1=16, sigma1=16, n2=40, sigma2 = 25, mu.Ha=100 , mu.True=110, alfa=0.01)
 two_sided2 <- power.z.test(n1=16, sigma1=16, n2=40, sigma2 = 25, mu.Ha=100 , mu.True=110, alfa=0.05)
