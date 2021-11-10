@@ -106,7 +106,8 @@ Al realizar una regresión lineal simple con una variable categórica $(\beta_{0
 
 
 
-> La interpretación de la variable \beta_{1} es que corresponde a la diferencia entre valores de cada grupo en esa categoría. Por ejemplo, en un dataset con una categoría de "deportistas" y "no deportistas", una columna "proteína diaria ingerida" y otra "masa muscular", y considerando la función lineal: Masa muscular = \beta_{0} + \beta_{1} * proteína diaria ingerida, entonces \beta_{1} sería igual a la diferencia entre la proteína diaria ingerida de los deportistas y los no deportistas. Cabe destacar que la interpretación de \beta_{1} en el modelo implica que se está realizando un test de hipótesis sobre las variables que definen a la variable objetivo.
+> La interpretación de la variable $\beta_{1}$ es que corresponde a la diferencia entre valores de cada grupo en esa categoría. Por ejemplo, en un dataset con una categoría de "deportistas" y "no deportistas", una columna "proteína diaria ingerida" y otra "masa muscular", y considerando la función lineal: $Masa \, muscular = \beta_{0} + \beta_{1} \cdot proteína \, diaria \, ingerida$, entonces $\beta_{1}$ sería igual a la diferencia entre la proteína diaria ingerida de los deportistas y los no deportistas. Cabe destacar que la interpretación de $\beta_{1}$ en el modelo implica que se está realizando un test de hipótesis sobre las variables que definen a la variable objetivo.
+
 #### **Pregunta 5:**
 Discuta la siguiente frase:
 
@@ -127,7 +128,7 @@ Hacer una regresión lineal mediante máxima verosimilitud requiere tener cierta
 
 Explique porque el test de significancia sobre los parámetros de una regresión lineal se realiza bajo la hipótesis nula $\beta_{H_{0}}=0$.
 
-> Principalmente porque se desea *rechazar* la hipótesis nula de que $\beta_{H_{0}}=0$ para $beta_0$ o "intercepto" y $beta_1$ o "la pendiente". Entonces, al rechazar la hipótesis nula de que $beta_0 = 0$ se está "diciendo" que al inicio de la función, en $x=0$, el valor es muy diferente de 0 con cierto nivel de confianza. Por otro lado, al rechazar la hipótesis nula de que $beta_1 = 0$, significa que existe una relación lineal entre la variable y el objetivo.
+> Principalmente porque se desea *rechazar* la hipótesis nula de que $\beta_{H_{0}}=0$ para $\beta_0$ o "intercepto" y $\beta_1$ o "la pendiente". Entonces, al rechazar la hipótesis nula de que $\beta_0 = 0$ se está "diciendo" que al inicio de la función, en $x=0$, el valor es muy diferente de 0 con cierto nivel de confianza. Por otro lado, al rechazar la hipótesis nula de que $\beta_1 = 0$, significa que existe una relación lineal entre la variable y el objetivo.
 
 
 #### **Pregunta 7:**
