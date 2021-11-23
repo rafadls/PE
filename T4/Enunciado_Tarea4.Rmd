@@ -75,32 +75,44 @@ A continuación, se presentaran diferentes preguntas que abordan las temáticas 
 
 Explique cual es la diferencia fundamental entre la estadística bayesiana y frecuentista.
 
-> Respuesta Aquí
+> La estadistica frecentista tiene una interpretación de la probabilidad como la frecuencia con que un evento ocurre en el tiempo, es decir. La estadistica bayesiana tiene una interpretación sobre la probabilidad que tiene más que ver con el conocimiento que se tiene sobre un determinado evento, es decir, se combina conocimiento posterior y datos obtenidos.
+
+> Ambas estadsticas tienen como base su interpretación de la probabilidad, lo cual hace que esta sea la diferencia fundamental entre estas.
 
 #### **Pregunta 2:**
 
 Discuta la siguiente afirmación **La inferencia bayesiana permite fácilmente utilizar distintos tipos de información**.
 
-> Respuesta Aqui
+> La probabilidad bayesiana, toma en cuenta distintos tipos de información a la hora de calcular la distribución de probabilidad de un parámetro. Principalmente se toma en cuenta la probabilidad previa (puede ser conocimiento experto o una hipotesis) y la probabilidad que se obtiene de los datos. En conjunto, ambos tipos de información sirven para obtenet una probabilidad de salida, la cual puede ser vista como una atualización de la probabilidad previa. 
+
+> La probabilidad previa (prior probability) puede tener una distribución distinta a la de los datos, lo cual facilita la combinación de ambos.
+
 
 #### **Pregunta 3:**
 
 Explique la diferencia entre **prior probability** y **posterior probability**
 
-> Respuesta Aquí
+> **prior probability:** Corresponde a la probabilidad que se cree o se tiene antes de evaluar los datos. Esta puede ser una suposición o tambien conocimiento experto. Esta probabilidad forma parte de la inferencia para obtener la **posterior probability**.
+
+> **posterior probability:** Corresponde a la probabilidad que se obtiene luego de evaluar los datos. Esta es la probabilidad que se busca obtener.
+
+> En resumen, su diferencia radica en como se obtienen y la función que cumplen en la inferencia bayesiana.
 
 #### **Pregunta 4:**
 
 El estadista bayesiano "Bruno Finetti" menciona la siguiente frase en su libro de probabilidad:  **La probabilidad no existe**. Lo que en verdad quizo decir es que la probabilidad es un método para describir incertidumbre en un observador con conocimiento limitado. Discuta esta información utilizando el ejemplo del lanzamiento del globo terraqueo visto en clases. ¿Que significa decir "la probabilidad de que sea agua es 0.7"?
 
-> Respuesta Aquí
+> La frase "la probabilidad de que sea agua es 0.7" no significa que este sea un valor constante que se encontró y siempre será así. La probabilidad tiene una distribución que depende del conocimiento previo y de los datos obtenidos. 
 
+> En consecuencia, esta frase significa que hasta ahora, en base al conocimiento previo y a los datos, se puede utilizar este valor de probabilidad, el cual viene dado por el conocimiento. 
 
 #### **Pregunta 5:**
+
 ¿ Que ventaja entrega que la distribución de la posterior este en la misma familia de distribución de probabilidad que la del prior?. De un ejemplo de alguna distribución que posee este comportamiento.
 
-> Respuesta Aquí
+> Si ambos, prior y posterior, tienen igual distribución, eso quiere decir que en cada iteración se irá ajustando la curva. Gracias a esto se verá una convergencia de los parametros de la distribución. 
 
+> En un caso contrario, donde prior y posterior tienen distribuciones distintas, la convergencia se complica y el resultado no necesariamente será de una distribución conocida.
 
 #### **Pregunta 6:**
 Señale y explique los pasos de la *grid approximation* para obtener la posterior y responda las siguientes preguntas:
@@ -108,7 +120,17 @@ Señale y explique los pasos de la *grid approximation* para obtener la posterio
 a. ¿Cual de los pasos señalados nos permite obtener una distribución de la posterior mas precisa?.
 b. Cuales son las limitaciones de la *grid approximation*.
 
-> Respuesta Aquí
+> A continuación se explican los pasos de la *grid approximation*
+
+* 1. Definir grilla: Definir la discretización a realizar
+* 2. Evaluar grilla: Calcular el prior para cada valor de la grilla
+* 3. Calcular likelihood en para cada grilla
+* 4. Multiplicar cada prior con su likelihood (para cada valor de grilla)
+* 5. Dividir el arreglo resultante en la suma total, es decir, normalizar
+
+> a. En el primer paso se decide la discretización, es decir, la precisión de la grilla con respecto a la curva real.
+
+> b. Cuando se tiene un gran número de variables este método se vuelve inviable, ya que se debe hacer grilla por cada parámetro del sistema. Esto tiene un limite computacional por debajo de otros métodos.
 
 
 #### **Pregunta 7:**
