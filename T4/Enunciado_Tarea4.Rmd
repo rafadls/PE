@@ -138,7 +138,9 @@ b. Cuales son las limitaciones de la *grid approximation*.
 
 ¿ Por qué es necesario aprender a trabajar con muestras de la posterior?.
 
-> Respuesta Aquí
+> Debido a que el método más utilizado y con mejor desempeño para calcular aproximaciones
+de varios parámetros, multiniveles y más complejas de la Posterior es el método de Monte Carlo usando Cadenas de Markov. Y esto es importante ya que éste método no devuelve la distribución de posterior directamente, si no que precisamente devuelve una muestra.
+
 
 
 #### **Pregunta 8:**
@@ -150,7 +152,23 @@ Señale si las siguientes afirmaciones son verdaderas o falsas, en el caso que s
 
 - [ ] La principal ventaja de HPDI frente a un intervalo de credibilidad es que si la posterior no distribuye de forma normal, el HPDI será capaz de detectar los puntos de interés, mientras que un intervalo de credibilidad lo ignoraría al asumir simetría.
 
-> Respuesta Aqui
+- [F] Los point estimates de la posterior no entregan información relevante en un estudio. 
+
+> Falso, si bien es cierto que los point estimates reducen un montón la información relevante 
+de un estudio, dado que proporcionan información bastante comprimida del fenómeno que se está estudiando, los point estimates nos pueden ofrecer información importante de manera resumida antes 
+de inspeccionar con mayor ahínco los datos. El máximo estimado de la posteriores, por ejemplo, nos 
+daría un primer acercamiento a valores importantes del modelo, como la simetría de la distribución.
+Pese a lo anterior, siempre es recomendable dar la mayor cantidad de información posible de la distribución, y no quedarse sólo con los point estimates, si no también con otros estimadores, como
+funciones de densidad, HPDI, etc..
+
+- [F] Un intervalo de confianza  es un intervalo dentro del cual un valor de parámetro no observado cae con una probabilidad particular, mientras que un intervalo de credibilidad es un rango de valores en el que se estima que estará cierto valor desconocido.
+
+> Con respecto al intervalo de confianza falta agregar que este intervalo aparece luego de repetir infinitamente la sample distribution del expertimento, y este cae con cierta frecuencia dentro del rango.
+Para el intervalo de credibilidad, no es sobre cierto valor desconocido, sino más bien una cantidad específica de la probabilidad de Posterior.
+
+
+- [V] La principal ventaja de HPDI frente a un intervalo de credibilidad es que si la posterior no distribuye de forma normal, el HPDI será capaz de detectar los puntos de interés, mientras que un intervalo de credibilidad lo ignoraría al asumir simetría.
+
 
 
 #### **Pregunta 9** 
@@ -169,7 +187,68 @@ Suponga que usted esta intentando determinar la especie de un panda que que tien
 Se administra el test y se obtiene un resultado positivo a la especie $1$. Sin utilizar la información en $D$ calcule la probabilidad posterior de que su panda sea de la especie $1$. Repita sus cálculos utilizando la información recopilada en $D$. ¿En que varían sus resultados?
 
 
-> Respuesta Aqui
+(1)
+
+Usando el teorema de Bayes, nos enfocamos en obtener los parámetros del teorema:
+
+"Cada una de las especies es igual de común":
+
+$$\mathbb{P}(\theta_1) = \mathbb{P}(\theta_2)  = 0.5$$ 
+Se calcula la probabilidad de cada tipo de panda dado los datos.
+$$\mathbb{P}(D|\theta_1) = 0.1,\, \mathbb{P}(D|\theta_2) = 0.2$$
+
+Se calcula la probabilidad de los datos, sin información adicional.
+$$ \mathbb{P}(D) = \mathbb{P}(D|\theta_1) \cdot \mathbb{P}(\theta_1) + \mathbb{P}(D|\theta_2) \cdot \mathbb{P}(\theta_2) = 0.5 \cdot 0.1 + 0.5\cdot0.2 = 0.15$$
+Por ello, usando el teoréma Bayesiano:
+
+$$\mathbb{P}(\theta_1|D) = \frac{\mathbb{P}(D|\theta_1) \cdot \mathbb{P}(\theta_1)}{\mathbb{P}(D) }
+= \frac{0.5 \cdot 0.1}{0.15} = 0.\overline{3}$$
+
+
+(2) 
+
+
+Usando la misma metodología anterior:
+
+$$ \mathbb{P}(D|\theta_1) = 0.1 \cdot 0.9 = 0.09, \, \mathbb{P}(D|\theta_2) = 0.2 \cdot 0.8 = 0.16$$
+$$\mathbb{P}(D) = \mathbb{P}(D|\theta_1) \cdot \mathbb{P}(\theta_1) + \mathbb{P}(D|\theta_2) \cdot \mathbb{P}(\theta_2) = 0.5 \cdot 0.09 + 0.5\cdot0.16 = 0.125$$
+$$\mathbb{P}(\theta_1|D) = \frac{\mathbb{P}(D|\theta_1) \cdot \mathbb{P}(\theta_1)}{\mathbb{P}(D) }
+= \frac{0.5\cdot 0.09}{0.125} = 0.36$$
+
+Los resultados muestran que aumenta la probabilidad de que sea un panda tipo $\theta_1$, dado que este nuevo trozo de información lo favorece.
+
+
+(3)
+
+Es posible que el test haya obtenido un resultado positivo de dos maneras:
+- Correctamente eligió a $\theta_1.\,  \mathbb{P} \to 0.8$.
+- Incorrectamente no eligió a $\theta_2.\, \mathbb{P}  \to (1 - 0.65) = 0.35$.
+Y viceversa para el $\theta_2$.
+
+Siguiendo el mismo procedimiento bayesiando de las preguntas anteriores:
+
+$$\mathbb{P}(\theta_1) = 0.5, \,\mathbb{P}(\theta_2) = 0.5$$
+
+
+$$\mathbb{P}(T|\theta_1) = 0.8, \,\mathbb{P}(T|\theta_2) = 0.65$$
+$$\mathbb{P}(T) = \mathbb{P}(T|\theta_1) \cdot \mathbb{P}(\theta_1) + \mathbb{P}(T|\theta_2) \cdot \mathbb{P}(\theta_2) = 0.5 \cdot 0.8 + 0.5\cdot 0.65 = 0.725$$
+
+
+Entonces la probabilidad de que sea $\theta_1$ es:
+
+$$\mathbb{P}(\theta_1|T) = \frac{\mathbb{P}(T|\theta_1) \cdot \mathbb{P}(\theta_1)}{\mathbb{P}(T) } = \frac{0.8 \cdot 0.5}{0.725} = 0.551..$$
+Ahora se repetirán los cálculos considerando la información anterior, esto significa utilizar el Posterior como prior en nuestros cálculos:
+
+$$\mathbb{P}(\theta_1) = 0.\overline{3}, \,\mathbb{P}(\theta_2) = 0.\overline{6}$$
+
+
+$$\mathbb{P}(D|\theta_1) = 0.1, \,\mathbb{P}(D|\theta_2) = 0.2$$
+
+$$\mathbb{P}(D) = \mathbb{P}(D|\theta_1) \cdot \mathbb{P}(\theta_1) + \mathbb{P}(D|\theta_2) \cdot \mathbb{P}(\theta_2) = 0.8 \cdot 0.\overline{3}  + 0.65 \cdot 0.\overline{6} = 0.7$$
+
+$$\mathbb{P}(\theta_1|D) = \frac{\mathbb{P}(D|\theta_1) \cdot \mathbb{P}(\theta_1)}{\mathbb{P}(D) } = \frac{0.8 \cdot 0.\overline{3}}{0.7} = 0.38$$
+Calculando el Posterior de $\theta_1$ usando $D$, sabiendo previamente los resultados del test, que favorecen a $\theta_1$, el resultado muestra que $\theta_1$ es ahora más favorable que antes.
+
 
 
 ---
@@ -238,7 +317,139 @@ dataMoneda <- read.csv("moneda.csv", header = TRUE)
 - [ ] Calcule un intervalo de credibilidad al $50\%$, $75\%$ y $95\%$. ¿Como se puede interpretar los resultados? ¿Cual podría ser un problema al usar intervalos de credibilidad?.
 - [ ] Genere los intervalos HDPI para $50\%$, $75\%$ y $95\%$, compárelos con  los intervalos de credibilidad de la parte anterior. ¿En que se diferencian los intervalos de credibilidad con los HDPI?.
 
-> Respuesta Aqui
+
+```{r, eval=TRUE}
+
+grid_posterior <- function(wins, total, grid_size){
+  
+  grid <- seq(0, 1, length.out = grid_size)
+  prior <- rep(1, grid_size)
+  likehood <- dbinom(wins, total, prob=grid)
+  posterior <- likehood * prior
+  posterior <- posterior / sum(posterior)
+  #print(posterior)
+  list(posterior = posterior, grilla = grid)
+}
+
+
+total_list <- c(5, 10, 20, 50, 100, 200, 500, 1000)
+win_list <- c()
+
+for (total in total_list){
+  wins <- length(dataMoneda[1:total,][dataMoneda[1:total,] == 1])
+  win_list <- append(win_list, wins)
+}
+
+grid_detail = 900
+Posterior <- c()
+index_list <- c(1:length(total_list))
+for (i in index_list){
+  res <- grid_posterior(win_list[i], total_list[i],  grid_detail)
+  print(plot(res$grilla, res$posterior, type="b"))
+  
+}
+
+```
+A medida que más datos se van agregando a los cálculos, se observa que la distribución
+del Posterior se va consolidando en una opción más plausible y por lo tanto la curva
+está más concentrada en un valor más denso.
+
+
+
+```{r, eval=TRUE}
+
+
+library(rethinking)
+
+
+total_list <- c(5, 10, 20, 50, 100, 200, 500, 1000)
+win_list <- c()
+
+for (total in total_list){
+  wins <- length(dataMoneda[1:total,][dataMoneda[1:total,] == 1])
+  win_list <- append(win_list, wins)
+}
+
+grid_detail = 900
+Posterior <- c()
+index_list <- c(1:length(total_list))
+for (i in index_list){
+  globe.qa <- quap(
+  alist(
+    W ~ dbinom(W+L, p), 
+    p ~ dunif(0, 1)
+    ), 
+  data=list(W=win_list[i], L=(total_list[i] - win_list[i])))
+  precis(globe.qa)
+  sample.quap <- extract.samples(globe.qa)
+  #hist(sample.quap)
+  dens(sample.quap)
+  #res <- grid_posterior(win_list[i], total_list[i],  grid_detail)
+  #print(plot(res$grilla, res$posterior, type="b"))
+}
+
+
+
+```
+Con el método de Laplace, observamos el mismo comportamiento, si bien la librería rethinking muestra los resultados de una manera que más difícil de visualizar a lo largo de las iteraciones (la densidad se empieza a agrupar en intervalos cada vez más pequeños, de la misma manera que con el método Grid approximation)
+
+
+```{r, eval=TRUE}
+
+globe.qa <- quap(
+  alist(
+    W ~ dbinom(W+L, p), 
+    p ~ dunif(0, 1)
+    ), 
+  data=list(W=win_list[8], L=(total_list[8] - win_list[8])))
+  precis(globe.qa)
+  sample.quap <- extract.samples(globe.qa)
+  #hist(sample.quap)
+  dens(sample.quap)
+  prop_00_to_04 <- sum(sample.quap < 0.4)/length(sample.quap[, 1])
+  prop_04_to_07 <- sum(sample.quap > 0.4 & sample.quap < 0.7)/length(sample.quap[, 1])
+  prop_07_to_10 <- sum(sample.quap > 0.7 & sample.quap < 1.0)/length(sample.quap[, 1])
+  
+  #prop_07_to_1 <- c(quantile(sample.quap[, 1], 0.7), quantile(sample.quap[, 1], 1.0))
+```
+
+
+```{r, eval=TRUE}
+prop_00_to_04
+prop_04_to_07
+prop_07_to_10
+```
+
+Estos resultados expresan directamente que el 100% de la probabilidad del posterior (de que la moneda salga cara)
+se encuentra entre 0.4 y 0.7
+
+
+```{r, eval=TRUE}
+print("Intervalo de credibilidad al 50%")
+PI(sample.quap[, 1], prob=0.5)
+print("Intervalo de credibilidad al 75%")
+PI(sample.quap[, 1], prob=0.75)
+print("Intervalo de credibilidad al 95%")
+PI(sample.quap[, 1], prob=0.95)
+```
+La información que nos devuelve en este caso el intervalo de credibilidad, es que
+la mayoría de la densidad se encuentra concentrada entre el 0.52 y 0.58, lo cual es un rango de probabilidad bastante pequeño. Esto igual tiene sentido dado que se ha tirado una moneda (que lo más probable es que esté ligeramente cargada) tantas veces que existe bastante certidumbre sobre el Posterior más probable.
+
+El problema de los intervalos de credibilidad es que no se comportan bien cuando la probabiliad del posterior es asimétrico, esto porque puede que no contengan el valor más
+plausible dentro de sus rangos. Afortunadamente en este dataset, el comportamiento de la moneda está modelado de manera bastante simetrica respecto a las dos salidas, por lo que no vemos este problema.
+
+
+```{r, eval=TRUE}
+print("HPDI al 50%")
+HPDI(sample.quap[, 1], prob=0.5)
+print("HPDI al 75%")
+HPDI(sample.quap[, 1], prob=0.75)
+print("HPDI al 95%")
+HPDI(sample.quap[, 1], prob=0.95)
+```
+
+Los valores obtenidos con este método más estable frente a densidades no simétricas son bastante parecidos a los anteriores, lo que nos demuestra de manera más analítica que la densidad de probabilidad del Posterior es simétrica o tiene un nivel muy bajo de $skewness$.
+---
 
 ---
 
@@ -261,7 +472,66 @@ En base a los datos, realice los siguientes puntos:
 
 - [ ] Como se comento en el comienzo `bites_month1` contiene las mordidas señaladas por un conjunto de personas en el primer mes. Haciendo uso de `bites_month2`, obtenga la posterior de que una persona que fue mordida en el primer mes, sea mordida nuevamente en el segundo mes. Para esto, se recomienda comenzar buscando los carteros que fueron mordidos el primer mes y en base a estos generar una búsqueda indexada para obtener el número solicitado. Hecho esto, simule ese número carteros mordidos 10.000 veces. De los resultados obtenidos, compare el recuento de carteros mordidos con el recuento real. ¿Cómo se ve el modelo desde este punto de vista?
 
-> Respuesta Aqui
+Pregunta 1:
+
+```{r, eval=TRUE}
+df_2 <- c(df[, 1], df[, 2])
+mordidos <- df_2[df_2 == 1]
+cant_mordidos <- length(mordidos)
+cant_no_mordidos <- length(df_2) - cant_mordidos
+cant_muestra <- length(df_2)
+
+p2_res <- grid_posterior(cant_mordidos, cant_muestra, 10000)
+grilla <- p2_res$grilla
+post   <- p2_res$posterior
+index <- which.max(post)
+max_posterior <- grilla[index]
+#print(plot(p2_res$grilla, p2_res$posterior, type="b"))
+
+print(paste("Maximo valor de la posterior:" , as.character(max_posterior)))
+
+```
+(2)
+
+```{r, eval=TRUE}
+pred_list = c(1:10000)
+for (i in c(1:10000)){
+  
+  pred_list[i] <-  rbinom(1, size=500, prob=max_posterior)
+}
+hist(pred_list)
+
+```
+En observación de los datos, y considerando que el número real de los datos es 248 carteros mordidos, la distribución se ajusta correctamente a los datos, es decir, la observación real se predice en estos resultados. Por ejemplo al calcular la media (248.2) del histograma, su valor está extremadamente cercano del valor real, y además se encuentra como valor central del histograma.
+
+
+
+(3)
+
+```{r, eval=TRUE}
+# Calculamos cuantos fueron mordidos en el primer mes dado que fueron mordidos en el segundo, y su inverso.
+primer_mes_dado_mordido_segundo <- df[, 1][df[, 2] == 1]
+mordidos_mes1_dado_mordido_mes2 <- length(primer_mes_dado_mordido_segundo[primer_mes_dado_mordido_segundo == 1])
+no_mordidos_mes1_dado_mordido_mes2 <- length(df[, 1]) - mordidos_mes1_dado_mordido_mes2
+
+# Calculamos el posterior usan grid approximation
+p3_res <- grid_posterior(mordidos_mes1_dado_mordido_mes2, length(df[, 1]), 10000)
+p3_grilla <- p3_res$grilla
+p3_post   <- p3_res$posterior
+p3_index <- which.max(p3_post)
+p3_max_posterior <- p3_grilla[p3_index]
+
+# Generamos la simulacion en base a ese posterior 10000 veces
+p3_pred_list = c(1:10000)
+for (i in c(1:10000)){
+  
+  p3_pred_list[i] <-  rbinom(1, size=length(df[, 1]), prob=p3_max_posterior)
+}
+hist(p3_pred_list)
+```
+
+Nuevamente observamos que los datos se ajustan al valor real, de igual manera existe cierta incertibumbre con respecto al valor central, y por lo tanto se observan dentro de estas 10000 iteraciones, que carteros que también fueron mordidos el segundo mes, dado que fueron mordidos también el primero, en un rango de +/- 10 personas. 
+
 
 ---
 
