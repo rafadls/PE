@@ -76,28 +76,28 @@ A continuación, se presentaran diferentes preguntas que abordan las temáticas 
 
 Explique cual es la diferencia fundamental entre la estadística bayesiana y frecuentista.
 
-> La estadistica frecentista tiene una interpretación de la probabilidad como la frecuencia con que un evento ocurre en el tiempo, es decir, se requiere de repetir un experimento hasta converger a una probabilidad por grandes números. La estadistica bayesiana tiene una interpretación sobre la probabilidad que tiene más que ver con el conocimiento que se tiene sobre un determinado evento, es decir, se combina conocimiento posterior y datos obtenidos.
+> La estadistica frecuentista tiene una interpretación de la probabilidad como la frecuencia con que un evento ocurre en el tiempo, es decir, se requiere de repetir un experimento hasta converger a una probabilidad por ley de grandes números. La estadística bayesiana tiene una interpretación sobre la probabilidad que tiene más que ver con el conocimiento que se tiene sobre un determinado evento, es decir, se combina conocimiento y muestra de datos.
 
-> Ambas estadsticas tienen como base su interpretación de la probabilidad, lo cual hace que esta sea la diferencia fundamental entre estas.
+> Ambas estadísticas tienen como base su interpretación de la probabilidad, lo cual hace que esta sea la diferencia fundamental entre estas.
 
 #### **Pregunta 2:**
 
 Discuta la siguiente afirmación **La inferencia bayesiana permite fácilmente utilizar distintos tipos de información**.
 
-> La probabilidad bayesiana, toma en cuenta distintos tipos de información a la hora de calcular la distribución de probabilidad de un parámetro. Principalmente se toma en cuenta la probabilidad previa (puede ser conocimiento experto o una hipotesis) y la probabilidad que se obtiene de los datos. En conjunto, ambos tipos de información sirven para obtenet una probabilidad de salida, la cual puede ser vista como una atualización de la probabilidad previa. 
+> La probabilidad bayesiana, toma en cuenta distintos tipos de información a la hora de calcular la distribución de probabilidad de un parámetro. Principalmente se toma en cuenta la probabilidad previa (puede ser conocimiento experto o una hipótesis) y la probabilidad que se obtiene de los datos. En conjunto, ambos tipos de información sirven para obtenet una probabilidad de salida, la cual puede ser vista como una actualización de la probabilidad previa. 
 
-> La probabilidad previa (prior probability) puede tener una distribución distinta a la de los datos, esto facilita el manejo de hipotesis.
+> La probabilidad previa (prior probability) puede tener una distribución distinta a la de los datos, esto facilita el manejo de hipótesis.
 
 
 #### **Pregunta 3:**
 
 Explique la diferencia entre **prior probability** y **posterior probability**
 
-> **prior probability:** Corresponde a la probabilidad que se cree o se tiene antes de evaluar los datos. Esta puede ser una suposición o tambien conocimiento experto. Esta probabilidad forma parte de la inferencia para obtener la **posterior probability**.
+> **prior probability:** Corresponde a la probabilidad que se cree o se tiene antes de evaluar los datos. Esta puede ser una suposición o también conocimiento experto. Esta probabilidad forma parte de la inferencia para obtener la **posterior probability**.
 
 > **posterior probability:** Corresponde a la probabilidad que se obtiene luego de evaluar los datos. Esta es la probabilidad que se busca obtener.
 
-> En resumen, su diferencia radica en como se obtienen y la función que cumplen en la inferencia bayesiana.
+> En resumen, su diferencia radica en cómo se obtienen y la función que cumplen en la inferencia bayesiana.
 
 #### **Pregunta 4:**
 
@@ -111,9 +111,9 @@ El estadista bayesiano "Bruno Finetti" menciona la siguiente frase en su libro d
 
 ¿ Que ventaja entrega que la distribución de la posterior este en la misma familia de distribución de probabilidad que la del prior?. De un ejemplo de alguna distribución que posee este comportamiento.
 
-> Si ambos, prior y posterior, tienen igual distribución, eso quiere decir que en cada iteración se irá ajustando la curva. Gracias a esto se verá una convergencia de los parametros de la distribución. En un caso contrario, donde prior y posterior tienen distribuciones distintas, la convergencia se complica y el resultado no necesariamente será de una distribución conocida.
+> Si ambos, prior y posterior, tienen igual distribución quiere decir que los datos tienen esta misma distribución. Es decir, la concordancia entre estos nos indica que los datos coinciden con el conocimiento actual. Por otro lado, que la prior y la likelihood tengan igual distribución nos indica que a medida que aumente la muestra el prior irá ajustando sus parámetros, conservando la distribución de sus dos entradas. 
 
-> Por ejemplo, si se tiene una distribución gaussiana para **prior probability** y **posterior probability**, lo que ocurrirá es que los parámetros $\sigma$ y $\mu$ serán los que se ajustarán.
+> Por ejemplo, si se tiene una distribución gaussiana para **prior probability** y **posterior probability**, esto nos da un indicio que los datos de la muestra tienen esta misma distribución. Entonces, a medida que aumente la muestra los parámetros $\sigma$ y $\mu$ serán los que se ajustarán. Todo esto hasta converger. 
 
 #### **Pregunta 6:**
 Señale y explique los pasos de la *grid approximation* para obtener la posterior y responda las siguientes preguntas:
