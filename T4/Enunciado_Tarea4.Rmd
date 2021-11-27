@@ -3,6 +3,7 @@ title: "Tarea 4"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ![](banner.png)
@@ -178,7 +179,7 @@ En la siguiente sección deberá resolver cada uno de los experimentos computaci
 
 Para el desarrollo preste mucha atención en los enunciados, ya que se le solicitará la implementación de métodos sin uso de funciones predefinidas. Por otro lado, Las librerías permitidas para desarrollar de la tarea 4 son las siguientes:
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 # Manipulación de estructuras
 library(tidyverse)
 library(dplyr)
@@ -186,7 +187,7 @@ library(tidyr)
 library(purrr)
 
 # Para realizar plots
-# library(scatterplot3d)
+library(scatterplot3d)
 library(ggplot2)
 library(plotly)
 
