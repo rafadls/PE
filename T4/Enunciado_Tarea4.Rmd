@@ -11,8 +11,8 @@ output:
 <center><strong>CC6104: Statistical Thinking</strong></center>
 #### **Integrantes :** 
 
-- Alumno 1
-- Alumno 2
+- Rafael De La Sotta
+- Felipe Ortúzar
 
 #### **Cuerpo Docente:**
 
@@ -75,7 +75,7 @@ A continuación, se presentaran diferentes preguntas que abordan las temáticas 
 
 Explique cual es la diferencia fundamental entre la estadística bayesiana y frecuentista.
 
-> La estadistica frecentista tiene una interpretación de la probabilidad como la frecuencia con que un evento ocurre en el tiempo, es decir. La estadistica bayesiana tiene una interpretación sobre la probabilidad que tiene más que ver con el conocimiento que se tiene sobre un determinado evento, es decir, se combina conocimiento posterior y datos obtenidos.
+> La estadistica frecentista tiene una interpretación de la probabilidad como la frecuencia con que un evento ocurre en el tiempo, es decir, se requiere de repetir un experimento hasta converger a una probabilidad por grandes números. La estadistica bayesiana tiene una interpretación sobre la probabilidad que tiene más que ver con el conocimiento que se tiene sobre un determinado evento, es decir, se combina conocimiento posterior y datos obtenidos.
 
 > Ambas estadsticas tienen como base su interpretación de la probabilidad, lo cual hace que esta sea la diferencia fundamental entre estas.
 
@@ -85,7 +85,7 @@ Discuta la siguiente afirmación **La inferencia bayesiana permite fácilmente u
 
 > La probabilidad bayesiana, toma en cuenta distintos tipos de información a la hora de calcular la distribución de probabilidad de un parámetro. Principalmente se toma en cuenta la probabilidad previa (puede ser conocimiento experto o una hipotesis) y la probabilidad que se obtiene de los datos. En conjunto, ambos tipos de información sirven para obtenet una probabilidad de salida, la cual puede ser vista como una atualización de la probabilidad previa. 
 
-> La probabilidad previa (prior probability) puede tener una distribución distinta a la de los datos, lo cual facilita la combinación de ambos.
+> La probabilidad previa (prior probability) puede tener una distribución distinta a la de los datos, esto facilita el manejo de hipotesis.
 
 
 #### **Pregunta 3:**
@@ -102,17 +102,17 @@ Explique la diferencia entre **prior probability** y **posterior probability**
 
 El estadista bayesiano "Bruno Finetti" menciona la siguiente frase en su libro de probabilidad:  **La probabilidad no existe**. Lo que en verdad quizo decir es que la probabilidad es un método para describir incertidumbre en un observador con conocimiento limitado. Discuta esta información utilizando el ejemplo del lanzamiento del globo terraqueo visto en clases. ¿Que significa decir "la probabilidad de que sea agua es 0.7"?
 
-> La frase "la probabilidad de que sea agua es 0.7" no significa que este sea un valor constante que se encontró y siempre será así. La probabilidad tiene una distribución que depende del conocimiento previo y de los datos obtenidos. 
+> La frase "la probabilidad de que sea agua es 0.7" no significa que este sea un valor constante que se encontró y siempre será así. La probabilidad tiene una distribución que depende del **conocimiento** previo y de los datos obtenidos. 
 
-> En consecuencia, esta frase significa que hasta ahora, en base al conocimiento previo y a los datos, se puede utilizar este valor de probabilidad, el cual viene dado por el conocimiento. 
+> En consecuencia, esta frase significa que hasta ahora, en base al conocimiento previo y a los datos, se puede estimar este valor de probabilidad, el cual viene dado por el conocimiento actual y está asociado a **certeza** de ocurrencia más que un valor determinado. 
 
 #### **Pregunta 5:**
 
 ¿ Que ventaja entrega que la distribución de la posterior este en la misma familia de distribución de probabilidad que la del prior?. De un ejemplo de alguna distribución que posee este comportamiento.
 
-> Si ambos, prior y posterior, tienen igual distribución, eso quiere decir que en cada iteración se irá ajustando la curva. Gracias a esto se verá una convergencia de los parametros de la distribución. 
+> Si ambos, prior y posterior, tienen igual distribución, eso quiere decir que en cada iteración se irá ajustando la curva. Gracias a esto se verá una convergencia de los parametros de la distribución. En un caso contrario, donde prior y posterior tienen distribuciones distintas, la convergencia se complica y el resultado no necesariamente será de una distribución conocida.
 
-> En un caso contrario, donde prior y posterior tienen distribuciones distintas, la convergencia se complica y el resultado no necesariamente será de una distribución conocida.
+> Por ejemplo, si se tiene una distribución gaussiana para **prior probability** y **posterior probability**, lo que ocurrirá es que los parámetros $\sigma$ y $\mu$ serán los que se ajustarán.
 
 #### **Pregunta 6:**
 Señale y explique los pasos de la *grid approximation* para obtener la posterior y responda las siguientes preguntas:
@@ -186,13 +186,14 @@ library(tidyr)
 library(purrr)
 
 # Para realizar plots
-library(scatterplot3d)
+# library(scatterplot3d)
 library(ggplot2)
 library(plotly)
 
 # Manipulación de varios plots en una imagen.
 library(gridExtra)
 
+library(rstan)
 # Análisis bayesiano
 library(rethinking)
 ```
@@ -272,19 +273,41 @@ Usted sabe un dato extra sobre la información, los valores de $\sigma$ en la gr
 
 - [ ] Modifique el siguiente código que permite realizar una grid approximation para $2$ parámetros. Proponga priors para $\mu$ y $\sigma$, justifique su elección.
 
+> Primero, se proponen distribuciones continuas para ambos priors:
 
-```r
+$
+f(\sigma)= \left\{ \begin{array}{lcc}
+             2/3 &   si  & x 0.5 \leq \sigma \leq 1.0 \\
+             \\ 1/3 &  si & 1.0 < \sigma \leq 1.5 \\
+             \\ 0 &    & otro
+             \end{array}
+   \right.
+$
+
+$
+f(\mu)= \left\{ \begin{array}{lcc}
+             1 &   si  & x 5 \leq \mu \leq 7 \\
+             \\ 0 &    & otro
+             \end{array}
+   \right.
+$
+
+> Luego en ambos casos se discretiza por medio del grid y luego se normalizan las probabiliades.
+
+
+
+```{r, eval=TRUE}
 # Leer información
 data_notas <- read.csv("notas.csv")
 
 # Función para crear likelihood dado mu y sigma
 grid_function <- function(mu,sigma){
-   .... # Funcion de likelihood
+   return(sum(dnorm(data_notas$Notas, mean=mu, sd=sigma)))
 }
 
 # Valores de la grilla
-grid_mu <- ...
-grid_sigma <- ...
+grid_mu <- seq( from=5 , to=7, length.out=100 )
+grid_sigma <- seq( from=0.5 , to=1.5 , length.out=100 )
 
 # Se crea la grilla 2d
 data_grid <- expand_grid(grid_mu,grid_sigma)
@@ -295,10 +318,9 @@ data_grid$likelihood <- map2(data_grid$grid_mu,data_grid$grid_sigma, grid_functi
 # Se transforma el forma de map2 a una columna
 data_grid <- unnest(data_grid,cols = c("likelihood"))
 
-
 # Valores de los priors
-prior_mu <- ...
-prior_sigma <-  ...
+prior_mu <- rep(1/length(grid_mu), times = 100)
+prior_sigma <- rep(c(2/(3*length(grid_sigma)/2), 1/(3*length(grid_sigma)/2)), each = length(grid_sigma)/2)
 
 # Se crea la grilla 2d de priors
 prior <- expand_grid(prior_mu,prior_sigma)
@@ -318,14 +340,15 @@ data_grid$posterior <- (data_grid$posterior - min(data_grid$posterior))/(max(dat
 
 ```
 
+
 - [ ] Tras haber ejecutado el código de la parte anterior ejecute el siguiente, ¿Que puede decir de los valores de la distribución? Se recomienda hacer modificaciones en el código para realizar un mejor análisis y estudio.
 
 
-```r
+```{r, eval=TRUE}
 # Punto de referencia
 # Se recomienda cambiar estos valores por unos adecuados que le permitan estudiar
 # Los valores de la distribución de mejor manera
-valor_x <- 1
+valor_x <- 6.1
 valor_y <- 1
 
 # Grafico
@@ -343,8 +366,8 @@ plt <- data_grid %>%
     label = "Punto Comparación",
     fill = "green",
     color = "black",
-    nudge_y = 0, # Este parametro desplaza la caja por el eje y
-    nudge_x = 1 # Este parametro desplaza la caja por el eje x
+    nudge_y = 0.1, # Este parametro desplaza la caja por el eje y
+    nudge_x = -0.2 # Este parametro desplaza la caja por el eje x
   )+
   scale_fill_viridis_c() +
   labs(
@@ -360,7 +383,7 @@ plt
 - [ ] A continuación se presenta un código que permite realizara la distribución dada por sampling from grid approximation ¿Para que sirve este proceso? ¿Que puede deducir del gráfico?
 
 
-```r
+```{r, eval=TRUE}
 # Codificamos los datos
 x <- 1:length(data_grid$posterior)
 
@@ -377,8 +400,13 @@ df <- data.frame(posterior_samples$grid_mu,posterior_samples$grid_sigma)
 dens(df)
 ```
 
-> Respuesta Aqui
+* **¿Para que sirve este proceso?**
 
+> La distribución obtenida en el posterior puede tener una forma compleja de determinar con una formula. Una forma simple de enteneder la distrbución es por medio de muestras, con esto se evita obtener una expresión pero se entiende la distribución. Además, graias a la distribución de la muestra se puede aproximar a distribuciones conocidas.  
+
+* **¿Que puede deducir del gráfico?**
+
+> De este gráfico en particular se puede ver como se juntan los supuestos y la información contenida en los datos. El promedio parece tener una distribución gaussiana con media en 6.1. Por otro lado, sigma resulta obtener una distribución similar a la esperada, pero resaltando que existe un máximo en el 0.6 y que los valores tienen una tendencia decreciente. 
 
 &nbsp;
 <hr />
