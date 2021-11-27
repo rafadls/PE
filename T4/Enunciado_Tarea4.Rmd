@@ -459,7 +459,7 @@ El objetivo de esta pregunta es comprender el concepto de `sample prediction` vi
 
 Un conjunto de carteros aburridos de las mordidas de perros ha decidido realizar un catastro de mordidas recibidas por los empleados de su empresa en un periodo de dos meses, planeando en base a estos datos realizar inferencia bayesiana. Los datos de las mordidas estas datos por el dataset `no+mordidas.csv`, en donde cada fila representa las mordidas recibidas por diferentes carteros y las columnas señalan si fue mordido o no el cartero en los meses de estudio (notar que si fue mordido sera señalado con un 1, de lo contrario es señalado con un 0). Cabe señalar que un cartero no puede ser mordido mas de una vez al mes, ya que el damnificado recibe licencia por todos los días restantes del mes tras la mordida, reincorporándose el siguiente mes al trabajo.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 df = read.csv("no+mordidas.csv")
 head(df)
 ```
@@ -546,22 +546,23 @@ Usted sabe un dato extra sobre la información, los valores de $\sigma$ en la gr
 
 > Primero, se proponen distribuciones continuas para ambos priors:
 
-$
+$$
 f(\sigma)= \left\{ \begin{array}{lcc}
-             2/3 &   si  & x 0.5 \leq \sigma \leq 1.0 \\
+             2/3 &   si  & 0.5 \leq \sigma \leq 1.0 \\
              \\ 1/3 &  si & 1.0 < \sigma \leq 1.5 \\
              \\ 0 &    & otro
              \end{array}
-   \right.
-$
+\right.
+$$
 
-$
+
+$$
 f(\mu)= \left\{ \begin{array}{lcc}
              1 &   si  & x 5 \leq \mu \leq 7 \\
              \\ 0 &    & otro
              \end{array}
    \right.
-$
+$$
 
 > Luego en ambos casos se discretiza por medio del grid y luego se normalizan las probabiliades.
 
