@@ -139,7 +139,10 @@ b. Cuales son las limitaciones de la *grid approximation*.
 ¿ Por qué es necesario aprender a trabajar con muestras de la posterior?.
 
 > Debido a que el método más utilizado y con mejor desempeño para calcular aproximaciones
-de varios parámetros, multiniveles y más complejas de la Posterior es el método de Monte Carlo usando Cadenas de Markov. Y esto es importante ya que éste método no devuelve la distribución de posterior directamente, si no que precisamente devuelve una muestra.
+de varios parámetros, multiniveles y más complejas de la Posterior es el método de Monte Carlo usando Cadenas de Markov.
+ Y esto es importante ya que éste método no devuelve la distribución de posterior directamente, si no que precisamente devuelve una muestra.
+ Por último, es importante aclarar que bajo condiciones complejas del problema, es posible que no exista una solución analítica de la posterior, 
+ y que por ello aparecen métodos que obtienen un muestreo de la posterior, como MCMC.
 
 
 
@@ -161,7 +164,7 @@ daría un primer acercamiento a valores importantes del modelo, como la simetrí
 Pese a lo anterior, siempre es recomendable dar la mayor cantidad de información posible de la distribución, y no quedarse sólo con los point estimates, si no también con otros estimadores, como
 funciones de densidad, HPDI, etc..
 
-- [F] Un intervalo de confianza  es un intervalo dentro del cual un valor de parámetro no observado cae con una probabilidad particular, mientras que un intervalo de credibilidad es un rango de valores en el que se estima que estará cierto valor desconocido.
+- [F] Un intervalo de confianza es un intervalo dentro del cual un valor de parámetro no observado cae con una probabilidad particular, mientras que un intervalo de credibilidad es un rango de valores en el que se estima que estará cierto valor desconocido.
 
 > Con respecto al intervalo de confianza falta agregar que este intervalo aparece luego de repetir infinitamente la sample distribution del expertimento, y este cae con cierta frecuencia dentro del rango.
 Para el intervalo de credibilidad, no es sobre cierto valor desconocido, sino más bien una cantidad específica de la probabilidad de Posterior.
@@ -502,6 +505,7 @@ for (i in c(1:10000)){
 hist(pred_list)
 
 ```
+
 En observación de los datos, y considerando que el número real de los datos es 248 carteros mordidos, la distribución se ajusta correctamente a los datos, es decir, la observación real se predice en estos resultados. Por ejemplo al calcular la media (248.2) del histograma, su valor está extremadamente cercano del valor real, y además se encuentra como valor central del histograma.
 
 
