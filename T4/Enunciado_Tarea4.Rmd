@@ -394,6 +394,7 @@ for (i in index_list){
 
 
 ```
+
 Con el método de Laplace, observamos el mismo comportamiento, si bien la librería rethinking muestra los resultados de una manera que más difícil de visualizar a lo largo de las iteraciones (la densidad se empieza a agrupar en intervalos cada vez más pequeños, de la misma manera que con el método Grid approximation)
 
 
@@ -451,7 +452,9 @@ print("HPDI al 95%")
 HPDI(sample.quap[, 1], prob=0.95)
 ```
 
+
 Los valores obtenidos con este método más estable frente a densidades no simétricas son bastante parecidos a los anteriores, lo que nos demuestra de manera más analítica que la densidad de probabilidad del Posterior es simétrica o tiene un nivel muy bajo de $skewness$.
+
 ---
 
 ---
