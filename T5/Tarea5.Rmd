@@ -79,7 +79,8 @@ A continuación, se presentaran diferentes preguntas que abordan las temáticas 
 
 Señale algunos beneficios (no mas de dos) que nos brinda realizar una regresión lineal bayesiana sobre una regresión ajustada por mínimos cuadrados.
 
-> Respuesta Aquí
+> 1.- La regresión Bayesiana permite entregar información previa (prior)
+> 2.- Dados los resultados (posterior) es posible analizar de mejor manera el grado de incertidubre de estos.
 
 
 #### **Pregunta 2:**
@@ -104,7 +105,24 @@ En base al modelo presentado, responda las siguientes preguntas:
 
 **Respuesta:**
 
-> Respuesta Aquí
+**Describa que representa cada una de las lineas del modelo.**
+
+* $y_i$ corresponde a la likelihood, la cual tiene distribución gaussiana.
+* $\mu$ corresponde a una variable que representa al modelo lineal.
+* $\beta_0$, $\beta_1$ y $\sigma$ corresponden a distribuciones esperadas, es decir, priors. $\beta_0$ y $\beta_1$ son gaussianas y $\sigma$ uniforme.
+
+**Señale los parámetros que conforman a la regresión lineal**
+
+> Los parámteros $\beta_0$ y $\beta_1$ son los interceptos de la regresión lineal. 
+
+
+**Que objetivo cumple en el modelo lineal tener una distribución $Normal(0,1)$ en el parámetro $\beta_1$**
+
+> El parámetro $\beta_1$ indica la relación entre $\mu$ y x, es por esto que se le entrega un rango de valores negativos y positivos, pasando por el cero, ya que existe la posibilidad de que la relación sea nula. 
+
+**Que propiedad de las regresiones lineales nos entrega $sigma$.**
+
+> $\sigma$ corresponde a la desviación estandar de la linalización, es decir, de $\mu$.
 
 #### **Pregunta 3:**
 
@@ -112,7 +130,16 @@ Explique de forma resumida como funciona el algoritmo de Laplace approximation u
 
 **Respuesta:**
 
-> Respuesta Aquí
+> Este método es conveniente mayormente para posteriores unimodales y simetrias, es decir, con distribuciónes aproximables por funciones gaussianas.
+
+> Laplace aproximation asume que el posterior tiene una distribución multivariable gaussiana. Esto se puede expresar de la siguiente forma:
+
+$$
+f(θ_1,..., θ_m|d) = N( \overrightarrow{\mu,} Σ).
+$$
+> Donde $$\overrightarrow{\mu,}$$ corresponde al vector de medias y $Σ$ a la matriz de covarianza.
+
+> Para este método no es necesario calcular el posterior normalizado, es decir, no se debe calcular f(d), lo cual es generalmente muy costoso de computar.
 
 #### **Pregunta 4:**
 Determine si las siguientes afirmaciones son verdaderas o falsas. Justifique las falsas.
@@ -122,6 +149,18 @@ Determine si las siguientes afirmaciones son verdaderas o falsas. Justifique las
 - [ ] El algoritmo de metropolis hasting y de Gibbs son el mismo algoritmo, pero este ultimo es una variante del primero.
 
 > Respuesta Aquí
+
+**[F] El algoritmo de metropolis hasting solo funciona si la probabilidad de saltar de B a A es la misma que de A a B**
+
+> El algoritmo de Metropolis trabaja con distribuciones simetricas, donde saltar de B a A es la misma que de A a B. Por su parte, el algoritmo de metropolis hasting es más general y permite distribuciones asimetrias del posterior.
+
+**[V] El algoritmo de Gibbs funciona en cualquier caso.**
+
+> El algoritmo de Gibbs, al ser una variante del algoritmo de Metropolis hasting, permite distribuciones asimetrias del posterior.
+
+**[V] El algoritmo de metropolis hasting y de Gibbs son el mismo algoritmo, pero este ultimo es una variante del primero.**
+
+> El algoritmo de Gibbs corresponde a una variante del algoritmo de Metropolis hasting. En esta variante se recorre un parámtero a la vez, igualando la "proposal distribution" al posterior.
 
 #### **Pregunta 5:**
 
