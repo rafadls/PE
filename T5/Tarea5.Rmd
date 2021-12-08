@@ -166,20 +166,22 @@ Determine si las siguientes afirmaciones son verdaderas o falsas. Justifique las
 
 El algoritmo de Gibbs es mas eficiente que el de metropolis hasting. ¿Como se logra este efecto? ¿Existe alguna limitante de esta estrategia?
 
-> Respuesta Aquí
+> La eficiencia viene de recorrer un parámtero a la vez, igualando la "proposal distribution" al posterior en el parámetro de turno. Con esto, la "proposal distribution" siempre es aceptada.
+
+> Este método tiene dos principales limitaciones. Primero, los casos donde no se quiete trabajar con priors conjugados. Segundo, lo casos donde se tiene un gran número de variables.
 
 
 #### **Pregunta 6:**
 
 De una ventaja y una desventaja del algoritmo HMC.
 
-> Respuesta Aquí
+> Como desventaja se tiene un mayor costo computacional, devido al trabajo con gradientes. Como ventaja, se tiene que es má eficiente al obtener respuestas, y como consecuencia requiere de menos datos para poder obtener buenos resultados.
 
 #### **Pregunta 7:**
 
 Nombre y explique dos propiedades que son deseables en una cadena de Markov.
 
-> Respuesta Aquí
+> Se desea que una cadena de Markov tenga **estacionalidad**, es decir, converger a la posterior y varíar en su vecindad. Además, se desea que sea aleatoria (well mixing), es decir, que no haya correlacion entre los datos, lo cual se representa como tendencias en el tiempo.
 
 #### **Pregunta 8:**
 Explique cómo cross-validation, criterios de información y regularización ayudan a mitigar o medir los problemas de underfitting y overfitting.
