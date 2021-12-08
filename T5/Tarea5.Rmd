@@ -113,7 +113,7 @@ En base al modelo presentado, responda las siguientes preguntas:
 
 **Señale los parámetros que conforman a la regresión lineal**
 
-> Los parámteros $\beta_0$ y $\beta_1$ son los interceptos de la regresión lineal. 
+> Los parámteros $\beta_0$ y $\beta_1$ son los interceptos de la regresión lineal. Por su parte, x corresponde a la entrada del modelo.
 
 
 **Que objetivo cumple en el modelo lineal tener una distribución $Normal(0,1)$ en el parámetro $\beta_1$**
@@ -137,7 +137,7 @@ Explique de forma resumida como funciona el algoritmo de Laplace approximation u
 $$
 f(θ_1,..., θ_m|d) = N( \overrightarrow{\mu,} Σ).
 $$
-> Donde $$\overrightarrow{\mu,}$$ corresponde al vector de medias y $Σ$ a la matriz de covarianza.
+> Donde $\overrightarrow{\mu,}$ corresponde al vector de medias y $Σ$ a la matriz de covarianza.
 
 > Para este método no es necesario calcular el posterior normalizado, es decir, no se debe calcular f(d), lo cual es generalmente muy costoso de computar.
 
