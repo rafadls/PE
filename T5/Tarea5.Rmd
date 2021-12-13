@@ -180,7 +180,7 @@ De una ventaja y una desventaja del algoritmo HMC.
 
 Nombre y explique dos propiedades que son deseables en una cadena de Markov.
 
-> Se desea que una cadena de Markov tenga **estacionalidad**, es decir, converger a la posterior y varíar en su vecindad. Además, se desea que sea aleatoria (well mixing), es decir, que no haya correlacion entre los datos, lo cual se representa como tendencias en el tiempo.
+> Se desea que una cadena de Markov tenga **estacionalidad**, es decir, converger a la posterior y variar en su vecindad. Además, se desea que sea aleatoria (well mixing), es decir, que no haya correlación entre los datos, lo cual se representa como tendencias en el tiempo.
 
 #### **Pregunta 8:**
 Explique cómo cross-validation, criterios de información y regularización ayudan a mitigar o medir los problemas de underfitting y overfitting.
@@ -193,6 +193,31 @@ Diseñe una DAG para un problema causal inventado por usted de al menos 5 nodos 
 
 > Respuesta Aquí
 
+
+```{r, eval=TRUE}
+#install.packages("dagitty")
+library("dagitty")
+
+my_dag <- dagitty('dag {
+bb="0,0,1,1"
+Caries [pos="0.644,0.745"]
+Edad [pos="0.645,0.430"]
+Frecuencia_lavado_dientes [pos="0.747,0.551"]
+Ida_al_dentista [pos="0.379,0.428"]
+Ingesta_azucar [pos="0.558,0.549"]
+Proteccion_fluor [pos="0.389,0.638"]
+Edad -> Frecuencia_lavado_dientes
+Edad -> Ingesta_azucar
+Frecuencia_lavado_dientes -> Caries
+Ida_al_dentista -> Proteccion_fluor
+Ingesta_azucar -> Caries
+Proteccion_fluor -> Caries
+}
+
+')
+
+plot(my_dag)
+```
 ---
 
 # Segunda Parte: Elaboración de Código<a name="id5"></a>
@@ -392,7 +417,130 @@ De ahora en adelante considere $\alpha = 5$ y $\beta = \frac{1}{5}$.
 
 **Respuesta:**
 
+
+```{r, eval=true}
+
+gamma_fun <- function(x, alpha, beta){
+  
+  if (x > 0){
+    (x ^ (alpha - 1)) * exp(-1*beta * x)
+    
+  }
+  else{
+    0
+  }
+}
+
+
+MCMC_g_fun <- function(repetitions, omega_i, alpha, beta){
+  
+  p_omega_t_minus_1 <- omega_i
+  #p_omega_a <- omega_i
+  historia <- c()
+  for(t in 1:repetitions){
+    
+    p_omega_a <- rnorm(1, mean=p_omega_t_minus_1, sd=1)
+
+
+    # Suppose we have r
+    gf_a <- gamma_fun(p_omega_a,         alpha, beta) 
+    gf_b <- gamma_fun(p_omega_t_minus_1, alpha, beta)
+    
+    r_gf <- gf_b / gf_a #gf_a / gf_b
+    
+    r  <- r_gf
+    #print("r")
+    #print(r)
+    if (rbinom(1, 1, min(1, r)) == 1){
+      p_omega_t <- p_omega_a
+    }
+    else{
+      p_omega_t <- p_omega_t_minus_1
+    }
+    
+    p_omega_a <- p_omega_t
+    historia <- append(historia, p_omega_a)
+    
+  }
+  
+  historia
+}
+
+
+```
+
+
+# P2 a)
+
+```{r, eval=TRUE}
+library("ggplot2")
+
+history <- MCMC_g_fun(1e2, 1, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+history <- MCMC_g_fun(1e3, 1, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+history <- MCMC_g_fun(1e4, 1, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+history <- MCMC_g_fun(1e5, 1, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+```
+
+
+```{r, eval=TRUE}
+
+history <- MCMC_g_fun(1e5, 1, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+history <- MCMC_g_fun(1e5, 0.1, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+history <- MCMC_g_fun(1e5, 0.3, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+history <- MCMC_g_fun(1e5, 0.5, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+```
+
 > Respuesta Aquí
+
+
+```{r, eval=TRUE}
+
+x <- seq(0, 4, 0.1)
+y <- sapply(x, gamma_fun, alpha=5, beta=1/5)
+mydf <- data.frame(x = x, res = y)
+
+plot(x, y)
+
+
+
+history <- MCMC_g_fun(1e4, 1, 5, 1/5)
+history <- data.frame("h_data" = history)
+ggplot(history, aes(x=h_data)) + 
+  geom_density()
+
+```
+
 
 &nbsp;
 <hr />
