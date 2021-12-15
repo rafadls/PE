@@ -3,6 +3,7 @@ title: "Tarea 5"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ![](banner.png)
@@ -225,7 +226,7 @@ En la siguiente sección deberá resolver cada uno de los experimentos computaci
 
 Para el desarrollo preste mucha atención en los enunciados, ya que se le solicitará la implementación de métodos sin uso de funciones predefinidas. Por otro lado, Las librerías permitidas para desarrollar de la tarea 4 son las siguientes:
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 # Manipulación de estructuras
 library(tidyverse)
 library(dplyr)
@@ -308,54 +309,58 @@ model1<-alist(
 
 * **Ajuste el modelo lineal utilizando el método de Laplace approximation**
 
+Se obtiene un valor $\beta_{0}$, tal como se esperaba, obtiene un valor cercano al promedio de los datos. Por su parte, $\beta_{1}$ obtiene un valor que muestra la relación entre el peso y la altura, que tal como se esperaba es positiva. Por último, $\sigma$ tiene un valor amplio, esto tiene sentido debido a que este estudio se realiza en edades de crecimiento. 
+
+
+
 ```{r, eval=TRUE}
-b.reg1 <- quap(model1, data=d1.hw)
+b.reg1 <- quap(model1, data=d.hw)
 precis(b.reg1, prob=0.95)
 ```
 
 * **Gráfique el MAP de regresión lineal obtenida**
+
+A continuación se muestra la regreción lineal obtenida. Los resultados no logran predecir correctamente los valores estudiados. Aun así, dada la linealización, es posible apreciar que se minimiza el error en relación con los datos.
+
 
 ```{r, eval=TRUE}
 # samples from the posterior
 post1 <- extract.samples( b.reg1, n= 1e4 )
 
 weight.seq1 <- seq( from=0 , to=50 , by=1 )
-mu.link1 <- function(weight) post$b0 + post$b1*weight
+mu.link1 <- function(weight) post1$b0 + post1$b1*weight
 mu1 <- sapply( weight.seq1 , mu.link1 )
 mu.mean1 <- apply( mu1 , 2 , mean )
 mu.HPDI1 <- apply( mu1 , 2 , HPDI , prob=0.95 )
 
 height.weight1 <- function(weight)
 rnorm(
-n=nrow(post) ,
-mean=post$b0 + post$b1*weight ,
-sd=post$sigma )
+n=nrow(post1) ,
+mean=post1$b0 + post1$b1*weight ,
+sd=post1$sigma )
 
 sim.height1 <- sapply( weight.seq1 , height.weight1)
 height.HPDI1 <- apply( sim.height1 , 2 , HPDI , prob=0.95 )
 
-# plot raw data
-plot( height ~ weight , data=d1.hw , col=col.alpha(rangi2,0.5) )
-# draw MAP line
+plot( height ~ weight , data=d.hw , col=col.alpha(rangi2,0.5) )
 lines( weight.seq1 , mu.mean1 )
-# draw HPDI region for line
 shade( mu.HPDI1 , weight.seq1 )
-# draw HPDI region for simulated heights
 shade( height.HPDI1 , weight.seq1 )
 ```
 
 **Parte II**
 
+A continuación se repite el procedimiento anterior pero esta vez utiliando pesos logarítmicos. Con este cambio se puede apreciar como la regresión se ajusta adecuadamente a los datos, tanto en forma como en la minimización del error.  
 
 ```{r, eval=TRUE}
 model2<-alist( 
     height ~ dnorm( mu, sigma ),
     mu <- b0 + b1*log(weight),
     b0 ~ dnorm( 125 , 10 ) ,
-    b1 ~ dnorm( 0 , 1) ,
+    b1 ~ dnorm( 0 , 10) ,
     sigma ~ dunif( 0 , 40 )
 )
-b.reg2 <- quap(model2, data=d2.hw)
+b.reg2 <- quap(model2, data=d.hw)
 precis(b.reg2, prob=0.95)
 ```
 
@@ -364,22 +369,22 @@ precis(b.reg2, prob=0.95)
 post2 <- extract.samples( b.reg2, n= 1e4 )
 
 weight.seq2 <- seq( from=0 , to=50 , by=1 )
-mu.link2 <- function(weight) post$b0 + post$b1*weight
+mu.link2 <- function(weight) post2$b0 + post2$b1*log(weight)
 mu2 <- sapply( weight.seq2 , mu.link2 )
 mu.mean2 <- apply( mu2 , 2 , mean )
 mu.HPDI2 <- apply( mu2 , 2 , HPDI , prob=0.95 )
 
 height.weight2 <- function(weight)
 rnorm(
-n=nrow(post) ,
-mean=post$b0 + post$b1*weight ,
-sd=post$sigma )
+n=nrow(post2) ,
+mean=post2$b0 + post2$b1*log(weight) ,
+sd=post2$sigma )
 
 sim.height2 <- sapply( weight.seq2 , height.weight2)
 height.HPDI2 <- apply( sim.height2 , 2 , HPDI , prob=0.95 )
 
 # plot raw data
-plot( height ~ weight , data=d2.hw , col=col.alpha(rangi2,0.5) )
+plot( height ~ weight , data=d.hw , col=col.alpha(rangi2,0.5) )
 # draw MAP line
 lines( weight.seq2 , mu.mean2 )
 # draw HPDI region for line
@@ -418,7 +423,7 @@ De ahora en adelante considere $\alpha = 5$ y $\beta = \frac{1}{5}$.
 **Respuesta:**
 
 
-```{r, eval=true}
+```{r, eval=FALSE}
 
 gamma_fun <- function(x, alpha, beta){
   
@@ -472,7 +477,7 @@ MCMC_g_fun <- function(repetitions, omega_i, alpha, beta){
 
 # P2 a)
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library("ggplot2")
 
 history <- MCMC_g_fun(1e2, 1, 5, 1/5)
@@ -497,7 +502,7 @@ ggplot(history, aes(x=h_data)) +
 ```
 
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 
 history <- MCMC_g_fun(1e5, 1, 5, 1/5)
 history <- data.frame("h_data" = history)
@@ -524,7 +529,7 @@ ggplot(history, aes(x=h_data)) +
 > Respuesta Aquí
 
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 
 x <- seq(0, 4, 0.1)
 y <- sapply(x, gamma_fun, alpha=5, beta=1/5)
