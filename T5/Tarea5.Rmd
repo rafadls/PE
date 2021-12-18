@@ -186,13 +186,13 @@ Nombre y explique dos propiedades que son deseables en una cadena de Markov.
 #### **Pregunta 8:**
 Explique cómo cross-validation, criterios de información y regularización ayudan a mitigar o medir los problemas de underfitting y overfitting.
 
-> Respuesta Aquí
-
+> Cross validation es un tipo de criterio de información y también una forma de entrenar modelos que permite la generalización
+de un modelo al separar los conjuntos de entrenamiento y testeo. Gracias a esto podemos tener una métrica en particular sobre cuán intenso es el overfitting de un modelo, o también sobre el bajo ajuste de un modelo (esto al tener resultados igualmente malos en todos los batches). Por otro lado, los criterios de regularización nos permiten introducir un castigo por la complejidad de un modelo, y muchas veces los modelos más complejos son aquellos que con mayor intensidad hacen overfitting de los datos, por ejemplo, en una regresión lineal, a medida que la realizamos con más parámetros, se ajusta cada vez a los datos, perdiendo generalización. Es por esto que son necesarias funciones de pérdida que nos permitan castigar este sobreajuste.
 #### **Pregunta 9:**
 
 Diseñe una DAG para un problema causal inventado por usted de al menos 5 nodos (puede basarse en el ejemplo de Eugene Charniak) usando **Dagitty**  y considere que la DAG tenga al menos: una chain, un fork y un collider. Muestre con dagitty todas las independencias condicionales de su DAG. Explique las independencias usando las reglas de d-separación.
 
-> Respuesta Aquí
+
 
 
 ```{r, eval=TRUE}
@@ -202,23 +202,33 @@ library("dagitty")
 my_dag <- dagitty('dag {
 bb="0,0,1,1"
 Caries [pos="0.644,0.745"]
+Dolor [pos="0.650,0.922"]
 Edad [pos="0.645,0.430"]
 Frecuencia_lavado_dientes [pos="0.747,0.551"]
-Ida_al_dentista [pos="0.379,0.428"]
 Ingesta_azucar [pos="0.558,0.549"]
-Proteccion_fluor [pos="0.389,0.638"]
+Caries -> Dolor
 Edad -> Frecuencia_lavado_dientes
 Edad -> Ingesta_azucar
 Frecuencia_lavado_dientes -> Caries
-Ida_al_dentista -> Proteccion_fluor
 Ingesta_azucar -> Caries
-Proteccion_fluor -> Caries
 }
+
 
 ')
 
 plot(my_dag)
 ```
+
+
+
+> 
+Las independencias condicionales son:
+- Las caries son independientes de la edad, dada la frecuencia del lavado de dientes y la ingesta de azúcar: Se observa que existe un collider de la ingesta de azucar y la frecuencia de lavado de dientes hacia caries.
+- La edad es independiente del dolor, dada las caries: En consecuencia de la cadena presente entre Edad, Caries y dolor.
+- La edad es independiente del dolor, dada la frecuencia del lavado de dientes: Misma razón que la anterior, pero esta vez consideramos el fork también sobre Edad.
+- La frecuencia del lavado de dientes es independiente de la ingesta de azúcar, dada la edad: Este es un caso de Confounding variables, o variables de confusión en base a la edad. Esto dado que existe un fork sobre Edad.
+- La ingesta de azúcar es independiente del dolor, dada las caries: Al considerar la evidencia de la caries, el camino d-conectado entre dolor e ingesta de azucar se vuelve d-separado, puesto que además no existe otro camino entre ambos nodos.
+
 ---
 
 # Segunda Parte: Elaboración de Código<a name="id5"></a>
@@ -448,10 +458,10 @@ MCMC_g_fun <- function(repetitions, omega_i, alpha, beta){
 
 
     # Suppose we have r
-    gf_a <- gamma_fun(p_omega_a,         alpha, beta) 
-    gf_b <- gamma_fun(p_omega_t_minus_1, alpha, beta)
+    gf_a <- gamma_fun(p_omega_a,         alpha, beta) / dnorm(x= p_omega_a, mean=p_omega_t_minus_1)
+    gf_b <- gamma_fun(p_omega_t_minus_1, alpha, beta) / dnorm(x=p_omega_t_minus_1, mean=p_omega_a)
     
-    r_gf <- gf_b / gf_a #gf_a / gf_b
+    r_gf <- gf_a / gf_b #gf_a / gf_b
     
     r  <- r_gf
     #print("r")
@@ -462,8 +472,12 @@ MCMC_g_fun <- function(repetitions, omega_i, alpha, beta){
     else{
       p_omega_t <- p_omega_t_minus_1
     }
+    if (p_omega_t <= 0 ){
+      p_omega_t = p_omega_t_minus_1
+    }
     
     p_omega_a <- p_omega_t
+    p_omega_t_minus_1 <- p_omega_a
     historia <- append(historia, p_omega_a)
     
   }
@@ -477,7 +491,10 @@ MCMC_g_fun <- function(repetitions, omega_i, alpha, beta){
 
 # P2 a)
 
-```{r, eval=FALSE}
+A continuación se presentan los resultados e histogramas que se obtienen cuando se modifica
+la cantidad de iteraciones del algoritmo.
+
+```{r, eval=TRUE}
 library("ggplot2")
 
 history <- MCMC_g_fun(1e2, 1, 5, 1/5)
@@ -501,8 +518,18 @@ ggplot(history, aes(x=h_data)) +
   geom_density()
 ```
 
+> Podemos observar que a medida que aumenta el número de iteraciones, el histograma
+muestra un comportamiento más definido con respecto a la función objetivo.
+Y además inconsistencias con la función objetivo, como montes o valles, van desapareciendo cuando las 
+repeticiones aumentan.
 
-```{r, eval=FALSE}
+
+# P2.b
+
+A continuación se muestran los resultados para distintos valores de $\theta_0$, con el resto de parámetros
+fijo.
+
+```{r, eval=TRUE}
 
 history <- MCMC_g_fun(1e5, 1, 5, 1/5)
 history <- data.frame("h_data" = history)
@@ -519,19 +546,27 @@ history <- data.frame("h_data" = history)
 ggplot(history, aes(x=h_data)) + 
   geom_density()
 
-history <- MCMC_g_fun(1e5, 0.5, 5, 1/5)
+history <- MCMC_g_fun(1e5, 10, 5, 1/5)
 history <- data.frame("h_data" = history)
 ggplot(history, aes(x=h_data)) + 
   geom_density()
 
 ```
 
-> Respuesta Aquí
+
+> Los resultados muestran que la condición inicial  tiene un efecto pequeño cuando
+existe una cantidad de iteraciones cercanas a lo 10 miles. El comportamiento o curva del
+histograma es el esperado, pero podemos observar algunas diferencias en pequeños montes o valles en la curva, o las diferencias entre el valor máximo de las curvas.
 
 
-```{r, eval=FALSE}
+# P2.c
 
-x <- seq(0, 4, 0.1)
+A continuación se comparará la distribución de la función objetivo, versus aquella calculada
+usando Metropolis-Hasting
+
+```{r, eval=TRUE}
+
+x <- seq(0, 50, 0.1)
 y <- sapply(x, gamma_fun, alpha=5, beta=1/5)
 mydf <- data.frame(x = x, res = y)
 
@@ -539,13 +574,19 @@ plot(x, y)
 
 
 
-history <- MCMC_g_fun(1e4, 1, 5, 1/5)
+history <- MCMC_g_fun(1e5, 1, 5, 1/5)
 history <- data.frame("h_data" = history)
 ggplot(history, aes(x=h_data)) + 
   geom_density()
 
+
+
 ```
 
+
+> Observando ambas distribuciones, podemos observar que ambas tienen un comportamiento o forma similar, siendo claramente la distribución objetivo más suave y predecible. Para la distribución de Metropolis-Hasting existe cierta variabilidad en algunos rangos que muestran un comportamiento
+principalmente aleatorio, esto se cree, debido al carácter de elegibilidad binario que tiene
+el algoritmo.
 
 &nbsp;
 <hr />
